@@ -1,0 +1,28 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Godot_VAT_Plugin"
+run/main_scene="res://demo/MultipleAnimations.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/image="res://demo/assets/images/AntzBanner1.png"
+config/icon="res://antz_512.png"
+boot_splash/minimum_display_time=1500
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_vat/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_3d=2
