@@ -31,6 +31,18 @@ func _exit_tree():
 
 func _init() -> void:
 	pass
+
+func _get_configuration_warnings(): # display the warning on the scene dock
+	var warnings = []
+	if !multimesh:
+		warnings.push_back('Multimesh not set')
+	if animation_tracks.size() == 0:
+		warnings.push_back('No animation tracks defined')
+	return warnings
+	
+func _validate_property(property: Dictionary): # update the config warnings
+	if property.name == "animation_tracks" or property.name == "multimesh":
+		update_configuration_warnings()
 	
 func _ready() -> void:
 	if multimesh:
