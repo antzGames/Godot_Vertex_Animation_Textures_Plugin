@@ -62,6 +62,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+# Set/Update functions
+
 ## Updates the current instance_id with the provided animation_offset (0..1),
 ## unless rand_anim_offset = false, where it sets the offset to 0
 func update_instance_animation_offset(instance_id: int, animation_offset: float):
@@ -85,7 +87,32 @@ func update_instance_alpha(instance_id: int, alpha: float):
 	custom_data.a = alpha
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 
+
+# Get functions
+
 ## get animation start/end frames from track_number.
 ## track_number must be within (0..number_of_animation_tracks - 1)
 func get_start_end_frames_from_track_number(track_number: int) -> Vector2i:
 	return animation_tracks[track_number]
+
+## get animation start/end frames from instance.
+## instance must have been initialized. 
+func get_start_end_frames_from_instance(instance_id: int) -> Vector2i:
+	var vec2: Vector2i
+	custom_data = multimesh.get_instance_custom_data(instance_id)
+	vec2.x = custom_data.g # start frame
+	vec2.y = custom_data.b # end frame
+	return vec2
+
+## get track_number from start/end frame Vector2i.
+## Returns -1 if not found.
+func get_track_number_from_track_vector(track_vector: Vector2i) -> int:
+	for i in range(animation_tracks.size()):
+		if track_vector == animation_tracks[i]: return i
+	
+	return -1
+
+## get track_number from instance_id
+## Returns -1 if not found.
+func get_track_number_from_instance(instance_id: int) -> int:
+	return get_track_number_from_track_vector(get_start_end_frames_from_instance(instance_id))

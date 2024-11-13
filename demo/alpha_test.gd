@@ -29,17 +29,18 @@ func _process(delta: float) -> void:
 		setupInstances()
 		
 func setupInstances():
-	var a: int = 0
+	var a: int = 0 # animation track number
 	for instance in vat_multi_mesh_instance_3d.multimesh.instance_count:
 		# randomize the animation offset
 		vat_multi_mesh_instance_3d.update_instance_animation_offset(instance, randf())
-		# randomize the animation track number
+		# sets the animation track number
 		vat_multi_mesh_instance_3d.update_instance_track(instance, a)
 		# set alpha to 1.0 -> you can fade out a specific instance by setting alpha to 0
 		vat_multi_mesh_instance_3d.update_instance_alpha(instance, 1.0)
 		# randomize scale, rotation, and location
 		randomizeInstance(instance)
 		
+		# this cycles threw each animation track number
 		a += 1
 		if a > vat_multi_mesh_instance_3d.number_of_animation_tracks - 1:
 			a = 0
