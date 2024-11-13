@@ -38,7 +38,7 @@ This plugin provides a new node called `VATMultiMeshInstance3D` which inherits `
 
 - **Instance Count**: `int` = the number of instances
 - **Rand Anim Offset**: `bool` =  randomize the animation offset (true/false)
-- **Animation Tracks**: `Array[Vector2i]` = the list of animation tracks with start/end frame information
+- **Animation Tracks**: `Array[Vector2i]` = the list of animation tracks with start frame = x, end frame = y information. 
 
 <img src="https://github.com/user-attachments/assets/790f897a-ef70-434d-afa3-6acc55c255fc" width="332">
 
