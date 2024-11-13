@@ -81,6 +81,15 @@ Get `track_number` from `instance_id`. Returns `-1` if not found.
 - `custom_data.b` = **animation end frame**
 - `custom_data.a` = **alpha of mesh**: used to fade in/out a unique instance
 
+## Demos
+
+There are two demo scenes in the `demo` subfolder:
+	
+- **MultipleAnimations**: 90 instances with 5 animations, with different scales, rotation, and positions.
+- **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
+
+
+
 ## Blender 3.3.1 Add-On Guide
 1. Download the files from [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) and install **vertex_animation.py** in the Blender -> **Edit** -> **Preferences...** -> **Add-ons** -> **Install...** menu. In the **3D Viewport** side bar, you should now have a **Not Unreal Tools** menu and if selected it will show a **Vertex Animation** panel.
 2. In **Object Mode** select the object you want to process, make sure the current animation you want is selected and playable in the **Timeline**.
