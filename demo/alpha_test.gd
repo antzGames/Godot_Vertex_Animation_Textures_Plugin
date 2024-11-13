@@ -22,23 +22,28 @@ func _process(delta: float) -> void:
 				vat_multi_mesh_instance_3d.update_instance_alpha(instance, 0.0)
 	
 	# reset after all have faded out
-	if timer > vat_multi_mesh_instance_3d.multimesh.instance_count:
+	if timer > vat_multi_mesh_instance_3d.multimesh.instance_count + 1:
 		x = -40
 		z = 10
 		timer = 0
 		setupInstances()
 		
 func setupInstances():
+	var a: int = 0
 	for instance in vat_multi_mesh_instance_3d.multimesh.instance_count:
 		# randomize the animation offset
 		vat_multi_mesh_instance_3d.update_instance_animation_offset(instance, randf())
 		# randomize the animation track number
-		vat_multi_mesh_instance_3d.update_instance_track(instance, randi_range(0, vat_multi_mesh_instance_3d.number_of_animation_tracks-1))
+		vat_multi_mesh_instance_3d.update_instance_track(instance, a)
 		# set alpha to 1.0 -> you can fade out a specific instance by setting alpha to 0
 		vat_multi_mesh_instance_3d.update_instance_alpha(instance, 1.0)
 		# randomize scale, rotation, and location
 		randomizeInstance(instance)
-
+		
+		a += 1
+		if a > vat_multi_mesh_instance_3d.number_of_animation_tracks - 1:
+			a = 0
+		
 func randomizeInstance(i: int):
 	if randi() %2:
 		node3D.scale = Vector3(1,1,1)

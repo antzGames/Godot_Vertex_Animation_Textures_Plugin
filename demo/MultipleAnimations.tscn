@@ -64,7 +64,7 @@ directional_shadow_mode = 0
 material_override = SubResource("ShaderMaterial_4v668")
 multimesh = SubResource("MultiMesh_qlnhw")
 script = ExtResource("1_uylxl")
-instance_count = 120
+instance_count = 90
 animation_tracks = Array[Vector2i]([Vector2i(0, 39), Vector2i(40, 80), Vector2i(81, 139), Vector2i(140, 242), Vector2i(243, 247)])
 
 [node name="Floor" type="MeshInstance3D" parent="."]
