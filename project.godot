@@ -21,6 +21,10 @@ boot_splash/minimum_display_time=1500
 
 enabled=PackedStringArray("res://addons/godot_vat/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
