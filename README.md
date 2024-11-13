@@ -40,7 +40,33 @@ This plugin provides a new node called `VATMultiMeshInstance3D` which inherits `
 
 ## `VATMultiMeshInstance3D` Functions
 
-### `update_instance_animation_offset(instance_id: int, animation_offset: float)`
+#### `update_instance_animation_offset(instance_id: int, animation_offset: float)`
+
+Updates the current `instance_id` with the provided `animation_offset` (0..1), unless `rand_anim_offset = false`, where it sets the offset to `0`.
+
+### `update_instance_track(instance_id: int, track_number: int):`
+
+Updates the current `instance_id` with the provided `track_number` (`0`..`number_of_animation_tracks - 1`)
+
+### `update_instance_alpha(instance_id: int, alpha: float):`
+
+Updates the current `instance_id` with the provided `alpha` (`0`..`1`)
+
+### `get_start_end_frames_from_track_number(track_number: int) -> Vector2i`
+
+Get animation start/end frame `Vector2i` from `track_number`. `track_number` must be within (`0`..`number_of_animation_tracks - 1`)
+
+### `get_start_end_frames_from_instance(instance_id: int) -> Vector2i`
+
+Get animation start/end frames `Vector2i` from `instance_id`. Instance must have been initialized.
+
+### `get_track_number_from_track_vector(track_vector: Vector2i) -> int`
+
+Get `track_number` from start/end frame `Vector2i`. Returns `-1` if not found.
+
+### `get_track_number_from_instance(instance_id: int) -> int`
+
+Get `track_number` from `instance_id`. Returns `-1` if not found.
 
 ## `MutiMeshInstance3D` `custom_data`
 
