@@ -137,6 +137,6 @@ There are two demo scenes in the `demo` subfolder:
 
 ## Assets
 
-[mage](https://kaylousberg.itch.io/kaykit-adventurers) by Kay Lousberg - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
+[Skeleton](https://kaylousberg.itch.io/kaykit-skeletons) by Kay Lousberg - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
 
-[characterMedium](https://kenney.nl/assets/animated-characters-2) by Kenney - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
+[Floor Tile](https://kenney.nl/assets/prototype-textures) by Kenney - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
