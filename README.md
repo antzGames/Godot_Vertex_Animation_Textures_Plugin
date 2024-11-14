@@ -85,6 +85,27 @@ Get `track_number` from `instance_id`. Returns `-1` if not found.
 - `custom_data.b` = **animation end frame**
 - `custom_data.a` = **alpha of mesh**: used to fade in/out a unique instance
 
+## Vertex Animation Shader
+
+The magic of vertex animation happens both in Blender and in the shader. 
+This is why you should understand what is happening in the shader.
+
+To make it easy, it is recommended you use `GeometryInstance3D > Geometry > Material Override` 
+to add the a new ShaderMaterial.
+
+In the `Shader` property select `Quick Load` and select: `vat_multiple_anims.gdshader`
+
+Once loaded expand `Shader Parametrs` and you will have access to configure the following
+shader parameters:
+	
+- `Time Scale`: How quickly animations will play.
+- `Offset Map`: A texture that encodes the position of each vertex for every frame.
+- `Normal Map`: A texture that encodes the normal of each vertex for every frame.
+- `Texture Albedo`: The UV color texture that is used for the mesh.
+- `Specular`, `Metallic`, `Roughness`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information
+
+Make sure both offset and normal textures are imported with Lossless format.
+
 ## Demos
 
 There are two demo scenes in the `demo` subfolder:
