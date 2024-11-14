@@ -3,7 +3,7 @@
 ##
 ## See tutorials for more information.
 ##
-## @tutorial:             https://example.com/tutorial_1
+## @tutorial:             https://github.com/antzGames/Godot_Vertex_Animation_Textures_Plugin
 extends MultiMeshInstance3D
 class_name VATMultiMeshInstance3D
 
