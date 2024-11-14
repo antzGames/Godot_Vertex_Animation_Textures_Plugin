@@ -47,8 +47,9 @@ https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 
 - Download this repository as a ZIP file.
 - Extract the ZIP file.
-- Copy `addons` directory to your Godot project's `res://` filesystem.
+- Copy the `addons` directory from the extracted ZIP file into your Godot project's `res://` filesystem.
 - Go to `Project > Project Settings > Plugins` and enable **Godot Vertex Animation Textures Plugin**.
+- Test to see if you can add the new `VATMultiMeshInstance3D` node into a scene.
 
 ## `VATMultiMeshInstance3D`
 
