@@ -172,6 +172,11 @@ There are two demo scenes in the `demo` subfolder:
 
 ![vat3](https://github.com/user-attachments/assets/84d8c9ee-f343-4226-927b-7bd92e68c5a2)
 
+## Godot games made with this plugin
+
+Play the game on ithc.io: [Skeletron 2084](https://antzgames.itch.io/skeletron2084)
+See a video of gameplay here: [Skeletron 2084 Gameplay](https://youtu.be/zTJlpS3jQCc)
+
 ## Blender 3.3.1 Add-On Guide
 1. Download the files from [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) and install **vertex_animation.py** in the Blender -> **Edit** -> **Preferences...** -> **Add-ons** -> **Install...** menu. In the **3D Viewport** side bar, you should now have a **Not Unreal Tools** menu and if selected it will show a **Vertex Animation** panel.
 2. In **Object Mode** select the object you want to process, make sure the current animation you want is selected and playable in the **Timeline**.
