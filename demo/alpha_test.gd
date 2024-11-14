@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 					vat_multi_mesh_instance_3d.update_instance_alpha(instance, (1 - (timer-instance)))
 				else: # already faded out
 					vat_multi_mesh_instance_3d.update_instance_alpha(instance, 0.0)
-	else: # Fade In
+	else: # fade In
 		for instance in vat_multi_mesh_instance_3d.multimesh.instance_count:
 			if timer > instance: # start fading in instance every second
 				if (1 - (timer-instance)) <= 1.0: # fade in
@@ -67,7 +67,7 @@ func randomizeInstance(i: int):
 	
 	x += 10
 	if x > 40:
-		x = - 40
+		x = -40
 		z += 10
 	
 	node3D.rotation.x = 0
