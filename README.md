@@ -42,7 +42,13 @@ This plugin provides a new node called `VATMultiMeshInstance3D` which inherits `
 <img src="https://github.com/user-attachments/assets/e979158a-5bb1-43a5-9129-1ca210492b1c" width="503">
 
 The Scene dock with show warnings when you first create a `VATMultiMeshInstance3D` node indicating that you need 
-to define animation track data and add a `MultiMesh`.  Error messages will also appear in the Output console.
+to define animation track data and add a `MultiMesh`.
+
+<img src="https://github.com/user-attachments/assets/f82b305b-ffc0-4cff-92b4-6e0b7d7873d8" width="50%">
+
+Error messages will also appear in the Output console.
+
+<img src="https://github.com/user-attachments/assets/310cdb80-80f9-476a-8a73-e5e700d6dbdf" width="50%">
 
 ## `VATMultiMeshInstance3D` Properties
 
