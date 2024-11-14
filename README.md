@@ -45,6 +45,8 @@ https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 
 ## Installing
 
+Maybe if this plugin gets noticed, I will add it to Godot's AssetLib.  Until then follow these instrcutions:
+
 - Download this repository as a ZIP file.
 - Extract the ZIP file.
 - Copy the `addons` directory from the extracted ZIP file into your Godot project's `res://` filesystem.
