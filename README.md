@@ -89,7 +89,7 @@ Get `track_number` from `instance_id`. Returns `-1` if not found.
 
 There are two demo scenes in the `demo` subfolder:
 	
-- **MultipleAnimations**: 90 instances with 5 animations, with different scales, rotation, and positions.
+- **MultipleAnimations**: 90 instances with 5 animations, with different scales, and positions.
 - **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
 
 ![vat3](https://github.com/user-attachments/assets/84d8c9ee-f343-4226-927b-7bd92e68c5a2)
