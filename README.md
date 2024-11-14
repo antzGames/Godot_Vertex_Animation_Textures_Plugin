@@ -35,6 +35,14 @@ https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 - Current Blender add-on tools tested on Blender 3.3 (Version 4.X not supported)
 - `MultiMeshInstance3D` `custom_data` is used by this plugin so you will not have access to it.
 
+## Requirements
+
+- Godot 4.x
+- Blender 3.3.x
+- [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) Blender add-on
+- An animated 3D model with less than 8192 total vertices
+- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part in using this solution.
+
 ## `VATMultiMeshInstance3D`
 
 This plugin provides a new node called `VATMultiMeshInstance3D` which inherits `MultiMeshInstance3D`.
