@@ -175,6 +175,7 @@ There are two demo scenes in the `demo` subfolder:
 ## Godot games made with this plugin
 
 Play the game on ithc.io: [Skeletron 2084](https://antzgames.itch.io/skeletron2084)
+
 See a video of gameplay here: [Skeletron 2084 Gameplay](https://youtu.be/zTJlpS3jQCc)
 
 ## Blender 3.3.1 Add-On Guide
