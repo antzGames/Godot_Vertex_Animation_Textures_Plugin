@@ -38,10 +38,10 @@ https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 ## Requirements
 
 - Godot 4.x
-- Blender 3.3.x
-- [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) Blender add-on
-- An animated 3D model with less than 8192 total vertices
-- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part in using this solution.
+- Blender 3.3.x (any version less than 4.x should work but not tested)
+- [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) Blender add-on.
+- An animated 3D model with less than 8192 total vertices.
+- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.
 
 ## `VATMultiMeshInstance3D`
 
@@ -177,6 +177,14 @@ There are two demo scenes in the `demo` subfolder:
 	
 - **MultipleAnimations**: 90 instances with 5 animations, with different scales, and positions.
 - **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
+
+The skeleton mesh included in the demo has 5 baked in animations:
+	
+- Track 0: Walk
+- Track 1: Cheer
+- Track 2: Spin
+- Track 3: Twearking?
+- Track 4: Dead (static pose)
 
 ![vat3](https://github.com/user-attachments/assets/84d8c9ee-f343-4226-927b-7bd92e68c5a2)
 
