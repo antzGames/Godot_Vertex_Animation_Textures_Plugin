@@ -134,7 +134,7 @@ void vertex(){
 	custom_data = INSTANCE_CUSTOM;
 
 	float start_frame = custom_data.g;
-	float end_frame = custom_data.b - 1.0;
+	float end_frame = custom_data.b;
 	
 	float num_frames = end_frame - start_frame;
 	float frame_offset = num_frames * custom_data.r;

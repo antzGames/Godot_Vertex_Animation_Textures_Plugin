@@ -19,7 +19,7 @@ void vertex(){
 	custom_data = INSTANCE_CUSTOM;
 
 	float start_frame = custom_data.g;
-	float end_frame = custom_data.b - 1.0; // - 1
+	float end_frame = custom_data.b;
 	
 	float time_int = 1.0;
 	float time = modf(TIME * time_scale, time_int);
@@ -30,8 +30,8 @@ void vertex(){
 	ivec2 tex_size = textureSize(offset_map, 0);
 
 	float pixel_size = 1.0 / float(tex_size.y);
-	float frame_floor = clamp(floor(current_frame), start_frame+1.0, end_frame);
-	float frame_ceil = clamp(ceil(current_frame), start_frame, end_frame-1.0);
+	float frame_floor = clamp(floor(current_frame), start_frame, end_frame);
+	float frame_ceil = clamp(ceil(current_frame), start_frame, end_frame);
 
 	vec2 frame_floor_uv_offset = vec2(0.0, -((frame_floor + 0.5) * pixel_size));
 	vec2 frame_ceil_uv_offset = vec2(0.0, -((frame_ceil + 0.5) * pixel_size));
