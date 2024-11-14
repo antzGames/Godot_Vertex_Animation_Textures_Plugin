@@ -87,11 +87,11 @@ Get `track_number` from `instance_id`. Returns `-1` if not found.
 
 ## Vertex Animation Shader
 
-The magic of vertex animation happens both in Blender and in the shader. 
+The magic of vertex animations happens both in Blender and in the shader. 
 This is why you should understand what is happening in the shader.
 
 To make it easy, it is recommended you use `GeometryInstance3D > Geometry > Material Override` 
-to add the a new ShaderMaterial.
+to add the a new `ShaderMaterial`.
 
 In the `Shader` property select `Quick Load` and select: `vat_multiple_anims.gdshader`
 
@@ -102,9 +102,47 @@ shader parameters:
 - `Offset Map`: A texture that encodes the position of each vertex for every frame.
 - `Normal Map`: A texture that encodes the normal of each vertex for every frame.
 - `Texture Albedo`: The UV color texture that is used for the mesh.
-- `Specular`, `Metallic`, `Roughness`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information
+- `Specular`, `Metallic`, `Roughness`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information.
 
 Make sure both offset and normal textures are imported with Lossless format.
+
+The `custom_data` in the MultiMeshInstance3D and the shader parameters are passed to the shader
+to do its magic.  Here is some of the shader code that uses this data:
+	
+```C++
+
+uniform sampler2D offset_map;
+uniform sampler2D normal_map;
+uniform sampler2D texture_albedo;
+
+uniform float time_scale = 1.0;
+
+uniform float specular : hint_range(0,1);
+uniform float metallic : hint_range(0,1);
+uniform float roughness : hint_range(0,1);
+
+varying flat vec4 custom_data;
+
+void vertex(){
+	custom_data = INSTANCE_CUSTOM;
+
+	float start_frame = custom_data.g;
+	float end_frame = custom_data.b - 1.0;
+	
+	float time_int = 1.0;
+	float time = modf(TIME * time_scale, time_int);
+	float num_frames = end_frame - start_frame;
+	float frame_offset = num_frames * custom_data.r;
+	
+	...
+	
+	
+void fragment(){
+	vec3 albedo_col = texture(texture_albedo, UV).rgb;
+
+	ALPHA = custom_data.a;  // fader
+	ALBEDO = albedo_col.rgb;
+```
 
 ## Demos
 
