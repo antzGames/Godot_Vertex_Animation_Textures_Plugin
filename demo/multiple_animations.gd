@@ -46,7 +46,7 @@ func randomizeInstance(i: int):
 	
 	x += 10
 	if x > 40:
-		x = - 40
+		x = -40
 		z += 10
 	
 	node3D.rotation = Vector3.ZERO
