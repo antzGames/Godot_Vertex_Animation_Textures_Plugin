@@ -43,6 +43,13 @@ https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 - An animated 3D model with less than 8192 total vertices.
 - For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.
 
+## Installing
+
+- Download this repository as a ZIP file.
+- Extract the ZIP file.
+- Copy `addons` directory to your Godot project's `res://` filesystem.
+- Go to `Project > Project Settings > Plugins` and enable **Godot Vertex Animation Textures Plugin**.
+
 ## `VATMultiMeshInstance3D`
 
 This plugin provides a new node called `VATMultiMeshInstance3D` which inherits `MultiMeshInstance3D`.
