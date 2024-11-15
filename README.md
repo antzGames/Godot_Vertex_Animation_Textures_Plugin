@@ -44,7 +44,7 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 
 ## Installing
 
-Maybe if this plugin gets noticed, I will add it to Godot's AssetLib.  Until then follow these instrcutions:
+Maybe if this plugin gets noticed, I will add it to Godot's AssetLib.  Until then follow these instructions:
 
 - Download this repository as a ZIP file.
 - Extract the ZIP file.
