@@ -13,9 +13,8 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 
 ## Preview
 
-https://github.com/user-attachments/assets/bfdbe418-76bf-44c7-b2a5-46c58c24e7d5
+![github](https://github.com/user-attachments/assets/855ad356-6c63-4717-93e2-f058ad99f6ce)
 
-https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 
 ## Features
 
@@ -200,7 +199,9 @@ The skeleton mesh included in the demo has 5 baked in animations:
 - Track 3: Twearking?
 - Track 4: Dead (static pose)
 
-![vat3](https://github.com/user-attachments/assets/84d8c9ee-f343-4226-927b-7bd92e68c5a2)
+https://github.com/user-attachments/assets/bfdbe418-76bf-44c7-b2a5-46c58c24e7d5
+
+https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 
 ## Godot games made with this plugin
 
