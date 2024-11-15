@@ -185,7 +185,7 @@ void fragment(){
 
 There are two demo scenes in the `demo` subfolder:
 	
-- **MultipleAnimations**: 90 instances with 5 animations, with different scales, and positions.
+- **MultipleAnimations**: 90 instances with 5 animations, with different scales, and positions.  Every 3 seconds all instances change animations tracks.
 - **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
 
 The skeleton mesh included in the demo has 5 baked in animations:

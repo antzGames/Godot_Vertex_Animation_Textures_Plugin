@@ -4,6 +4,7 @@ extends Node3D
 
 var node3D: Node3D = Node3D.new()
 var location: Vector3 = Vector3.ZERO
+var timer: float
 var x: float = -40
 var z: float = -45
 
@@ -53,3 +54,17 @@ func randomizeInstance(i: int):
 	node3D.position = location
 	
 	vat_multi_mesh_instance_3d.multimesh.set_instance_transform(i, node3D.transform)
+
+
+func _process(delta: float) -> void:
+	timer += delta
+	
+	# every three seconds change the animation track of each instance
+	if timer > 3:
+		timer = 0
+		var a: int
+		for instance in vat_multi_mesh_instance_3d.multimesh.instance_count:
+			a = vat_multi_mesh_instance_3d.get_track_number_from_instance(instance)
+			a += 1
+			if a > vat_multi_mesh_instance_3d.number_of_animation_tracks - 1: a = 0
+			vat_multi_mesh_instance_3d.update_instance_track(instance, a)
