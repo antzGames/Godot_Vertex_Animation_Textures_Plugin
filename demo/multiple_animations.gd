@@ -24,7 +24,7 @@ func setupInstances():
 		# randomize scale, rotation, and location
 		randomizeInstance(instance)
 		
-		# Test helper functions - you can comment this out
+		# Unit tests for helper functions - you can comment this out
 		print("Instance: ", instance, "   Track: ", vat_multi_mesh_instance_3d.get_track_number_from_instance(instance), \
 			"   Frame Start/End:", vat_multi_mesh_instance_3d.get_start_end_frames_from_instance(instance), \
 			"   Test Vector2i: ", vat_multi_mesh_instance_3d.get_start_end_frames_from_track_number(a) == vat_multi_mesh_instance_3d.get_start_end_frames_from_instance(instance), \
@@ -54,7 +54,6 @@ func randomizeInstance(i: int):
 	node3D.position = location
 	
 	vat_multi_mesh_instance_3d.multimesh.set_instance_transform(i, node3D.transform)
-
 
 func _process(delta: float) -> void:
 	timer += delta
