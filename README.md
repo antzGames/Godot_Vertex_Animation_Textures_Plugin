@@ -13,7 +13,7 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 
 ## Preview
 
-https://github.com/user-attachments/assets/c50953d1-2d06-4043-b1e4-3464487a79c1
+https://github.com/user-attachments/assets/bfdbe418-76bf-44c7-b2a5-46c58c24e7d5
 
 https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
 
