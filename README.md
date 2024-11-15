@@ -141,6 +141,8 @@ shader parameters:
 - `Texture Albedo`: The UV color texture that is used for the mesh.
 - `Specular`, `Metallic`, `Roughness`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information.
 
+<img src="https://github.com/user-attachments/assets/dab1bb68-291a-4c70-8f25-cf10dfe2b8ed" width="328">
+
 Make sure both offset and normal textures are imported with Lossless format.
 
 The `custom_data` in the `MultiMeshInstance3D` and the shader parameters are passed to the shader
