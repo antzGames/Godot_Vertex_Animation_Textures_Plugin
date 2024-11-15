@@ -81,7 +81,7 @@ Error messages will also appear in the Output console.
 
 #### `update_all_instances(animation_offset: float, track_number: int, alpha: float)`
 Updates ALL INSTANCES with the provided `animation_offset`, `track_number`, and `alpha`
-unless `rand_anim_offset = false`, where it sets the `animation_offset` to 0
+unless `rand_anim_offset = false`, where it sets the `animation_offset` to 0.
 
 #### `update_instance_animation_offset(instance_id: int, animation_offset: float)`
 
