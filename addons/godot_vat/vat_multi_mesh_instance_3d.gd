@@ -64,8 +64,16 @@ func _process(delta: float) -> void:
 
 # Set/Update functions
 
+## Update ALL INSTANCES with the provided animation_offset, track_number, and alpha
+## unless rand_anim_offset = false, where it sets the animation_offset to 0
+func update_all_instances(animation_offset: float, track_number: int, alpha: float):
+	for instance in multimesh.instance_count:
+		update_instance_animation_offset(instance, animation_offset)
+		update_instance_track(instance, track_number)
+		update_instance_alpha(instance, alpha)
+
 ## Updates the current instance_id with the provided animation_offset (0..1),
-## unless rand_anim_offset = false, where it sets the offset to 0
+## unless rand_anim_offset = false, where it sets the animation_offset to 0
 func update_instance_animation_offset(instance_id: int, animation_offset: float):
 	custom_data = multimesh.get_instance_custom_data(instance_id)
 	if rand_anim_offset:
