@@ -47,7 +47,7 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 - Blender 3.3.x (any version less than 4.x should work but not tested)
 - [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) Blender add-on.
 - An animated 3D model with less than 8192 total vertices.
-- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.
+- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.  I have created a video on how to  append (concatenate) Blender NLA strips into a single track here: https://youtu.be/YFPywP6LMZU
 
 ## Installing
 
