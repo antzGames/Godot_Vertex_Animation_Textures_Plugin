@@ -4,8 +4,7 @@ extends Node3D
 
 var node3D: Node3D = Node3D.new()
 var location: Vector3 = Vector3.ZERO
-var timer: float
-var x: float = -40
+var x: float = -37
 var z: float = -45
 
 func _ready() -> void:
@@ -25,10 +24,10 @@ func setupInstances():
 		randomizeInstance(instance)
 		
 		# Unit tests for helper functions - you can comment this out
-		print("Instance: ", instance, "   Track: ", vat_multi_mesh_instance_3d.get_track_number_from_instance(instance), \
-			"   Frame Start/End:", vat_multi_mesh_instance_3d.get_start_end_frames_from_instance(instance), \
-			"   Test Vector2i: ", vat_multi_mesh_instance_3d.get_start_end_frames_from_track_number(a) == vat_multi_mesh_instance_3d.get_start_end_frames_from_instance(instance), \
-			"   Test Track: ", vat_multi_mesh_instance_3d.get_track_number_from_track_vector(vat_multi_mesh_instance_3d.get_start_end_frames_from_track_number(a)) == vat_multi_mesh_instance_3d.get_track_number_from_instance(instance))
+		#print("Instance: ", instance, "   Track: ", vat_multi_mesh_instance_3d.get_track_number_from_instance(instance), \
+			#"   Frame Start/End:", vat_multi_mesh_instance_3d.get_start_end_frames_from_instance(instance), \
+			#"   Test Vector2i: ", vat_multi_mesh_instance_3d.get_start_end_frames_from_track_number(a) == vat_multi_mesh_instance_3d.get_start_end_frames_from_instance(instance), \
+			#"   Test Track: ", vat_multi_mesh_instance_3d.get_track_number_from_track_vector(vat_multi_mesh_instance_3d.get_start_end_frames_from_track_number(a)) == vat_multi_mesh_instance_3d.get_track_number_from_instance(instance))
 
 		# this cycles threw each animation track number
 		a += 1
@@ -45,10 +44,10 @@ func randomizeInstance(i: int):
 	location.z = z
 	location.y = 0
 	
-	x += 10
+	x += 9
 	if x > 40:
-		x = -40
-		z += 10
+		x = -35
+		z += 7.5
 	
 	node3D.rotation = Vector3.ZERO
 	node3D.position = location
@@ -56,15 +55,4 @@ func randomizeInstance(i: int):
 	vat_multi_mesh_instance_3d.multimesh.set_instance_transform(i, node3D.transform)
 
 func _process(delta: float) -> void:
-	timer += delta
-	
-	# every five seconds change the animation track of each instance
-	if timer > 5:
-		timer = 0
-		var a: int
-	
-		for instance in vat_multi_mesh_instance_3d.multimesh.instance_count:
-			a = vat_multi_mesh_instance_3d.get_track_number_from_instance(instance)
-			a += 1
-			if a > vat_multi_mesh_instance_3d.number_of_animation_tracks - 1: a = 0
-			vat_multi_mesh_instance_3d.update_instance_track(instance, a)
+	pass

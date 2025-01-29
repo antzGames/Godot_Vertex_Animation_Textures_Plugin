@@ -20,7 +20,7 @@ void vertex(){
 
 	// frame
 	float start_frame = custom_data.g;
-	float end_frame = custom_data.b;
+	float end_frame = custom_data.b - 1.0; // subtract 1 for static pose issues
 	float num_frames = end_frame - start_frame;
 	
 	// time

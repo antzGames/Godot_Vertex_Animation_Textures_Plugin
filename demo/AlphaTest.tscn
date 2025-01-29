@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b0678yn2e7i10" path="res://demo/assets/models/skeleton_normals.png" id="3_iokxi"]
 [ext_resource type="Texture2D" uid="uid://dhclkkw6efewn" path="res://demo/assets/models/skeleton_offsets.exr" id="4_kt5fk"]
 [ext_resource type="Texture2D" uid="uid://ch57dnrr25jn3" path="res://demo/assets/models/skeleton_texture.png" id="5_vpu2l"]
-[ext_resource type="ArrayMesh" uid="uid://bewi2bstad8fu" path="res://demo/assets/models/skeleton_export_mesh.res" id="6_ulx3d"]
+[ext_resource type="ArrayMesh" uid="uid://ser3u8cvloqa" path="res://demo/assets/models/skeleton_export_mesh.res" id="6_kmwx8"]
 [ext_resource type="Script" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="7_u3ysm"]
 [ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="8_x5df0"]
 
@@ -22,7 +22,7 @@ ambient_light_source = 3
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4v668"]
 render_priority = 0
 shader = ExtResource("2_23hvf")
-shader_parameter/time_scale = 0.5
+shader_parameter/fps = 24.0
 shader_parameter/specular = 0.25
 shader_parameter/metallic = 0.5
 shader_parameter/roughness = 0.5
@@ -34,8 +34,8 @@ shader_parameter/texture_albedo = ExtResource("5_vpu2l")
 transform_format = 1
 use_custom_data = true
 instance_count = 27
-mesh = ExtResource("6_ulx3d")
-buffer = PackedFloat32Array(2.1636e-42, 0, -6.11648e-38, 1.12104e-43, 2.70578e+35, 4.59093e-41, 2.70578e+35, 4.59093e-41, 1.62163e+34, 4.59093e-41, 1.4013e-45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+mesh = ExtResource("6_kmwx8")
+buffer = PackedFloat32Array(0, 0, -6.11648e-38, 0, 2.70578e+35, 0, 2.70578e+35, 0, 1.62163e+34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.00245667, 0.00245667, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.03609e-24, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwhhi"]
 albedo_texture = ExtResource("8_x5df0")
@@ -64,7 +64,7 @@ material_override = SubResource("ShaderMaterial_4v668")
 multimesh = SubResource("MultiMesh_qlnhw")
 script = ExtResource("7_u3ysm")
 instance_count = 27
-animation_tracks = Array[Vector2i]([Vector2i(0, 39), Vector2i(40, 80), Vector2i(81, 139), Vector2i(140, 242), Vector2i(243, 247)])
+animation_tracks = Array[Vector2i]([Vector2i(0, 25), Vector2i(26, 58), Vector2i(59, 116), Vector2i(117, 157), Vector2i(158, 174), Vector2i(175, 226), Vector2i(227, 252), Vector2i(253, 325), Vector2i(326, 357), Vector2i(358, 389), Vector2i(390, 475), Vector2i(476, 508), Vector2i(509, 537), Vector2i(538, 554), Vector2i(555, 583), Vector2i(584, 622), Vector2i(623, 661), Vector2i(662, 686), Vector2i(687, 706), Vector2i(707, 711)])
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_jiksp")
