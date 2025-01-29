@@ -44,10 +44,10 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 ## Requirements
 
 - Godot 4.x
-- Blender 3.3.x (any version less than 4.x should work but not tested)
-- [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) Blender add-on.
+- Blender 3.x use: [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) 
+- Blender 4.x use: [Godot VAT Blender Tools](https://github.com/antzGames/Godot_VAT_Blender_Tool)
 - An animated 3D model with less than 8192 total vertices.
-- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.  I have created a video on how to  append (concatenate) Blender NLA strips into a single track here: https://youtu.be/YFPywP6LMZU
+- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.  I have created a video on how to append (concatenate) Blender NLA strips into a single track here: https://youtu.be/YFPywP6LMZU
 
 ## Installing
 
@@ -219,8 +219,12 @@ itch.io: [Skeletron 2084](https://antzgames.itch.io/skeletron2084)
 
 YouTube: [Skeletron 2084 Gameplay](https://youtu.be/zTJlpS3jQCc)
 
-## Blender 3.3.1 Add-On Guide
-1. Download the files from [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) and install **vertex_animation.py** in the Blender -> **Edit** -> **Preferences...** -> **Add-ons** -> **Install...** menu. In the **3D Viewport** side bar, you should now have a **Not Unreal Tools** menu and if selected it will show a **Vertex Animation** panel.
+## Blender Add-On Guide
+
+- Blender 3.x use: [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) 
+- Blender 4.x use: [Godot VAT Blender Tools](https://github.com/antzGames/Godot_VAT_Blender_Tool)
+
+1. Download the files from the correct addon version and install **vertex_animation.py** in the Blender -> **Edit** -> **Preferences...** -> **Add-ons** -> **Install...** menu. In the **3D Viewport** side bar, you should now have a **Not Unreal Tools** or **Godot Blender Tools** menu and if selected it will show a **Vertex Animation** panel.
 2. In **Object Mode** select the object you want to process, make sure the current animation you want is selected and playable in the **Timeline**.
 3. Adjust the **Frame Start**, **End** and **Step** values as required. Changing these settings will update corresponding **Timeline** values.
 4. Click the **Process Anim Meshes** button. This will create a new object named **export_mesh** in the **Outliner**, this is the special mesh that will be animated. In the source .blend file path there will be a newly created folder called **vaexport** and inside will be two files; **normals.png** and **offsets.exr**.
