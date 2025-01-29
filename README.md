@@ -135,7 +135,7 @@ In the `Shader` property select `Quick Load` and select: `vat_multiple_anims.gds
 Once loaded expand `Shader Parametrs` and you will have access to configure the following
 shader parameters:
 	
-- `Time Scale`: How quickly animations will play.
+- `FPS`: How many frames to play per second.  Use the same value you see in Blender.
 - `Offset Map`: A texture that encodes the position of each vertex for every frame.
 - `Normal Map`: A texture that encodes the normal of each vertex for every frame.
 - `Texture Albedo`: The UV color texture that is used for the mesh.
@@ -154,7 +154,7 @@ uniform sampler2D offset_map;
 uniform sampler2D normal_map;
 uniform sampler2D texture_albedo;
 
-uniform float time_scale;
+uniform float fps;
 
 uniform float specular : hint_range(0,1);
 uniform float metallic : hint_range(0,1);

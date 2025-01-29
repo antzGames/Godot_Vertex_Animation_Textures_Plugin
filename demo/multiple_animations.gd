@@ -58,10 +58,11 @@ func randomizeInstance(i: int):
 func _process(delta: float) -> void:
 	timer += delta
 	
-	# every three seconds change the animation track of each instance
-	if timer > 3:
+	# every five seconds change the animation track of each instance
+	if timer > 5:
 		timer = 0
 		var a: int
+	
 		for instance in vat_multi_mesh_instance_3d.multimesh.instance_count:
 			a = vat_multi_mesh_instance_3d.get_track_number_from_instance(instance)
 			a += 1
