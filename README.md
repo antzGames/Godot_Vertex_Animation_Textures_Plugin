@@ -198,20 +198,10 @@ void fragment(){
 
 There are two demo scenes in the `demo` subfolder:
 	
-- **MultipleAnimations**: 90 instances with 5 animations, with different scales, and positions.  Every 3 seconds all instances change animations tracks.
+- **MultipleAnimations**: 108 instances with 20 animations, with different scales, and positions.
 - **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
 
-The skeleton mesh included in the demo has 5 baked in animations:
-	
-- Track 0: Walk
-- Track 1: Cheer
-- Track 2: Spin
-- Track 3: Twearking?
-- Track 4: Dead (static pose)
-
-https://github.com/user-attachments/assets/bfdbe418-76bf-44c7-b2a5-46c58c24e7d5
-
-https://github.com/user-attachments/assets/85120f28-479f-4661-8451-7a7073b20027
+The skeleton mesh included in the demo has 20 baked in animations.
 
 ## Godot games made with this plugin
 
