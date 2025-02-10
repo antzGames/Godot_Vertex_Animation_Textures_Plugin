@@ -54,5 +54,5 @@ func randomizeInstance(i: int):
 	
 	vat_multi_mesh_instance_3d.multimesh.set_instance_transform(i, node3D.transform)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
