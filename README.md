@@ -37,6 +37,7 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 - Mesh must be less than 8192 vertices.
 - Total number of frames for all animations must be less than 8192.
 - No blending or transitions between animation tracks possible.
+- Animations will always loop, so you need to develop a custom solution for chaining different animations.
 - Current Blender add-on tools tested on Blender 3.3 (Version 4.X not supported)
 - `MultiMeshInstance3D` `custom_data` is used by this plugin so you will not have access to it.
 
@@ -44,8 +45,8 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 
 - Godot 4.x
 - Blender:
-    - For Blender 3.x use: [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) 
-    - For Blender 4.x use: [Godot VAT Blender Tools](https://github.com/antzGames/Godot_VAT_Blender_Tool)
+	- For Blender 3.x use: [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) 
+	- For Blender 4.x use: [Godot VAT Blender Tools](https://github.com/antzGames/Godot_VAT_Blender_Tool)
 - An animated 3D model with less than 8192 total vertices.
 - For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.  I have created a video on how to append (concatenate) Blender NLA strips into a single track here: https://youtu.be/YFPywP6LMZU
 
