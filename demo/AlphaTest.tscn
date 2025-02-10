@@ -22,7 +22,7 @@ ambient_light_source = 3
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4v668"]
 render_priority = 0
 shader = ExtResource("2_23hvf")
-shader_parameter/fps = 24.0
+shader_parameter/fps = 12.0
 shader_parameter/specular = 0.25
 shader_parameter/metallic = 0.5
 shader_parameter/roughness = 0.5

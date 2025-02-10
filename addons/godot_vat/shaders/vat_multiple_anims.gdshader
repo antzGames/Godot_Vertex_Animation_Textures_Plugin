@@ -20,8 +20,9 @@ void vertex(){
 
 	// frame
 	float start_frame = custom_data.g;
-	float end_frame = custom_data.b - 1.0; // subtract 1 for static pose issues
+	float end_frame = custom_data.b;
 	float num_frames = end_frame - start_frame;
+	int frame_count = int(end_frame - start_frame);
 	
 	// time
 	float time_scale_normalized = fps / num_frames;
@@ -34,8 +35,11 @@ void vertex(){
 
 	float pixel_size = 1.0 / float(tex_size.y);
 	float frame_floor = clamp(floor(current_frame), start_frame, end_frame);
-	float frame_ceil = clamp(ceil(current_frame), start_frame, end_frame);
-
+		
+	// New from AJ213
+	//float frame_ceil = clamp(ceil(current_frame), start_frame, end_frame); // Old
+	float frame_ceil = float(int(ceil(current_frame) - start_frame) % frame_count) + start_frame; // accounting for looping
+	
 	vec2 frame_floor_uv_offset = vec2(0.0, -((frame_floor + 0.5) * pixel_size));
 	vec2 frame_ceil_uv_offset = vec2(0.0, -((frame_ceil + 0.5) * pixel_size));
 
