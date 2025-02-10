@@ -38,7 +38,6 @@ Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to under
 - Total number of frames for all animations must be less than 8192.
 - No blending or transitions between animation tracks possible.
 - Animations will always loop, so you need to develop a custom solution for chaining different animations.
-- Current Blender add-on tools tested on Blender 3.3 (Version 4.X not supported)
 - `MultiMeshInstance3D` `custom_data` is used by this plugin so you will not have access to it.
 
 ## Requirements
