@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=3 uid="uid://bfmgkppx4r4e3"]
 
-[ext_resource type="Script" path="res://demo/alpha_test.gd" id="1_t78lf"]
-[ext_resource type="Shader" path="res://addons/godot_vat/shaders/vat_multiple_anims.gdshader" id="2_23hvf"]
+[ext_resource type="Script" uid="uid://c08yo2clqj1sy" path="res://demo/alpha_test.gd" id="1_t78lf"]
+[ext_resource type="Shader" uid="uid://bvppykyi3ougu" path="res://addons/godot_vat/shaders/vat_multiple_anims.gdshader" id="2_23hvf"]
 [ext_resource type="Texture2D" uid="uid://b0678yn2e7i10" path="res://demo/assets/models/skeleton_normals.png" id="3_iokxi"]
 [ext_resource type="Texture2D" uid="uid://dhclkkw6efewn" path="res://demo/assets/models/skeleton_offsets.exr" id="4_kt5fk"]
 [ext_resource type="Texture2D" uid="uid://ch57dnrr25jn3" path="res://demo/assets/models/skeleton_texture.png" id="5_vpu2l"]
 [ext_resource type="ArrayMesh" uid="uid://ser3u8cvloqa" path="res://demo/assets/models/skeleton_export_mesh.res" id="6_kmwx8"]
-[ext_resource type="Script" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="7_u3ysm"]
+[ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="7_u3ysm"]
 [ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="8_x5df0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jutc3"]
@@ -22,13 +22,13 @@ ambient_light_source = 3
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4v668"]
 render_priority = 0
 shader = ExtResource("2_23hvf")
+shader_parameter/offset_map = ExtResource("4_kt5fk")
+shader_parameter/normal_map = ExtResource("3_iokxi")
+shader_parameter/texture_albedo = ExtResource("5_vpu2l")
 shader_parameter/fps = 12.0
 shader_parameter/specular = 0.25
 shader_parameter/metallic = 0.5
 shader_parameter/roughness = 0.5
-shader_parameter/offset_map = ExtResource("4_kt5fk")
-shader_parameter/normal_map = ExtResource("3_iokxi")
-shader_parameter/texture_albedo = ExtResource("5_vpu2l")
 
 [sub_resource type="MultiMesh" id="MultiMesh_qlnhw"]
 transform_format = 1

@@ -39,7 +39,7 @@ func randomizeInstance(i: int):
 		node3D.scale = Vector3(1,1,1)
 	else:
 		node3D.scale = Vector3(2,2,1.5)
-	
+		
 	location.x = x
 	location.z = z
 	location.y = 0

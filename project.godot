@@ -12,8 +12,8 @@ config_version=5
 
 config/name="Godot_VAT_Plugin"
 config/version="1."
-run/main_scene="res://demo/MultipleAnimations.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+run/main_scene="uid://giefrwrug3iy"
+config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/image="res://demo/assets/images/AntzBanner1.png"
 config/icon="res://antz_512.png"
 boot_splash/minimum_display_time=1500

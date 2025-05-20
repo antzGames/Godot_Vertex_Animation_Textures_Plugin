@@ -1,11 +1,11 @@
 @tool
+extends MultiMeshInstance3D
+class_name VATMultiMeshInstance3D
 ## Allows [MultiMeshInstance3D] vertex animation functionality.
 ##
 ## See tutorials for more information.
 ##
-## @tutorial:             https://github.com/antzGames/Godot_Vertex_Animation_Textures_Plugin
-extends MultiMeshInstance3D
-class_name VATMultiMeshInstance3D
+## @tutorial: https://github.com/antzGames/Godot_Vertex_Animation_Textures_Plugin
 
 ## Total number of instances in the multimesh.
 @export var instance_count: int = 10
@@ -49,6 +49,7 @@ func _ready() -> void:
 		multimesh.instance_count = 0
 		multimesh.transform_format = MultiMesh.TRANSFORM_3D
 		multimesh.use_custom_data = true
+		#multimesh.use_colors = true
 		multimesh.instance_count = instance_count
 	else:
 		printerr("VATMultiMeshInstance3D: No multimesh defined")
