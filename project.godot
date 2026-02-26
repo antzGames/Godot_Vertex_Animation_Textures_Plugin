@@ -8,19 +8,38 @@
 
 config_version=5
 
+[DebugMenu]
+
+settings/font_size=24
+settings/startup_visibility=1
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Godot_VAT_Plugin"
 config/version="1."
-run/main_scene="uid://giefrwrug3iy"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene="uid://u2ga3lbjdmma"
+config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/image="res://demo/assets/images/AntzBanner1.png"
 config/icon="res://antz_512.png"
 boot_splash/minimum_display_time=1500
 
+[autoload]
+
+DebugMenu="*uid://cggqb75a8w8r"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/vsync/vsync_mode=0
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_vat/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/godot_vat/plugin.cfg")
 
 [filesystem]
 
