@@ -17,10 +17,10 @@ These textures can then be used to create motion in a game engine.
 
 Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to understand fully.
 
+
 ## Preview
 
-![github](https://github.com/user-attachments/assets/855ad356-6c63-4717-93e2-f058ad99f6ce)
-
+https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 
 ## Features
 
