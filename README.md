@@ -196,8 +196,9 @@ void fragment(){
 
 ## Demos
 
-There are two demo scenes in the `demo` subfolder:
-	
+There are three demo scenes in the `demo` subfolder:
+
+- **PerformanceTest**: 2000 instances (configurable) with 20 animations, with different scales, and positions.  Displays FPS, and allows you to disable shadows.  See `Performance` section for detailed performance findings.
 - **MultipleAnimations**: 108 instances with 20 animations, with different scales, and positions.
 - **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
 
@@ -208,6 +209,10 @@ The skeleton mesh included in the demo has 20 baked in animations.
 itch.io: [Skeletron 2084](https://antzgames.itch.io/skeletron2084)
 
 YouTube: [Skeletron 2084 Gameplay](https://youtu.be/zTJlpS3jQCc)
+
+## Performance
+
+
 
 ## Blender Add-On Guide
 
