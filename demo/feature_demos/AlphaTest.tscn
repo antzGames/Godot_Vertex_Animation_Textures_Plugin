@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://bfmgkppx4r4e3"]
+[gd_scene format=3 uid="uid://bfmgkppx4r4e3"]
 
-[ext_resource type="Script" uid="uid://c08yo2clqj1sy" path="res://demo/alpha_test.gd" id="1_t78lf"]
+[ext_resource type="Script" uid="uid://c08yo2clqj1sy" path="res://demo/feature_demos/alpha_test.gd" id="1_t78lf"]
 [ext_resource type="Shader" uid="uid://bvppykyi3ougu" path="res://addons/godot_vat/shaders/vat_multiple_anims.gdshader" id="2_23hvf"]
 [ext_resource type="Texture2D" uid="uid://b0678yn2e7i10" path="res://demo/assets/models/skeleton_normals.png" id="3_iokxi"]
 [ext_resource type="Texture2D" uid="uid://dhclkkw6efewn" path="res://demo/assets/models/skeleton_offsets.exr" id="4_kt5fk"]
