@@ -3,6 +3,14 @@ extends MultiMeshInstance3D
 class_name OpenVATMultiMeshInstance3D
 ## Allows [MultiMeshInstance3D] vertex animation functionality that is OpenVAT compatible.
 
+## Exported [Mesh] from OpenVAT, with [ShaderMaterial] set in surface_0
+@export var exported_mesh: ArrayMesh:
+	set(value):
+		exported_mesh = value
+		if !multimesh:
+			_create_multimesh()
+		multimesh.mesh = exported_mesh
+
 ## Total number of instances in the multimesh.
 @export var instance_count: int = 10
 
@@ -14,53 +22,22 @@ class_name OpenVATMultiMeshInstance3D
 @export_category("OpenVAT Config")
 @export_file("*.json") var openvat_json_config_file: String
 @export_tool_button("Import JSON") var import_json_action = import_json
+@export var min_values: Vector3:
+	set(value):
+		min_values = value
+		if !multimesh:
+			_create_multimesh()
+		if multimesh.mesh:
+			multimesh.mesh.surface_get_material(0).set_shader_parameter("min_values", value)
+@export var max_values: Vector3:
+	set(value):
+		max_values = value
+		if !multimesh:
+			_create_multimesh()
+		if multimesh and multimesh.mesh:
+			multimesh.mesh.surface_get_material(0).set_shader_parameter("max_values", value)
 
-@export var min_values: Vector3
-@export var max_values: Vector3
 var frames: int
-
-func import_json():
-	if !openvat_json_config_file or openvat_json_config_file.length() == 0:
-		printerr("No JSON file set. Select the OpenVAT JSON file.")
-		return
-
-	var file = FileAccess.open(openvat_json_config_file, FileAccess.READ)
-	var content = file.get_as_text()
-
-	var json = JSON.new()
-	var error = json.parse(content)
-	if error == OK:
-		var data_received = json.data
-		print_rich("OpenVAT JSON file: [color=yellow]" + openvat_json_config_file + "[/color] contents: ")
-		print_rich(str("[color=green]"), data_received, "[/color]")
-		var j = JSON.parse_string(content)
-		var os_remap = j["os-remap"]
-		
-		# Min/Max vectors
-		var min_array = os_remap["Min"]
-		min_values.x = float(min_array[0])
-		min_values.y = float(min_array[1])
-		min_values.z = float(min_array[2])
-		print_rich(str("Minimum values parsed: [color=yellow]",min_values,"[/color]"))
-		
-		var max_array = os_remap["Max"]
-		max_values.x = float(max_array[0])
-		max_values.y = float(max_array[1])
-		max_values.z = float(max_array[2])
-		print_rich(str("Maximum values parsed: [color=yellow]",max_values,"[/color]"))
-		
-		# animation
-		var anim_dict = j["animations"]
-		if anim_dict.is_empty():
-			printerr("No animation meta data found.  You will need to manually enter Animation Tracks.")
-		else:
-			# Loop threw animation dictionary
-			for key in anim_dict:
-				pass
-		
-	else:
-		print("JSON Parse Error: ", json.get_error_message(), " in ", content, " at line ", json.get_error_line())
-
 
 ## Animation tracks: [br]
 ## x = start frame, y = end frame.[br]
@@ -83,15 +60,21 @@ func _init() -> void:
 
 func _get_configuration_warnings(): # display the warning on the scene dock
 	var warnings = []
-	if !multimesh:
-		warnings.push_back('Multimesh not set')
 	if animation_tracks.size() == 0:
 		warnings.push_back('No animation tracks defined')
+	if multimesh and !multimesh.mesh:
+		warnings.push_back('No mesh assigned to multimesh')	
 	return warnings
 	
 func _validate_property(property: Dictionary): # update the config warnings
 	if property.name == "animation_tracks" or property.name == "multimesh":
 		update_configuration_warnings()
+	
+func _create_multimesh():
+	multimesh = MultiMesh.new()
+	multimesh.instance_count = 0
+	multimesh.transform_format = MultiMesh.TRANSFORM_3D
+	multimesh.use_custom_data = true
 	
 func _ready() -> void:
 	if multimesh:
@@ -101,7 +84,7 @@ func _ready() -> void:
 		#multimesh.use_colors = true
 		multimesh.instance_count = instance_count
 	else:
-		printerr("OpenVATMultiMeshInstance3D: No multimesh defined")
+		_create_multimesh()
 		
 	number_of_animation_tracks = animation_tracks.size()
 	if number_of_animation_tracks == 0:
@@ -112,7 +95,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-# Set/Update functions
+#region Set/Update functions
 
 ## Update ALL INSTANCES with the provided animation_offset, track_number, and alpha
 ## unless rand_anim_offset = false, where it sets the animation_offset to 0
@@ -145,7 +128,6 @@ func update_instance_alpha(instance_id: int, alpha: float):
 	custom_data.a = alpha
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 
-
 # Get functions
 
 ## get animation start/end frames from track_number.
@@ -174,3 +156,58 @@ func get_track_number_from_track_vector(track_vector: Vector2i) -> int:
 ## Returns -1 if not found.
 func get_track_number_from_instance(instance_id: int) -> int:
 	return get_track_number_from_track_vector(get_start_end_frames_from_instance(instance_id))
+#endregion
+
+#region JSON config file import
+
+func import_json():
+	if !multimesh:
+		_create_multimesh()
+		print_rich("Multimesh instance created.")
+	elif !multimesh.mesh: 
+		printerr("No mesh assigned to your multimesh. Please configure your mesh and shader before importing JSON config file.")
+		return
+
+	if !openvat_json_config_file or openvat_json_config_file.length() == 0:
+		printerr("No JSON file set. Select the OpenVAT JSON file.")
+		return
+
+	print_rich("[color=cyan]Beginning OpenVAT JSON config file import...")
+
+	var file = FileAccess.open(openvat_json_config_file, FileAccess.READ)
+	var content = file.get_as_text()
+
+	var json = JSON.new()
+	var error = json.parse(content)
+	if error == OK:
+		var data_received = json.data
+		print_rich("OpenVAT JSON file: [color=yellow]" + openvat_json_config_file + "[/color] contents: ")
+		print_rich(str("[color=green]"), data_received, "[/color]")
+		var j = JSON.parse_string(content)
+		var os_remap = j["os-remap"]
+		
+		# Min/Max vectors
+		var min_array = os_remap["Min"]
+		min_values = Vector3(float(min_array[0]), float(min_array[1]), float(min_array[2]))
+		print_rich(str("✅Minimum values parsed: [color=yellow]",min_values,"[/color]"))
+		
+		var max_array = os_remap["Max"]
+		max_values = Vector3(float(max_array[0]), float(max_array[1]), float(max_array[2]))
+		print_rich(str("✅Maximum values parsed: [color=yellow]",max_values,"[/color]"))
+		
+		frames = int(os_remap["Frames"])
+		
+		# animation
+		var anim_dict = j["animations"]
+		if anim_dict.is_empty():
+			animation_tracks.append(Vector2(0,frames-1))
+			print_rich(str("❌[color=orange]No animation meta data found.[/color]  Creating one track with ", frames, " frames."))
+		else:
+			# Loop threw animation dictionary
+			for key in anim_dict:
+				pass
+				
+		print_rich("[color=cyan]OpenVAT import completed.[/color] [color=red]Make sure you SAVE this scene[/color]")
+	else:
+		print("JSON Parse Error: ", json.get_error_message(), " in ", content, " at line ", json.get_error_line())
+#endregion
