@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://7wkugnkuwbqm" path="res://demo/OpenVAT/open_vat_demo.gd" id="1_m56k3"]
 [ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="1_xwwik"]
-[ext_resource type="ArrayMesh" uid="uid://b5ybl0rhfu78p" path="res://demo/assets/models/OpenVAT/openvat_skell_mesh.res" id="2_7n746"]
 [ext_resource type="Script" uid="uid://sp8krhj7tq5i" path="res://addons/openvat_animated/open_vat_multi_mesh_instance_3d.gd" id="3_4gt3n"]
+[ext_resource type="ArrayMesh" uid="uid://c5mb8ol0bdgdt" path="res://demo/assets/models/OpenVAT/open_vat.res" id="3_m56k3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
 
@@ -23,10 +23,10 @@ uv1_scale = Vector3(20, 20, 20)
 material = SubResource("StandardMaterial3D_uwhhi")
 size = Vector2(200, 200)
 
-[sub_resource type="MultiMesh" id="MultiMesh_4gt3n"]
+[sub_resource type="MultiMesh" id="MultiMesh_udw1v"]
 transform_format = 1
 use_custom_data = true
-mesh = ExtResource("2_7n746")
+mesh = ExtResource("3_m56k3")
 
 [node name="OpenVATDemo" type="Node3D" unique_id=391254406]
 script = ExtResource("1_m56k3")
@@ -97,15 +97,15 @@ theme_override_font_sizes/font_size = 24
 button_pressed = true
 text = "True"
 
-[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=991167876]
-multimesh = SubResource("MultiMesh_4gt3n")
+[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=95084555]
+multimesh = SubResource("MultiMesh_udw1v")
 script = ExtResource("3_4gt3n")
-exported_mesh = ExtResource("2_7n746")
+exported_mesh = ExtResource("3_m56k3")
 instance_count = 2000
-openvat_json_config_file = "res://demo/assets/models/OpenVAT/Skeleton_Minion-remap_info.json"
+openvat_json_config_file = "res://demo/assets/models/OpenVAT/Collection-remap_info.json"
 min_values = Vector3(-1.8, -2.9, -0.4)
 max_values = Vector3(1.6, 0.4, 2.1)
-animation_tracks = Array[Vector2i]([Vector2i(0, 248)])
+animation_tracks = Array[Vector2i]([Vector2i(1, 40), Vector2i(41, 81), Vector2i(82, 140), Vector2i(141, 243), Vector2i(244, 248)])
 metadata/_custom_type_script = "uid://sp8krhj7tq5i"
 
 [connection signal="toggled" from="UI/MarginContainer/VBox/HBoxShadows/ShadowsCheckButton" to="." method="_on_shadows_check_button_toggled"]

@@ -1,0 +1,47 @@
+{
+    "os-remap": {
+        "Min": [
+            -1.8,
+            -2.9,
+            -0.4
+        ],
+        "Max": [
+            1.6,
+            0.4,
+            2.1
+        ],
+        "Frames": 248
+    },
+    "animations": {
+        "Walk": {
+            "startFrame": 1,
+            "endFrame": 40,
+            "framerate": 30,
+            "looping": true
+        },
+        "Cheer": {
+            "startFrame": 41,
+            "endFrame": 81,
+            "framerate": 30,
+            "looping": true
+        },
+        "Attack": {
+            "startFrame": 82,
+            "endFrame": 140,
+            "framerate": 30,
+            "looping": true
+        },
+        "Idle": {
+            "startFrame": 141,
+            "endFrame": 243,
+            "framerate": 30,
+            "looping": true
+        },
+        "Death": {
+            "startFrame": 244,
+            "endFrame": 248,
+            "framerate": 30,
+            "looping": true
+        }
+    }
+}

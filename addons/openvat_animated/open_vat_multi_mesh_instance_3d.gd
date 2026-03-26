@@ -1,8 +1,9 @@
 @tool
-extends MultiMeshInstance3D
 class_name OpenVATMultiMeshInstance3D
+extends MultiMeshInstance3D
 ## Allows [MultiMeshInstance3D] vertex animation functionality that is OpenVAT compatible.
 
+#region Variables and Exports
 ## Exported [Mesh] from OpenVAT, with [ShaderMaterial] set in surface_0
 @export var exported_mesh: ArrayMesh:
 	set(value):
@@ -37,17 +38,18 @@ class_name OpenVATMultiMeshInstance3D
 		if multimesh and multimesh.mesh:
 			multimesh.mesh.surface_get_material(0).set_shader_parameter("max_values", value)
 
-var frames: int
-
 ## Animation tracks: [br]
 ## x = start frame, y = end frame.[br]
 ## Import them if OpenVAT JSON config has track information[br]
 ## or you can set them manually.
 @export var animation_tracks: Array[Vector2i] = []
 
+var frames: int
 var custom_data: Color
 var number_of_animation_tracks: int
+#endregion
 
+#region Built in Functions
 func _enter_tree():
 	pass
 	
@@ -96,6 +98,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	pass
+#endregion
 
 #region Set/Update functions
 
@@ -197,20 +200,26 @@ func import_json():
 		max_values = Vector3(float(max_array[0]), float(max_array[1]), float(max_array[2]))
 		print_rich(str("✅Maximum values parsed: [color=yellow]",max_values,"[/color]"))
 		
-		frames = int(os_remap["Frames"])
-		print_rich(str("✅Frames parsed: [color=yellow]",frames,"[/color]"))
-		
-		# animation
+		# Animations
 		var anim_dict = j["animations"]
 		if anim_dict.is_empty():
 			animation_tracks.clear()
 			animation_tracks.append(Vector2(0,frames-1))
 			print_rich(str("❌[color=orange]No animation meta data found.[/color]  Creating one track with ", frames, " frames."))
 		else:
+			animation_tracks.clear()
+			var i: int = 0
 			# Loop through animation dictionary
 			for key in anim_dict:
-				pass
-				
+				var vec2: Vector2i = Vector2i(int(anim_dict[key]["startFrame"]), int(anim_dict[key]["endFrame"]))
+				print_rich(str("  🎞️Animation track ", i, ": [color=yellow]", key, "[/color] Start/End Frames: [color=yellow]", vec2, "[/color]"))
+				animation_tracks.append(vec2)
+				i += 1
+			print_rich(str("✅Total animation tracks parsed: [color=yellow]",animation_tracks.size(),"[/color]"))			
+		
+		frames = int(os_remap["Frames"])
+		print_rich(str("✅Frames parsed: [color=yellow]",frames,"[/color]"))
+		
 		print_rich("[color=cyan]OpenVAT import completed.[/color] [color=red]Make sure you SAVE this scene![/color]")
 	else:
 		print("JSON Parse Error: ", json.get_error_message(), " in ", content, " at line ", json.get_error_line())
