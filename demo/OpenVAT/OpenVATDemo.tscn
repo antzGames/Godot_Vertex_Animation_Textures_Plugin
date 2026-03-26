@@ -23,7 +23,7 @@ uv1_scale = Vector3(20, 20, 20)
 material = SubResource("StandardMaterial3D_uwhhi")
 size = Vector2(200, 200)
 
-[sub_resource type="MultiMesh" id="MultiMesh_m56k3"]
+[sub_resource type="MultiMesh" id="MultiMesh_4gt3n"]
 transform_format = 1
 use_custom_data = true
 mesh = ExtResource("2_7n746")
@@ -97,10 +97,11 @@ theme_override_font_sizes/font_size = 24
 button_pressed = true
 text = "True"
 
-[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=960751083]
-multimesh = SubResource("MultiMesh_m56k3")
+[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=991167876]
+multimesh = SubResource("MultiMesh_4gt3n")
 script = ExtResource("3_4gt3n")
 exported_mesh = ExtResource("2_7n746")
+instance_count = 2000
 openvat_json_config_file = "res://demo/assets/models/OpenVAT/Skeleton_Minion-remap_info.json"
 min_values = Vector3(-1.8, -2.9, -0.4)
 max_values = Vector3(1.6, 0.4, 2.1)

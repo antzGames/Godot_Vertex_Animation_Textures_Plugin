@@ -21,7 +21,7 @@ class_name OpenVATMultiMeshInstance3D
 ## OpenVAT auto and manual configuration
 @export_category("OpenVAT Config")
 @export_file("*.json") var openvat_json_config_file: String
-@export_tool_button("Import JSON") var import_json_action = import_json
+@export_tool_button(" Import JSON  ", "FileAccess") var import_json_action = import_json
 @export var min_values: Vector3:
 	set(value):
 		min_values = value
@@ -69,6 +69,8 @@ func _get_configuration_warnings(): # display the warning on the scene dock
 func _validate_property(property: Dictionary): # update the config warnings
 	if property.name == "animation_tracks" or property.name == "multimesh":
 		update_configuration_warnings()
+	if property.name.begins_with("multimesh"):
+		property.usage = PROPERTY_USAGE_NO_EDITOR
 	
 func _create_multimesh():
 	multimesh = MultiMesh.new()
@@ -196,18 +198,20 @@ func import_json():
 		print_rich(str("✅Maximum values parsed: [color=yellow]",max_values,"[/color]"))
 		
 		frames = int(os_remap["Frames"])
+		print_rich(str("✅Frames parsed: [color=yellow]",frames,"[/color]"))
 		
 		# animation
 		var anim_dict = j["animations"]
 		if anim_dict.is_empty():
+			animation_tracks.clear()
 			animation_tracks.append(Vector2(0,frames-1))
 			print_rich(str("❌[color=orange]No animation meta data found.[/color]  Creating one track with ", frames, " frames."))
 		else:
-			# Loop threw animation dictionary
+			# Loop through animation dictionary
 			for key in anim_dict:
 				pass
 				
-		print_rich("[color=cyan]OpenVAT import completed.[/color] [color=red]Make sure you SAVE this scene[/color]")
+		print_rich("[color=cyan]OpenVAT import completed.[/color] [color=red]Make sure you SAVE this scene![/color]")
 	else:
 		print("JSON Parse Error: ", json.get_error_message(), " in ", content, " at line ", json.get_error_line())
 #endregion
