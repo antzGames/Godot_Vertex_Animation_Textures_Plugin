@@ -1,0 +1,54 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dlh4m45557di2"
+path="res://.godot/imported/Skeleton_Minion.glb-3b7f23fa57e78795cb4465ba12a162ce.scn"
+
+[deps]
+
+source_file="res://demo/assets/models/OpenVAT/Skeleton_Minion.glb"
+dest_files=["res://.godot/imported/Skeleton_Minion.glb-3b7f23fa57e78795cb4465ba12a162ce.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=false
+meshes/generate_lods=false
+meshes/create_shadow_meshes=false
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=24.0
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"meshes": {
+"Skeleton_Minion_Skeleton_Minion_mesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://demo/assets/models/OpenVAT/openvat_skell_mesh.res",
+"save_to_file/path": "uid://cpkuspy2efxow"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

@@ -21,7 +21,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Godot_VAT_Plugin"
 config/version="1."
-run/main_scene="uid://u2ga3lbjdmma"
+run/main_scene="uid://dhqmmc5dhf6ne"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/image="res://demo/assets/images/AntzBanner1.png"
 config/icon="res://antz_512.png"
@@ -39,7 +39,16 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/godot_vat/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/godot_vat/plugin.cfg", "res://addons/openvat_animated/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://demo/OpenVAT/": "pink",
+"res://demo/assets/": "red",
+"res://demo/feature_demos/": "green",
+"res://demo/performance_tests/": "teal"
+}
 
 [filesystem]
 
