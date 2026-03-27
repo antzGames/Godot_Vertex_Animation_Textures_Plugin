@@ -211,7 +211,7 @@ func import_json():
 			var i: int = 0
 			# Loop through animation dictionary
 			for key in anim_dict:
-				var vec2: Vector2i = Vector2i(int(anim_dict[key]["startFrame"]), int(anim_dict[key]["endFrame"]))
+				var vec2: Vector2i = Vector2i(int(anim_dict[key]["startFrame"])-1, int(anim_dict[key]["endFrame"])-1)
 				print_rich(str("  🎞️Animation track ", i, ": [color=yellow]", key, "[/color] Start/End Frames: [color=yellow]", vec2, "[/color]"))
 				animation_tracks.append(vec2)
 				i += 1

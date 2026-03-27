@@ -102,10 +102,11 @@ multimesh = SubResource("MultiMesh_udw1v")
 script = ExtResource("3_4gt3n")
 exported_mesh = ExtResource("3_m56k3")
 instance_count = 2000
+rand_anim_offset = false
 openvat_json_config_file = "res://demo/assets/models/OpenVAT/Collection-remap_info.json"
 min_values = Vector3(-1.8, -2.9, -0.4)
 max_values = Vector3(1.6, 0.4, 2.1)
-animation_tracks = Array[Vector2i]([Vector2i(1, 40), Vector2i(41, 81), Vector2i(82, 140), Vector2i(141, 243), Vector2i(244, 248)])
+animation_tracks = Array[Vector2i]([Vector2i(0, 39), Vector2i(40, 80), Vector2i(81, 139), Vector2i(140, 242), Vector2i(243, 247)])
 metadata/_custom_type_script = "uid://sp8krhj7tq5i"
 
 [connection signal="toggled" from="UI/MarginContainer/VBox/HBoxShadows/ShadowsCheckButton" to="." method="_on_shadows_check_button_toggled"]
