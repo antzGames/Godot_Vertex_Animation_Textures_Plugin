@@ -96,6 +96,7 @@ void vertex() {
 	float frame_time;
 	float current_frame;
 	
+	// Used so that each instance can play a different animation track
 	float start_frame = custom_data.g;
 	float end_frame = custom_data.b;
 	float num_frames = end_frame - start_frame;
