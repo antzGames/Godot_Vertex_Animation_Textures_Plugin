@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj7hwgshnyg7a"
-path="res://.godot/imported/Collection_vat.exr-08394bdc97def465b83ae05329e703c5.ctex"
+uid="uid://su1f5loq431n"
+path.s3tc="res://.godot/imported/skeleton_texture.png-ee5ca5bfa629cff86132630cb8d37543.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://demo/assets/models/OpenVAT/Collection_vat.exr"
-dest_files=["res://.godot/imported/Collection_vat.exr-08394bdc97def465b83ae05329e703c5.ctex"]
+source_file="res://demo/assets/models/OpenVAT/skeleton/skeleton_texture.png"
+dest_files=["res://.godot/imported/skeleton_texture.png-ee5ca5bfa629cff86132630cb8d37543.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

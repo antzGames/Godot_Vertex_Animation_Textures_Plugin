@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cg5tswm01sdtw"
-path="res://.godot/imported/Collection.glb-426233be695a2010173f52a758807462.scn"
+uid="uid://dlwih6katcwam"
+path="res://.godot/imported/Cylinder.glb-005f99197deeb07a1a06cf5361062a86.scn"
 
 [deps]
 
-source_file="res://demo/assets/models/OpenVAT/Collection.glb"
-dest_files=["res://.godot/imported/Collection.glb-426233be695a2010173f52a758807462.scn"]
+source_file="res://demo/assets/models/OpenVAT/jello/Cylinder.glb"
+dest_files=["res://.godot/imported/Cylinder.glb-005f99197deeb07a1a06cf5361062a86.scn"]
 
 [params]
 
@@ -39,14 +39,14 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "meshes": {
-"Collection_Collection_mesh": {
+"Cylinder_Cylinder_mesh": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 20.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://demo/assets/models/OpenVAT/open_vat.res",
-"save_to_file/path": "uid://codi8sgivuhq3"
+"save_to_file/fallback_path": "res://demo/assets/models/OpenVAT/jello/jello_mesh.res",
+"save_to_file/path": "uid://c7oev4x68wbse"
 }
 }
 }

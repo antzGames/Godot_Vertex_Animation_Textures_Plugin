@@ -1,4 +1,5 @@
 shader_type spatial;
+render_mode cull_disabled;
 
 // This shader assumes you exported a model in Blender using OpenVAT using these settings:
 // "Vertex Normals" = "Packed"

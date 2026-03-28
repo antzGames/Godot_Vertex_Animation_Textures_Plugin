@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bda7s3pho8err"
-path="res://.godot/imported/Plane_vat.exr-510b977af8568b7e88c34f3998e2e905.ctex"
+uid="uid://dtjial6ev85hg"
+path="res://.godot/imported/Cylinder_vat.exr-f5a77714a333a1e69cec2acbb33e259c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://demo/assets/models/OpenVAT/cloth/Plane_vat.exr"
-dest_files=["res://.godot/imported/Plane_vat.exr-510b977af8568b7e88c34f3998e2e905.ctex"]
+source_file="res://demo/assets/models/OpenVAT/jello/Cylinder_vat.exr"
+dest_files=["res://.godot/imported/Cylinder_vat.exr-f5a77714a333a1e69cec2acbb33e259c.ctex"]
 
 [params]
 

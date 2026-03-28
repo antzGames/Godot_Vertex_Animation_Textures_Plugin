@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var directional_light_3d: DirectionalLight3D = $DirectionalLight3D
 
-@onready var vat_multi_mesh_instance_3d: OpenVATMultiMeshInstance3D = $OpenVATMultiMeshInstance3D
+@onready var vat_multi_mesh_instance_3d: OpenVATMultiMeshInstance3D = $SkeletonInstances
 @onready var mesh_floor: MeshInstance3D = $Floor
 @onready var pivot: Node3D = $Pivot
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b3xy2k0ablof7"
-path="res://.godot/imported/Plane.glb-c624452955b38b25db7c7c1ef80c5622.scn"
+uid="uid://cg5tswm01sdtw"
+path="res://.godot/imported/Collection.glb-98bdfea317ab4f7407ed646be68fbd6e.scn"
 
 [deps]
 
-source_file="res://demo/assets/models/OpenVAT/cloth/Plane.glb"
-dest_files=["res://.godot/imported/Plane.glb-c624452955b38b25db7c7c1ef80c5622.scn"]
+source_file="res://demo/assets/models/OpenVAT/skeleton/Collection.glb"
+dest_files=["res://.godot/imported/Collection.glb-98bdfea317ab4f7407ed646be68fbd6e.scn"]
 
 [params]
 
@@ -39,14 +39,14 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "meshes": {
-"Plane_Plane_mesh": {
+"Collection_Collection_mesh": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 20.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://demo/assets/models/OpenVAT/Cloth/cloth_mesh.res",
-"save_to_file/path": "uid://dx7o55oyd1qmm"
+"save_to_file/fallback_path": "res://demo/assets/models/OpenVAT/open_vat.res",
+"save_to_file/path": "uid://codi8sgivuhq3"
 }
 }
 }
