@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhclkkw6efewn"
-path="res://.godot/imported/skeleton_offsets.exr-a5bdd87cc069f61076145f3ef35f29f9.ctex"
+path="res://.godot/imported/skeleton_offsets.exr-91d823f96df8e6cd4c4060679770d51c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://demo/assets/models/skeleton_offsets.exr"
-dest_files=["res://.godot/imported/skeleton_offsets.exr-a5bdd87cc069f61076145f3ef35f29f9.ctex"]
+source_file="res://demo/assets/models/skeleton/skeleton_offsets.exr"
+dest_files=["res://.godot/imported/skeleton_offsets.exr-91d823f96df8e6cd4c4060679770d51c.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

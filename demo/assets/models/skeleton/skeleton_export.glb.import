@@ -4,20 +4,22 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cmk2h4e4eejr1"
-path="res://.godot/imported/skeleton_export.glb-faf65a9ce9b54ef13c0d0a10bd02b8c3.scn"
+path="res://.godot/imported/skeleton_export.glb-ac061e20b2d0a70464f582c175889c3f.scn"
 
 [deps]
 
-source_file="res://demo/assets/models/skeleton_export.glb"
-dest_files=["res://.godot/imported/skeleton_export.glb-faf65a9ce9b54ef13c0d0a10bd02b8c3.scn"]
+source_file="res://demo/assets/models/skeleton/skeleton_export.glb"
+dest_files=["res://.godot/imported/skeleton_export.glb-ac061e20b2d0a70464f582c175889c3f.scn"]
 
 [params]
 
 nodes/root_type=""
 nodes/root_name=""
+nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -32,6 +34,9 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
 _subresources={
 "meshes": {
 "skel_merged_Tracks_mesh_713": {
@@ -41,7 +46,8 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://demo/assets/models/skel_merged_Tracks_mesh_713.res"
+"save_to_file/fallback_path": "res://demo/assets/models/skel_merged_Tracks_mesh_713.res",
+"save_to_file/path": "uid://tldkuaqsdgum"
 }
 }
 }

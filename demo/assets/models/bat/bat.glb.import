@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bslw2qcwol4lo"
-path="res://.godot/imported/bat.glb-5bb5549fc2a2e675592d723af94d1f14.scn"
+path="res://.godot/imported/bat.glb-de5ed5d1d9a8e5b24cd5bf28af71a934.scn"
 
 [deps]
 
-source_file="res://demo/assets/models/bat.glb"
-dest_files=["res://.godot/imported/bat.glb-5bb5549fc2a2e675592d723af94d1f14.scn"]
+source_file="res://demo/assets/models/bat/bat.glb"
+dest_files=["res://.godot/imported/bat.glb-de5ed5d1d9a8e5b24cd5bf28af71a934.scn"]
 
 [params]
 
@@ -45,8 +45,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 20.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://demo/assets/models/bat_mesh.res",
-"save_to_file/path": "uid://by3114ddfeq2r"
+"save_to_file/fallback_path": "res://demo/assets/models/bat/bat_mesh.res",
+"save_to_file/path": "uid://dlam8i22irrfc"
 }
 }
 }

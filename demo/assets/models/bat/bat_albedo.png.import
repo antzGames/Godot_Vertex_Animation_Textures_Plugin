@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6gixfpdui1bf"
-path="res://.godot/imported/bat_normals.png-7fbe412194612f1a35d6673abfe035cc.ctex"
+uid="uid://cv3rclqhfjbk2"
+path.s3tc="res://.godot/imported/bat_albedo.png-e60cf97916ba5bd6e29a15900d099fbe.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://demo/assets/models/bat_normals.png"
-dest_files=["res://.godot/imported/bat_normals.png-7fbe412194612f1a35d6673abfe035cc.ctex"]
+source_file="res://demo/assets/models/bat/bat_albedo.png"
+dest_files=["res://.godot/imported/bat_albedo.png-e60cf97916ba5bd6e29a15900d099fbe.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

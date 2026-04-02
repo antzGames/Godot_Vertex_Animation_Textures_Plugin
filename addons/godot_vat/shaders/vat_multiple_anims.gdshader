@@ -26,6 +26,10 @@ uniform sampler2D texture_albedo: filter_nearest, hint_default_white;
 
 uniform float fps = 24.0; // change this to what the fps is in Blender
 
+uniform float metallic : hint_range(0.0, 1.0) = 0.0;
+uniform float specular : hint_range(0.0, 1.0) = 0.5;
+uniform float roughness : hint_range(0.0, 1.0) = 1.0;
+
 varying flat vec4 custom_data;
 
 void vertex(){
@@ -65,6 +69,10 @@ void vertex(){
 	vec3 normal_lerp = mix(normal_floor, normal_ceil, lerp_factor);
 	vec3 new_normal = vec3((normal_lerp.x * 2.0) - 1.0, (normal_lerp.z * 2.0) - 1.0, (normal_lerp.y * 2.0) - 1.0);
 	NORMAL = new_normal;
+	
+	//// Recomputes TANGENT & BIPLANAR based on the updated NORMAL (taken from the Godot source)
+	TANGENT = normalize(vec3(abs(NORMAL.y) + abs(NORMAL.z), 0.0, -abs(NORMAL.x)));
+	BINORMAL = normalize(vec3(0.0, abs(NORMAL.x) + abs(NORMAL.z), -abs(NORMAL.y)));
 }
 
 void fragment(){
@@ -72,4 +80,8 @@ void fragment(){
 
 	ALPHA = custom_data.a;  // fader
 	ALBEDO = albedo_col.rgb;
+	
+	METALLIC = metallic;
+	ROUGHNESS = roughness;
+	SPECULAR = specular;
 }
