@@ -1,3 +1,6 @@
+> [!Note]
+> I have created a newer solution based on [OpenVAT](https://openvat.org/).  This provides much easier Blender based VAT support.  Recommend you start migrating to: https://github.com/antzGames/OpenVAT-for-Godot
+
 # Godot Vertex Animation Textures Plugin (an Animated MultimeshInstance3D solution)
 
 A plugin that extends the `MultiMeshInstance3D` node to support instanced vertex animations
