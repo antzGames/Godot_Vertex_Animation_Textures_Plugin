@@ -44,6 +44,7 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 - No blending or transitions between animation tracks possible.
 - Animations will always loop, so you need to develop a custom solution for chaining different animations.
 - `MultiMeshInstance3D` `custom_data` is used by this plugin so you will not have access to it.
+- The new `VATMultiMeshInstance3D` will have `physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF`. The reason is that Godot interpolates the `custom_data` uniform which we do not want.  You can still use physics interpolation in your project though.
 
 ## Requirements
 

@@ -51,6 +51,7 @@ func _ready() -> void:
 		multimesh.use_custom_data = true
 		#multimesh.use_colors = true
 		multimesh.instance_count = instance_count
+		physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF # becasue Godot interpolates custom_data, which we do not want
 	else:
 		printerr("VATMultiMeshInstance3D: No multimesh defined")
 		

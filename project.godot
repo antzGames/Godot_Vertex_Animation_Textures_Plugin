@@ -40,6 +40,13 @@ window/size/viewport_height=1080
 
 enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/godot_vat/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "red",
+"res://demo/": "green"
+}
+
 [filesystem]
 
 import/blender/enabled=false
