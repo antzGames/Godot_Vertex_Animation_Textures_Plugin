@@ -3,6 +3,7 @@ extends CanvasLayer
 @export var fps: Label
 @export var frame_time: Label
 @export var frame_number: Label
+@export var frame_stats: Label
 @export var frame_history_total_avg: Label
 @export var frame_history_total_min: Label
 @export var frame_history_total_max: Label
@@ -58,6 +59,7 @@ var style := Style.HIDDEN:
 			Style.VISIBLE_COMPACT, Style.VISIBLE_DETAILED:
 				visible = true
 				frame_number.visible = style == Style.VISIBLE_DETAILED
+				frame_stats.visible = style == Style.VISIBLE_DETAILED
 				$DebugMenu/VBoxContainer/FrameTimeHistory.visible = style == Style.VISIBLE_DETAILED
 				$DebugMenu/VBoxContainer/FPSGraph.visible = style == Style.VISIBLE_DETAILED
 				$DebugMenu/VBoxContainer/TotalGraph.visible = style == Style.VISIBLE_DETAILED
@@ -589,6 +591,11 @@ func _process(_delta: float) -> void:
 				frame_time.text += " (" + vsync_string + ")"
 
 		frame_number.text = "Frame: " + str(Engine.get_frames_drawn())
+
+		frame_stats.text = str(
+			&"Draw calls: %d" % Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
+			&", Primitives: ", int(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)),
+			&", VRAM: %d" % snapped(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) * 0.000001, 1.0), &" MB")
 
 	last_tick = Time.get_ticks_usec()
 
