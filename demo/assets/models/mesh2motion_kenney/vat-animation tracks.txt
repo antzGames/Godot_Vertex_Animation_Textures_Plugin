@@ -1,0 +1,5 @@
+Death_D: Vector4i(1, 53, 1, 30)
+Chop_Tree: Vector4i(54, 77, 1, 30)
+Bow: Vector4i(78, 167, 1, 30)
+Attack_Ground_Pound: Vector4i(168, 232, 1, 30)
+Angry: Vector4i(233, 252, 1, 30)

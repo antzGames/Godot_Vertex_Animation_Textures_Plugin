@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhpskr425f0f2"
-path="res://.godot/imported/offsets.exr-cacf8ec0c14ac62e8f217e3cece6b528.ctex"
+uid="uid://boarw4kgcqyid"
+path="res://.godot/imported/normals.png-78262d9bd35aead40e54fb73b5b8ee18.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://demo/assets/models/mesh2motion/offsets.exr"
-dest_files=["res://.godot/imported/offsets.exr-cacf8ec0c14ac62e8f217e3cece6b528.ctex"]
+source_file="res://demo/assets/models/mesh2motion_kenney/normals.png"
+dest_files=["res://.godot/imported/normals.png-78262d9bd35aead40e54fb73b5b8ee18.ctex"]
 
 [params]
 

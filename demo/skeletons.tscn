@@ -35,7 +35,7 @@ buffer = PackedFloat32Array(0, 11.999999, 0, 0, 0, 0.005, 0.004854369, 0.2321428
 
 [node name="SkeletonDemo" type="Node3D" unique_id=391254406]
 script = ExtResource("1_6c36e")
-title = "Skeleton Demo- Performance Test"
+title = "Skeleton - Performance Test"
 next_scene = ExtResource("2_pepov")
 randomize_rotation = true
 randomize_scale = true

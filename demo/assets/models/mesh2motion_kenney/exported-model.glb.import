@@ -3,19 +3,21 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bslw2qcwol4lo"
-path="res://.godot/imported/bat.glb-de5ed5d1d9a8e5b24cd5bf28af71a934.scn"
+uid="uid://dv1qn5mhy7x8k"
+path="res://.godot/imported/exported-model.glb-a5f4f24e57d9fdef21047ca6134acc46.scn"
 
 [deps]
 
-source_file="res://demo/assets/models/bat/bat.glb"
-dest_files=["res://.godot/imported/bat.glb-de5ed5d1d9a8e5b24cd5bf28af71a934.scn"]
+source_file="res://demo/assets/models/mesh2motion_kenney/exported-model.glb"
+dest_files=["res://.godot/imported/exported-model.glb-a5f4f24e57d9fdef21047ca6134acc46.scn"]
 
 [params]
 
 nodes/root_type=""
 nodes/root_name=""
 nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -37,18 +39,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"meshes": {
-"bat_mesh_030": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 20.0,
-"save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://demo/assets/models/bat/bat_mesh.res",
-"save_to_file/path": "uid://dlam8i22irrfc"
-}
-}
-}
+_subresources={}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
+gltf/texture_map_mode=1

@@ -3,13 +3,12 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dbx68q0m7a3hl"
-path="res://.godot/imported/mesh2motion.glb-e886db5c022aee6e2ee596c3cea0935f.scn"
+uid="uid://cmb06odhab6e3"
+valid=false
 
 [deps]
 
-source_file="res://demo/assets/models/mesh2motion/mesh2motion.glb"
-dest_files=["res://.godot/imported/mesh2motion.glb-e886db5c022aee6e2ee596c3cea0935f.scn"]
+source_file="res://demo/assets/models/bat/mesh2motion_kenney/kenney.glb"
 
 [params]
 
@@ -41,14 +40,14 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "meshes": {
-"mesh2motion_mesh_415": {
+"kenney_mesh_251": {
 "generate/lightmap_uv": 0,
 "generate/lods": 2,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 20.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://demo/assets/models/mesh2motion/mesh2motion_mesh.res",
-"save_to_file/path": "uid://d3rwattr2hrt8"
+"save_to_file/fallback_path": "res://demo/assets/mesh2motion_kenney/kenney_mesh.res",
+"save_to_file/path": "uid://dmvwawxnqn83b"
 }
 }
 }

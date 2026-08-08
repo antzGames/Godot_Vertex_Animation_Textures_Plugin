@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bmkn3df8astmd"
-path="res://.godot/imported/exported-model.glb-a739b133dc56275a24aebbe3315a275d.scn"
+path="res://.godot/imported/exported-model.glb-6a8a2e2c6e8f0bc1975fd03274bd24ed.scn"
 
 [deps]
 
-source_file="res://demo/assets/models/mesh2motion/exported-model.glb"
-dest_files=["res://.godot/imported/exported-model.glb-a739b133dc56275a24aebbe3315a275d.scn"]
+source_file="res://demo/assets/models/mesh2motion_male/exported-model.glb"
+dest_files=["res://.godot/imported/exported-model.glb-6a8a2e2c6e8f0bc1975fd03274bd24ed.scn"]
 
 [params]
 

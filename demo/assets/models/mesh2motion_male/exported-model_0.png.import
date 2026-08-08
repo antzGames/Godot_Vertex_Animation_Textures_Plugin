@@ -2,20 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cx8fc3haa7um"
-path="res://.godot/imported/bat_offsets.exr-bce250f1228f2e6753f5ce57ebe4a8f6.ctex"
+uid="uid://b13byj4s0hqlu"
+path.s3tc="res://.godot/imported/exported-model_0.png-ac2a3942f6cf9edbe314db17bfdab22b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "b80c2618e719a3ed1c146bc03b5cf90e"
 }
 
 [deps]
 
-source_file="res://demo/assets/models/bat/bat_offsets.exr"
-dest_files=["res://.godot/imported/bat_offsets.exr-bce250f1228f2e6753f5ce57ebe4a8f6.ctex"]
+source_file="res://demo/assets/models/mesh2motion_male/exported-model_0.png"
+dest_files=["res://.godot/imported/exported-model_0.png-ac2a3942f6cf9edbe314db17bfdab22b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +27,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

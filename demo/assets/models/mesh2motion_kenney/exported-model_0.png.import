@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b13byj4s0hqlu"
-path.s3tc="res://.godot/imported/exported-model_0.png-f615f26a97d16f95f66150167607c491.s3tc.ctex"
+uid="uid://b5x768lgg0j83"
+path.s3tc="res://.godot/imported/exported-model_0.png-090c03b87c34dc94e1f1bab337388d58.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b80c2618e719a3ed1c146bc03b5cf90e"
+"md5": "4cc4b102acc92c652f01eebd7eda8ea2"
 }
 
 [deps]
 
-source_file="res://demo/assets/models/mesh2motion/exported-model_0.png"
-dest_files=["res://.godot/imported/exported-model_0.png-f615f26a97d16f95f66150167607c491.s3tc.ctex"]
+source_file="res://demo/assets/models/mesh2motion_kenney/exported-model_0.png"
+dest_files=["res://.godot/imported/exported-model_0.png-090c03b87c34dc94e1f1bab337388d58.s3tc.ctex"]
 
 [params]
 

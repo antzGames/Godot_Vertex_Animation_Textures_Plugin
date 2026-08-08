@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://bypvmrpum6glw"]
 
-[ext_resource type="Script" uid="uid://bwf8bcqwdntcm" path="res://demo/src/vat_instanced_track.gd" id="1_phdlk"]
-[ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_te56j"]
-[ext_resource type="ArrayMesh" uid="uid://2aqlbf68xslb" path="res://demo/assets/models/mesh2motion/mesh2motion_mesh.res" id="4_phdlk"]
-[ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_2dhfw"]
-[ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_yoji6"]
+[ext_resource type="Script" uid="uid://bwf8bcqwdntcm" path="res://demo/src/vat_instanced_track.gd" id="1_3dxpt"]
+[ext_resource type="PackedScene" uid="uid://b5nbeneriouvl" path="res://demo/mesh2motion_male_track_change.tscn" id="2_3dxpt"]
+[ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_mkj31"]
+[ext_resource type="ArrayMesh" uid="uid://d3ri3s4xpv5e6" path="res://demo/assets/models/mesh2motion_kenney/kenney_mesh.res" id="4_sss41"]
+[ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_qts8c"]
+[ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_bcyuy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
 
@@ -17,7 +18,7 @@ sky = SubResource("Sky_03w7h")
 ambient_light_source = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwhhi"]
-albedo_texture = ExtResource("3_te56j")
+albedo_texture = ExtResource("3_mkj31")
 uv1_scale = Vector3(20, 20, 20)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m56k3"]
@@ -29,12 +30,13 @@ transform_format = 1
 use_colors = true
 use_custom_data = true
 instance_count = 1
-mesh = ExtResource("4_phdlk")
-buffer = PackedFloat32Array(0, 0, 1.0051414, 1, 778, 190, 0, 0, 0, 0.3, 1, 1, 778, 194, 0, 0, 0, 0, 1, 1.0210526)
+mesh = ExtResource("4_sss41")
+buffer = PackedFloat32Array(1, 1, 1, 1, 1.435e-42, 1.435e-42, 1, 0.6900348, 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 1, 1, 0)
 
 [node name="Mesh2MotionTrackChange" type="Node3D" unique_id=391254406]
-script = ExtResource("1_phdlk")
-title = "Animation Track Selection Test"
+script = ExtResource("1_3dxpt")
+title = "Kenney's Mesh2Motion"
+next_scene = ExtResource("2_3dxpt")
 base_scale = 2.0
 max_scale = 2.0
 cycle_all_instances = false
@@ -64,12 +66,12 @@ mesh = SubResource("PlaneMesh_m56k3")
 [node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1903163823]
 physics_interpolation_mode = 2
 multimesh = SubResource("MultiMesh_wsgid")
-script = ExtResource("5_2dhfw")
-exported_mesh = ExtResource("4_phdlk")
+script = ExtResource("5_qts8c")
+exported_mesh = ExtResource("4_sss41")
 instance_count = 1
 rand_anim_offset = false
 default_fps = 24
-animation_tracks = Array[Vector4i]([Vector4i(1, 45, 1, 0), Vector4i(46, 82, 1, 0), Vector4i(83, 111, 1, 0), Vector4i(112, 187, 1, 0), Vector4i(188, 240, 0, 0), Vector4i(241, 296, 1, 0), Vector4i(297, 356, 1, 0)])
+animation_tracks = Array[Vector4i]([Vector4i(1, 53, 0, 0), Vector4i(54, 77, 1, 0), Vector4i(78, 167, 1, 0), Vector4i(168, 232, 1, 0), Vector4i(233, 252, 1, 0)])
 metadata/_custom_type_script = "uid://damlqeu0m6ksk"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=10977124]
@@ -203,7 +205,7 @@ offset_right = -3.0
 offset_bottom = 42.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("6_yoji6")
+texture = ExtResource("6_bcyuy")
 expand_mode = 1
 
 [connection signal="item_selected" from="UI/MarginContainer/VBox/HBoxTrack/TrackSelect" to="." method="_on_track_select_item_selected"]

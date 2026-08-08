@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6gixfpdui1bf"
-path="res://.godot/imported/bat_normals.png-5aba623215bd23f92221d194abc7792c.ctex"
+uid="uid://dhpskr425f0f2"
+path="res://.godot/imported/offsets.exr-9eae4ed15ff3f7586e27ece0f1158840.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://demo/assets/models/bat/bat_normals.png"
-dest_files=["res://.godot/imported/bat_normals.png-5aba623215bd23f92221d194abc7792c.ctex"]
+source_file="res://demo/assets/models/mesh2motion_male/offsets.exr"
+dest_files=["res://.godot/imported/offsets.exr-9eae4ed15ff3f7586e27ece0f1158840.ctex"]
 
 [params]
 
