@@ -1,0 +1,216 @@
+[gd_scene format=3 uid="uid://caao8i34yqxpw"]
+
+[ext_resource type="Script" uid="uid://cy3hgsk2sxmwm" path="res://demo/src/vat_interactive_grid_demo.gd" id="1_s4612"]
+[ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_5fm1e"]
+[ext_resource type="ArrayMesh" uid="uid://dnxg08wlisnc7" path="res://demo/assets/models/granite/granite_mesh.res" id="3_nmwwa"]
+[ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="4_m6pyy"]
+[ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_d046m"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
+
+[sub_resource type="Sky" id="Sky_03w7h"]
+sky_material = SubResource("ProceduralSkyMaterial_7n746")
+
+[sub_resource type="Environment" id="Environment_4gt3n"]
+background_mode = 2
+sky = SubResource("Sky_03w7h")
+ambient_light_source = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwhhi"]
+albedo_texture = ExtResource("3_5fm1e")
+uv1_scale = Vector3(20, 20, 20)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m56k3"]
+material = SubResource("StandardMaterial3D_uwhhi")
+size = Vector2(200, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s4612"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="MultiMesh" id="MultiMesh_wsgid"]
+transform_format = 1
+use_colors = true
+use_custom_data = true
+instance_count = 10
+mesh = ExtResource("3_nmwwa")
+buffer = PackedFloat32Array(0, 5.9999995, 0.2359, 0.434, 0.7, 0.8, 0, 0.062499996, 0.29366064, 4.145898, 0.2359, 0.434, 0.7, 0.8, 0.00059808686, 0.043186437, 1.1458983, 2.4732878, 0.2359, 0.434, 0.7, 0.8, 0.0023338052, 0.025763415, 2.4732895, 1.1458974, 0.2359, 0.434, 0.7, 0.8, 0.0050372495, 0.011936431, 4.1458974, 0.29366112, 0.2359, 0.434, 0.7, 0.8, 0.008443783, 0.00305897, 6, 0, 0.2359, 0.434, 0.7, 0.8, 0.012219959, 0, 485, 0, 0.2359, 0.434, 0.7, 0.8, 0.98778003, 0, 486.8541, 0.29366112, 0.2359, 0.434, 0.7, 0.8, 0.9915562, 0.00305897, 488.5267, 1.1458988, 0.2359, 0.434, 0.7, 0.8, 0.99496275, 0.011936446, 489.8541, 2.473288, 0.2359, 0.434, 0.7, 0.8, 0.9976662, 0.025763417, 490.70633, 4.1458983, 0.2359, 0.434, 0.7, 0.8, 0.99940187, 0.04318644, 491, 6.000001, 0.2359, 0.434, 0.7, 0.8, 1, 0.06250001, 491, 96, 0.2359, 0.434, 0.7, 0.8, 1, 1, 491, 96, 0.2359, 0.434, 0.7, 0.8, 1, 1, 491, 96, 0.2359, 0.434, 0.7, 0.8, 1, 1, 491, 96, 0.2359, 0.434, 0.7, 0.8, 1, 1, 491, 96, 0.2359, 0.434, 0.7, 0.8, 1, 1, 491, 96, 0.2359, 0.434, 0.7, 0.8, 1, 1, 0, 96, 0.2359, 0.434, 0.7, 0.8, 0, 1, 0, 96, 0.2359, 0.434, 0.7, 0.8, 0, 1, 0, 96, 0.2359, 0.434, 0.7, 0.8, 0, 1, 0, 96, 0.2359, 0.434, 0.7, 0.8, 0, 1, 0, 96, 0.2359, 0.434, 0.7, 0.8, 0, 1, 0, 96, 0.2359, 0.434, 0.7, 0.8, 0, 1, 9.8e-44, 3.4e-44, 1e-43, 1e-43, 3.5e-44, 3.4e-44, 0.9936871, 0.9058205)
+
+[node name="InteractiveFloorDemo" type="Node3D" unique_id=391254406]
+script = ExtResource("1_s4612")
+title = "Interactive One Shot  - Click Floor!"
+rotate_camera = true
+camera_position = Vector3(0, 30, 40)
+grid_size = Vector2(7.94, 7.94)
+
+[node name="Pivot" type="Node3D" parent="." unique_id=2130049990]
+
+[node name="Camera3D" type="Camera3D" parent="Pivot" unique_id=412152167]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 20, 55)
+fov = 90.0
+far = 2000.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=495390962]
+environment = SubResource("Environment_4gt3n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=140219212]
+transform = Transform3D(0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1794494979]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.974, 0, -3.97)
+mesh = SubResource("PlaneMesh_m56k3")
+
+[node name="Area3D" type="Area3D" parent="Floor" unique_id=2042017801]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/Area3D" unique_id=2119158142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_s4612")
+
+[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=5934285]
+physics_interpolation_mode = 2
+multimesh = SubResource("MultiMesh_wsgid")
+script = ExtResource("4_m6pyy")
+exported_mesh = ExtResource("3_nmwwa")
+instance_count = 400
+default_fps = 24
+animation_tracks = Array[Vector4i]([Vector4i(0, 118, 0, 0), Vector4i(25, 118, 0, 0), Vector4i(118, 118, 0, 0)])
+metadata/_custom_type_script = "uid://damlqeu0m6ksk"
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=10977124]
+
+[node name="Title" type="Label" parent="UI" unique_id=842271657]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.0
+offset_top = -67.0
+offset_right = 99.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 48
+text = "Example"
+
+[node name="Info" type="Label" parent="UI" unique_id=48507592]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.5
+offset_right = 204.5
+offset_bottom = 49.0
+grow_horizontal = 2
+text = "Press [SPACE] or [F1] to load next scene."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1163633282]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="UI/MarginContainer" unique_id=60975586]
+layout_mode = 2
+
+[node name="HBoxCount" type="HBoxContainer" parent="UI/MarginContainer/VBox" unique_id=1500443010]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelCount" type="Label" parent="UI/MarginContainer/VBox/HBoxCount" unique_id=978831982]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Instances:"
+horizontal_alignment = 2
+
+[node name="InstanceCount" type="Label" parent="UI/MarginContainer/VBox/HBoxCount" unique_id=2097797752]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2000"
+
+[node name="HBoxCount2" type="HBoxContainer" parent="UI/MarginContainer/VBox" unique_id=1701045734]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelDemoType" type="Label" parent="UI/MarginContainer/VBox/HBoxCount2" unique_id=1101109755]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Demo Type:"
+horizontal_alignment = 2
+
+[node name="DemoTypeSelect" type="OptionButton" parent="UI/MarginContainer/VBox/HBoxCount2" unique_id=1191943684]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+selected = 0
+allow_reselect = true
+item_count = 2
+popup/item_0/text = "Falling Effect"
+popup/item_0/id = 0
+popup/item_1/text = "Area Effect"
+popup/item_1/id = 1
+
+[node name="HBoxShadows" type="HBoxContainer" parent="UI/MarginContainer/VBox" unique_id=1729384961]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelShadows" type="Label" parent="UI/MarginContainer/VBox/HBoxShadows" unique_id=893450082]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Shadows:"
+horizontal_alignment = 2
+
+[node name="ShadowsCheckButton" type="CheckButton" parent="UI/MarginContainer/VBox/HBoxShadows" unique_id=1722329091]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+button_pressed = true
+text = "True"
+
+[node name="HBoxShadows2" type="HBoxContainer" parent="UI/MarginContainer/VBox" unique_id=1604977151]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelVSync" type="Label" parent="UI/MarginContainer/VBox/HBoxShadows2" unique_id=226456148]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "VSync:"
+horizontal_alignment = 2
+
+[node name="VSyncCheckButton" type="CheckButton" parent="UI/MarginContainer/VBox/HBoxShadows2" unique_id=346839192]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+button_pressed = true
+text = "True"
+
+[node name="Label" type="TextureRect" parent="UI" unique_id=271355795]
+custom_minimum_size = Vector2(128, 128)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -86.0
+offset_right = -3.0
+offset_bottom = 42.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("6_d046m")
+expand_mode = 1
+
+[connection signal="item_selected" from="UI/MarginContainer/VBox/HBoxCount2/DemoTypeSelect" to="." method="_on_demo_type_select_item_selected"]
+[connection signal="toggled" from="UI/MarginContainer/VBox/HBoxShadows/ShadowsCheckButton" to="." method="_on_shadows_check_button_toggled"]
+[connection signal="toggled" from="UI/MarginContainer/VBox/HBoxShadows2/VSyncCheckButton" to="." method="_on_v_sync_check_button_toggled"]

@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://cm5cqd4dopvkb"]
+
+[ext_resource type="Script" uid="uid://b27tc0i4ry488" path="res://demo/src/alpha_test_demo.gd" id="1_82jgt"]
+[ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="2_pggjp"]
+[ext_resource type="PackedScene" uid="uid://b5nbeneriouvl" path="res://demo/mesh2motion_male_track_change.tscn" id="2_y8aks"]
+[ext_resource type="ArrayMesh" uid="uid://ser3u8cvloqa" path="res://demo/assets/models/skeleton/skeleton_export_mesh.res" id="3_2j2vw"]
+[ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="3_oyjhf"]
+[ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="5_ctkm4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
+
+[sub_resource type="Sky" id="Sky_03w7h"]
+sky_material = SubResource("ProceduralSkyMaterial_7n746")
+
+[sub_resource type="Environment" id="Environment_4gt3n"]
+background_mode = 2
+sky = SubResource("Sky_03w7h")
+ambient_light_source = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwhhi"]
+albedo_texture = ExtResource("2_pggjp")
+uv1_scale = Vector3(20, 20, 20)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m56k3"]
+material = SubResource("StandardMaterial3D_uwhhi")
+size = Vector2(200, 200)
+
+[sub_resource type="MultiMesh" id="MultiMesh_wsgid"]
+transform_format = 1
+use_colors = true
+use_custom_data = true
+instance_count = 35
+mesh = ExtResource("3_2j2vw")
+buffer = PackedFloat32Array(63.5, 823, 0.27692, 0.27692, 0.27692, 1, 0.0023400935, 0.175, 63.769188, 821.3004, 0.27692, 0.27692, 0.27692, 1, 0.0027600436, 0.13251038, 64.55041, 819.76715, 0.27692, 0.27692, 0.27692, 1, 0.003978795, 0.09417877, 65.76718, 818.5504, 0.27692, 0.27692, 0.27692, 1, 0.005877038, 0.06376038, 67.30041, 817.76917, 0.27692, 0.27692, 0.27692, 1, 0.008268966, 0.044229127, 69, 817.5, 0.27692, 0.27692, 0.27692, 1, 0.010920437, 0.0375, 696, 817.5, 0.27692, 0.27692, 0.27692, 1, 0.98907954, 0.0375, 697.6996, 817.76917, 0.27692, 0.27692, 0.27692, 1, 0.99173105, 0.044229127, 699.23285, 818.5504, 0.27692, 0.27692, 0.27692, 1, 0.994123, 0.06376038, 700.4496, 819.76715, 0.27692, 0.27692, 0.27692, 1, 0.9960212, 0.09417877, 701.23083, 821.3004, 0.27692, 0.27692, 0.27692, 1, 0.99724, 0.13251038, 701.5, 823, 0.27692, 0.27692, 0.27692, 1, 0.9976599, 0.175, 701.5, 849, 0.27692, 0.27692, 0.27692, 1, 0.9976599, 0.825, 701.23083, 850.6996, 0.27692, 0.27692, 0.27692, 1, 0.99724, 0.86748964, 700.4496, 852.23285, 0.27692, 0.27692, 0.27692, 1, 0.9960212, 0.9058212, 699.2328, 853.4496, 0.27692, 0.27692, 0.27692, 1, 0.9941229, 0.9362396, 697.6996, 854.23083, 0.27692, 0.27692, 0.27692, 1, 0.99173105, 0.95577085, 696, 854.5, 0.27692, 0.27692, 0.27692, 1, 0.98907954, 0.9625, 69, 854.5, 0.27692, 0.27692, 0.27692, 1, 0.010920437, 0.9625, 67.30041, 854.23083, 0.27692, 0.27692, 0.27692, 1, 0.008268966, 0.95577085, 65.76718, 853.4496, 0.27692, 0.27692, 0.27692, 1, 0.005877038, 0.9362396, 64.55041, 852.23285, 0.27692, 0.27692, 0.27692, 1, 0.003978795, 0.9058212, 63.769188, 850.6996, 0.27692, 0.27692, 0.27692, 1, 0.0027600436, 0.86748964, 63.5, 849, 0.27692, 0.27692, 0.27692, 1, 0.0023400935, 0.825, 63.5, 823, 0.27692, 0.27692, 0.27692, 1, 0.0023400935, 0.175, 62.5, 823, 0.27692, 0.27692, 0.27692, 0, 0.0007800312, 0.175, 63.769188, 821.3004, 0.27692, 0.27692, 0.27692, 1, 0.0027600436, 0.13251038, 62.81813, 820.9914, 0.27692, 0.27692, 0.27692, 0, 0.0012763346, 0.12478485, 64.55041, 819.76715, 0.27692, 0.27692, 0.27692, 1, 0.003978795, 0.09417877, 63.74139, 819.1794, 0.27692, 0.27692, 0.27692, 0, 0.0027166775, 0.07948456, 65.76718, 818.5504, 0.27692, 0.27692, 0.27692, 1, 0.005877038, 0.06376038, 65.1794, 817.7414, 0.27692, 0.27692, 0.27692, 0, 0.0049600587, 0.043534853, 67.30041, 817.76917, 0.27692, 0.27692, 0.27692, 1, 0.008268966, 0.044229127, 66.99139, 816.8181, 0.27692, 0.27692, 0.27692, 0, 0.007786874, 0.020452881, 69, 817.5, 0.27692, 0.27692, 0.27692, 1, 0.010920437, 0.0375, 69, 816.5, 0.27692, 0.27692, 0.27692, 0, 0.010920437, 0.0125, 696, 817.5, 0.27692, 0.27692, 0.27692, 1, 0.98907954, 0.0375, 696, 816.5, 0.27692, 0.27692, 0.27692, 0, 0.98907954, 0.0125, 697.6996, 817.76917, 0.27692, 0.27692, 0.27692, 1, 0.99173105, 0.044229127, 698.0086, 816.8181, 0.27692, 0.27692, 0.27692, 0, 0.99221313, 0.020452881, 699.23285, 818.5504, 0.27692, 0.27692, 0.27692, 1, 0.994123, 0.06376038, 699.8206, 817.7414, 0.27692, 0.27692, 0.27692, 0, 0.99503994, 0.043534853, 700.4496, 819.76715, 0.27692, 0.27692, 0.27692, 1, 0.9960212, 0.09417877, 701.2586, 819.1794, 0.27692, 0.27692, 0.27692, 0, 0.99728334, 0.07948456, 701.23083, 821.3004, 0.27692, 0.27692, 0.27692, 1, 0.99724, 0.13251038, 702.1819, 820.9914, 0.27692, 0.27692, 0.27692, 0, 0.9987237, 0.12478485, 701.5, 823, 0.27692, 0.27692, 0.27692, 1, 0.9976599, 0.175, 702.5, 823, 0.27692, 0.27692, 0.27692, 0, 0.99921995, 0.175, 701.5, 849, 0.27692, 0.27692, 0.27692, 1, 0.9976599, 0.825, 702.5, 849, 0.27692, 0.27692, 0.27692, 0, 0.99921995, 0.825, 701.23083, 850.6996, 0.27692, 0.27692, 0.27692, 1, 0.99724, 0.86748964, 702.1819, 851.0086, 0.27692, 0.27692, 0.27692, 0, 0.9987237, 0.8752152, 700.4496, 852.23285, 0.27692, 0.27692, 0.27692, 1, 0.9960212, 0.9058212, 701.2586, 852.8206, 0.27692, 0.27692, 0.27692, 0, 0.99728334, 0.9205154, 699.2328, 853.4496, 0.27692, 0.27692, 0.27692, 1, 0.9941229, 0.9362396, 699.8206, 854.2586, 0.27692, 0.27692, 0.27692, 0, 0.99503994, 0.9564651, 697.6996, 854.23083, 0.27692, 0.27692, 0.27692, 1, 0.99173105, 0.95577085, 698.0086, 855.1819, 0.27692, 0.27692, 0.27692, 0, 0.99221313, 0.97954714, 696, 854.5, 0.27692, 0.27692, 0.27692, 1, 0.98907954, 0.9625, 696, 855.5, 0.27692, 0.27692, 0.27692, 0, 0.98907954, 0.9875, 69, 854.5, 0.27692, 0.27692, 0.27692, 1, 0.010920437, 0.9625, 69, 855.5, 0.27692, 0.27692, 0.27692, 0, 0.010920437, 0.9875, 67.30041, 854.23083, 0.27692, 0.27692, 0.27692, 1, 0.008268966, 0.95577085, 66.99139, 855.1819, 0.27692, 0.27692, 0.27692, 0, 0.007786874, 0.97954714, 65.76718, 853.4496, 0.27692, 0.27692, 0.27692, 1, 0.005877038, 0.9362396, 65.17939, 854.2586, 0.27692, 0.27692, 0.27692, 0, 0.0049600466, 0.9564651, 64.55041, 852.23285, 0.27692, 0.27692, 0.27692, 1, 0.003978795, 0.9058212, 63.74139, 852.8206, 0.27692, 0.27692, 0.27692, 0, 0.0027166775, 0.9205154, 63.769188, 850.6996, 0.27692, 0.27692, 0.27692, 1, 0.0027600436, 0.86748964, 62.818134, 851.0086, 0.27692, 0.27692, 0.27692, 0, 0.0012763406, 0.8752152, 63.5, 849, 0.27692, 0.27692, 0.27692, 1, 0.0023400935, 0.825, 62.5, 849, 0.27692, 0.27692, 0.27692, 0, 0.0007800312, 0.825, 2.72e-43, 2.75e-43, 2.73e-43, 2.73e-43, 2.76e-43, 2.75e-43, 2.75e-43, 2.77e-43, 2.76e-43, 2.76e-43, 2.79e-43, 2.77e-43, 2.77e-43, 2.8e-43, 2.79e-43, 2.79e-43, 2.82e-43, 2.8e-43, 2.8e-43, 2.83e-43, 2.82e-43, 2.82e-43, 2.84e-43, 2.83e-43, 2.83e-43, 2.86e-43, 2.84e-43, 2.84e-43, 2.87e-43, 2.86e-43, 2.86e-43, 2.89e-43, 2.87e-43, 2.87e-43, 2.9e-43, 2.89e-43, 2.89e-43, 2.91e-43, 2.9e-43, 2.9e-43, 2.93e-43, 2.91e-43, 2.91e-43, 2.94e-43, 2.93e-43, 2.93e-43, 2.96e-43, 2.94e-43, 2.94e-43, 2.97e-43, 2.96e-43, 2.96e-43, 2.98e-43, 2.97e-43, 2.97e-43, 3e-43, 2.98e-43, 2.98e-43, 3.01e-43, 3e-43, 3e-43, 2.35e-43, 3.01e-43, 3.01e-43, 2.37e-43, 2.35e-43, 0.3483813, 0.285425, 0.7, 0.8, 0.9946349, 0.023872891, 459.8541, 2.473288, 0.3483813, 0.285425, 0.7, 0.8, 0.9975143, 0.051526833, 460.70633, 4.1458983, 0.3483813, 0.285425, 0.7, 0.8, 0.99936295, 0.08637288, 461, 6.000001, 0.3483813, 0.285425, 0.7, 0.8, 1, 0.12500001, 461, 48, 0.3483813, 0.285425, 0.7, 0.8, 1, 1, 461, 48, 0.3483813, 0.285425, 0.7, 0.8, 1, 1, 461, 48, 0.3483813, 0.285425, 0.7, 0.8, 1, 1, 461, 48, 0.3483813, 0.285425)
+
+[node name="SkeletonAlphaTestDemo" type="Node3D" unique_id=391254406]
+script = ExtResource("1_82jgt")
+title = "Skeleton Alpha Test"
+next_scene = ExtResource("2_y8aks")
+randomize_rotation = true
+randomize_scale = true
+base_scale = 1.5
+max_scale = 2.0
+cycle_all_instances = false
+cycle_time = 1.6
+camera_position = Vector3(0, 20, 50)
+camera_lookat = Vector3(0, -40, 0)
+
+[node name="Pivot" type="Node3D" parent="." unique_id=2130049990]
+
+[node name="Camera3D" type="Camera3D" parent="Pivot" unique_id=412152167]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 20, 55)
+fov = 90.0
+far = 2000.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=495390962]
+environment = SubResource("Environment_4gt3n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=140219212]
+transform = Transform3D(0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, -0.353553, 0.612372, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1794494979]
+mesh = SubResource("PlaneMesh_m56k3")
+
+[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=106241849]
+physics_interpolation_mode = 2
+multimesh = SubResource("MultiMesh_wsgid")
+script = ExtResource("3_oyjhf")
+exported_mesh = ExtResource("3_2j2vw")
+instance_count = 35
+default_fps = 24
+animation_tracks = Array[Vector4i]([Vector4i(0, 25, 1, 0), Vector4i(26, 58, 1, 0), Vector4i(59, 116, 1, 0), Vector4i(117, 157, 1, 0), Vector4i(158, 174, 1, 0), Vector4i(175, 226, 1, 0), Vector4i(227, 252, 1, 0), Vector4i(253, 325, 1, 0), Vector4i(326, 357, 1, 0), Vector4i(358, 389, 1, 0), Vector4i(390, 475, 1, 0), Vector4i(476, 508, 1, 0), Vector4i(509, 537, 1, 0), Vector4i(538, 554, 1, 0), Vector4i(555, 583, 1, 0), Vector4i(584, 622, 1, 0), Vector4i(623, 661, 1, 0), Vector4i(662, 686, 1, 0), Vector4i(687, 706, 1, 0), Vector4i(707, 711, 0, 0)])
+metadata/_custom_type_script = "uid://damlqeu0m6ksk"
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=10977124]
+
+[node name="Title" type="Label" parent="UI" unique_id=842271657]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -99.0
+offset_top = -67.0
+offset_right = 99.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 48
+text = "Example"
+
+[node name="Info" type="Label" parent="UI" unique_id=107981898]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.5
+offset_right = 204.5
+offset_bottom = 49.0
+grow_horizontal = 2
+text = "Press [SPACE] or [F1] to load next scene."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1163633282]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="UI/MarginContainer" unique_id=60975586]
+layout_mode = 2
+
+[node name="HBoxCount" type="HBoxContainer" parent="UI/MarginContainer/VBox" unique_id=1500443010]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelCount" type="Label" parent="UI/MarginContainer/VBox/HBoxCount" unique_id=978831982]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Instances:"
+horizontal_alignment = 2
+
+[node name="InstanceCount" type="Label" parent="UI/MarginContainer/VBox/HBoxCount" unique_id=2097797752]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2000"
+
+[node name="HBoxShadows" type="HBoxContainer" parent="UI/MarginContainer/VBox" unique_id=1729384961]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelShadows" type="Label" parent="UI/MarginContainer/VBox/HBoxShadows" unique_id=893450082]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "Shadows:"
+horizontal_alignment = 2
+
+[node name="ShadowsCheckButton" type="CheckButton" parent="UI/MarginContainer/VBox/HBoxShadows" unique_id=1722329091]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+button_pressed = true
+text = "True"
+
+[node name="HBoxShadows2" type="HBoxContainer" parent="UI/MarginContainer/VBox" unique_id=1604977151]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelVSync" type="Label" parent="UI/MarginContainer/VBox/HBoxShadows2" unique_id=226456148]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "VSync:"
+horizontal_alignment = 2
+
+[node name="VSyncCheckButton" type="CheckButton" parent="UI/MarginContainer/VBox/HBoxShadows2" unique_id=346839192]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+button_pressed = true
+text = "True"
+
+[node name="Label" type="TextureRect" parent="UI" unique_id=271355795]
+custom_minimum_size = Vector2(128, 128)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -131.0
+offset_top = -86.0
+offset_right = -3.0
+offset_bottom = 42.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("5_ctkm4")
+expand_mode = 1
+
+[connection signal="toggled" from="UI/MarginContainer/VBox/HBoxShadows/ShadowsCheckButton" to="." method="_on_shadows_check_button_toggled"]
+[connection signal="toggled" from="UI/MarginContainer/VBox/HBoxShadows2/VSyncCheckButton" to="." method="_on_v_sync_check_button_toggled"]
