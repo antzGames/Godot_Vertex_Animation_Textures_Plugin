@@ -9,7 +9,7 @@ import bpy
 # CONFIG
 # ------------------------------------------------------------
 
-START_FRAME = 1
+START_FRAME = 0
 GAP_FRAMES = 1
 
 USE_ACTIVE_OBJECT_ONLY = True
