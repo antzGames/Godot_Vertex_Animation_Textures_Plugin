@@ -45,6 +45,7 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 - Mesh must be less than 8192 vertices.
 - Total number of frames for all animations must be less than 8192.
 - No blending or transitions between animation tracks possible.
+- Cloth simulations not supported by the Blender tool.
 - `MultiMeshInstance3D` `custom_data` and `instance_color` is used by this plugin so you will not have access to it.
 - The new `VATMultiMeshInstance3D` will have `physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF`. The reason is that Godot interpolates the `custom_data` uniform which we do not want.  You can still use physics interpolation in your project though.
 
