@@ -13,7 +13,7 @@ See video of the plugin and demos here:
 
 ## Easy Mesh2Motion (and Mixamo) to Vertex Animation Textures (VAT)
 
-See video showing complete VAT workflow from `Mesh2Motion` into `Blender` into `Godot` in less than 10 minutes: [insert link here]
+See video showing complete VAT workflow from `Mesh2Motion` into `Blender` into `Godot` in less than 10 minutes: [https://youtu.be/twFFcn4Q0fQ](https://youtu.be/twFFcn4Q0fQ)
 
 https://github.com/user-attachments/assets/32335989-0162-403c-a21e-e38b8cca9510
 
