@@ -86,8 +86,8 @@ Error messages will also appear in the Output console.
 
 - **Instance Count**: `int` = the number of instances
 - **Rand Anim Offset**: `bool` = randomize the animation offset (true/false)
-- **Default FPS**: `int` = sets `Vector4i.w` component automatically if it is 0.
-- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks with start frame = `x`, end frame = `y` information, `z` = islooping [0..1], `w` = fps. 
+- **Default FPS**: `int` = sets `Vector4i.w` component automatically if it is `0`.
+- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks with start frame = `x`, end frame = `y` information, `z` = is_looping `[0..1]`, `w` = fps, if `0`, then the **Default FPS** is used.
 
 <img width="352" alt="image" src="https://github.com/user-attachments/assets/179685b6-48ba-49d3-8212-717bea88bceb" />
 
