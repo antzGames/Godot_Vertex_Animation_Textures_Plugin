@@ -15,42 +15,99 @@ It has total of 4 floats. All renderers supported
 
 	Alpha channel:
 		alpha of mesh: used to fade in/out a unique instance
+
+		
+Instanced COLOR is used for looping / non-looping (also called one_shot) animations.
+It has total of 4 floats. All renderers supported.
+
+	Red channel:
+		is_looping: 1.0 = true, 0.0 = false
+
+	Green channel:
+		timestamp:
+			if looping - when the looping animation started.
+			if non-lopping - Tells the shader when the one_shot has been reset.
+
+	Blue channel: 
+			animation frame rate - must be greater than 0
+	
+	Alpha channel: not used
 */
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_always,depth_prepass_alpha,cull_back;
+render_mode blend_mix,depth_draw_always,depth_prepass_alpha,cull_disabled;
 
 uniform sampler2D offset_map: filter_nearest;
 uniform sampler2D normal_map: filter_nearest;
-uniform sampler2D texture_albedo: filter_nearest, hint_default_white;
+//uniform sampler2D texture_albedo: filter_nearest, hint_default_white;
 
-uniform float fps = 24.0; // change this to what the fps is in Blender
+group_uniforms Albedo;
+uniform vec4 albedo : source_color = vec4(1.0); // Opaque white by default
+uniform sampler2D albedo_texture : source_color;
+group_uniforms;
 
+group_uniforms Metallic;
+uniform sampler2D metallic_texture : hint_default_white;
 uniform float metallic : hint_range(0.0, 1.0) = 0.0;
+uniform vec4 metallic_texture_channel: source_color = vec4(1.0, 0.0, 0.0, 0.0); // Red channel by default
 uniform float specular : hint_range(0.0, 1.0) = 0.5;
+group_uniforms;
+
+group_uniforms Roughness;
+uniform sampler2D roughness_texture : hint_roughness_r;
 uniform float roughness : hint_range(0.0, 1.0) = 1.0;
+uniform vec4 roughness_texture_channel : source_color = vec4(1.0, 0.0, 0.0, 0.0); // Red channel by default
+group_uniforms;
+
+group_uniforms NormalMap;
+uniform sampler2D normal_map_texture : hint_roughness_normal;
+uniform float normal_scale : hint_range(-16.0, 16.0) = 1.0;
+group_uniforms;
 
 varying flat vec4 custom_data;
+varying flat vec4 color_data;
 
 void vertex(){
 	custom_data = INSTANCE_CUSTOM;
+	color_data = COLOR;
 
+	bool is_looping = color_data.r > 0.5; // 1.0 = true, 0.0 = false
+	float timestamp = color_data.g;
+	
 	float start_frame = custom_data.g;
 	float end_frame = custom_data.b;
 	float num_frames = end_frame - start_frame;
 	int frame_count = int(end_frame - start_frame);
-
-	float time_scale_normalized = fps / num_frames;
-	float time = mod(TIME * time_scale_normalized, 1.0);
 	
 	float frame_offset = num_frames * custom_data.r;
-	float current_frame = start_frame + mod((time * num_frames) + frame_offset, num_frames);
+	float speed = max(1, color_data.b);
 
+	// if start_frame and end_frame are the same - prevents divide by zero
+	num_frames = clamp(num_frames, 0.0001, 8192.0);
+	//if (abs(num_frames) < 0.0001) num_frames = 0.0001;
+
+	float time_scale_normalized = (TIME - timestamp) * (speed / num_frames);
+		
+	float frame_time;
+	float current_frame;
+	float frame_ceil;
+		
+	if (is_looping) {
+		frame_time = mod(time_scale_normalized, 1.0);
+		current_frame = start_frame + mod((frame_time * num_frames) + frame_offset, num_frames) + 1.0;
+		if (current_frame > end_frame) current_frame = start_frame;
+		frame_ceil = float(int(ceil(current_frame) - start_frame) % frame_count) + start_frame;
+	} else {
+		frame_time = time_scale_normalized;
+		current_frame = start_frame + (frame_time * num_frames) + frame_offset + 1.0;
+		if (current_frame > end_frame) current_frame = end_frame;
+		frame_ceil = clamp(ceil(current_frame), start_frame, end_frame);
+	}
+		
 	ivec2 tex_size = textureSize(offset_map, 0);
 	float pixel_size = 1.0 / float(tex_size.y);
 
 	float frame_floor = clamp(floor(current_frame), start_frame, end_frame);
-	float frame_ceil = float(int(ceil(current_frame) - start_frame) % frame_count) + start_frame; // accounting for looping
 	vec2 frame_floor_uv_offset = vec2(0.0, -((frame_floor + 0.5) * pixel_size));
 	vec2 frame_ceil_uv_offset = vec2(0.0, -((frame_ceil + 0.5) * pixel_size));
 
@@ -75,13 +132,12 @@ void vertex(){
 	BINORMAL = normalize(vec3(0.0, abs(NORMAL.x) + abs(NORMAL.z), -abs(NORMAL.y)));
 }
 
-void fragment(){
-	vec3 albedo_col = texture(texture_albedo, UV).rgb;
-
-	ALPHA = custom_data.a;  // fader
-	ALBEDO = albedo_col.rgb;
-	
-	METALLIC = metallic;
-	ROUGHNESS = roughness;
+void fragment() {
+	ALBEDO = albedo.rgb * texture(albedo_texture, UV).rgb;
+	METALLIC = dot(texture(metallic_texture, UV), metallic_texture_channel) * metallic;
 	SPECULAR = specular;
+	ROUGHNESS = dot(texture(roughness_texture, UV), roughness_texture_channel) * roughness;
+	NORMAL_MAP = texture(normal_map_texture, UV).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
+	ALPHA = custom_data.a;  // fader
 }
