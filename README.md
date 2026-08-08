@@ -35,6 +35,8 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 - Animations tracks can be different frame sizes.
 - Ability to set a unique animation track per instance.
 - Ability to control the alpha channel for individual instances.
+- Ability to set a unique fps speed per animation track.
+- Animation tracks can loop or be a one-shot.
 - All the `MultiMeshInstance3D` features such as a unique transform (scale, rotation, and position) per instance.
 - Works on all renderers, and on HTML builds.
 
@@ -43,8 +45,7 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 - Mesh must be less than 8192 vertices.
 - Total number of frames for all animations must be less than 8192.
 - No blending or transitions between animation tracks possible.
-- Animations will always loop, so you need to develop a custom solution for chaining different animations.
-- `MultiMeshInstance3D` `custom_data` is used by this plugin so you will not have access to it.
+- `MultiMeshInstance3D` `custom_data` and `instance_color` is used by this plugin so you will not have access to it.
 - The new `VATMultiMeshInstance3D` will have `physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF`. The reason is that Godot interpolates the `custom_data` uniform which we do not want.  You can still use physics interpolation in your project though.
 
 ## Requirements
@@ -84,8 +85,9 @@ Error messages will also appear in the Output console.
 ## `VATMultiMeshInstance3D` Properties
 
 - **Instance Count**: `int` = the number of instances
-- **Rand Anim Offset**: `bool` =  randomize the animation offset (true/false)
-- **Animation Tracks**: `Array[Vector2i]` = the list of animation tracks with start frame = x, end frame = y information. 
+- **Rand Anim Offset**: `bool` = randomize the animation offset (true/false)
+- **Default FPS**: `int` = sets `Vector4i.w` component automatically if it is 0.
+- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks with start frame = x, end frame = y information, z = islooping [0..1], w = fps. 
 
 <img src="https://github.com/user-attachments/assets/790f897a-ef70-434d-afa3-6acc55c255fc" width="332">
 
