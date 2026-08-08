@@ -87,7 +87,7 @@ Error messages will also appear in the Output console.
 - **Instance Count**: `int` = the number of instances
 - **Rand Anim Offset**: `bool` = randomize the animation offset (true/false)
 - **Default FPS**: `int` = sets `Vector4i.w` component automatically if it is 0.
-- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks with start frame = x, end frame = y information, z = islooping [0..1], w = fps. 
+- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks with start frame = `x`, end frame = `y` information, `z` = islooping [0..1], `w` = fps. 
 
 <img src="https://github.com/user-attachments/assets/790f897a-ef70-434d-afa3-6acc55c255fc" width="332">
 
@@ -138,12 +138,18 @@ Error messages will also appear in the Output console.
 - `custom_data.b` = **animation end frame**
 - `custom_data.a` = **alpha of mesh**: used to fade in/out a unique instance
 
+The inherited `MultiMeshInstance3D` `color_instance` is used by this plugin and instanced shader. Here is how it is used:
+
+- `color.r` = is_looping (1.0 = true, 0.0 = false)
+- `color.g` = timestamp used to keep track of when an animation was set or the one_shot has been reset.
+- `color.b` = animation frame rate: must be greater than zero
+
 ## Vertex Animation Shader
 
 The magic of vertex animations happens both in Blender and in the shader. 
 This is why you should understand what is happening in the shader.
 
-To make it easy, it is recommended you use `GeometryInstance3D > Geometry > Material Override` 
+To make it easy, use `Mesh > Surface_0 > Material` 
 to add the a new `ShaderMaterial`.
 
 In the `Shader` property select `Quick Load` and select: `vat_multiple_anims.gdshader`
