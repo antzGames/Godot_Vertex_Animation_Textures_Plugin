@@ -164,7 +164,8 @@ shader parameters:
 - `Specular`, `Metallic`, `Roughness`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information.
 
 
-<img src="https://github.com/user-attachments/assets/ef4625bc-910a-41cc-b90b-51867b61c7e8" width="350">
+<img width="353" alt="image" src="https://github.com/user-attachments/assets/f54cd3d3-fe8c-423a-a50c-bb47f3bf4bb5" />
+
 
 Make sure both offset and normal textures are imported with Lossless format.
 
