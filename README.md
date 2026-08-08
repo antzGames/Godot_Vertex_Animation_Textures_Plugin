@@ -56,7 +56,6 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 	- For Blender 3.x use: [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) 
 	- For Blender 4.x use: [Godot VAT Blender Tools](https://github.com/antzGames/Godot_VAT_Blender_Tool)
 - An animated 3D model with less than 8192 total vertices.
-- For encoding multiple baked in animations, you will need to learn how to concatenate multiple animation tracks into one animation track in Blender.  This is the hardest part of using this solution.  I have created a video on how to append (concatenate) Blender NLA strips into a single track here: https://youtu.be/YFPywP6LMZU
 
 ## Installing
 
@@ -87,10 +86,10 @@ Error messages will also appear in the Output console.
 
 - **Instance Count**: `int` = the number of instances
 - **Rand Anim Offset**: `bool` = randomize the animation offset (true/false)
-- **Default FPS**: `int` = sets `Vector4i.w` component automatically if it is 0.
-- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks with start frame = `x`, end frame = `y` information, `z` = islooping [0..1], `w` = fps. 
+- **Default FPS**: `int` = sets `Vector4i.w` component automatically if it is `0`.
+- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks: `x` = start frame,`y` = end frame, `z` = is_looping `[0..1]`, `w` = fps, if `0`, then the **Default FPS** is used.
 
-<img src="https://github.com/user-attachments/assets/790f897a-ef70-434d-afa3-6acc55c255fc" width="332">
+<img width="352" alt="image" src="https://github.com/user-attachments/assets/179685b6-48ba-49d3-8212-717bea88bceb" />
 
 ## `VATMultiMeshInstance3D` Functions
 
