@@ -11,6 +11,11 @@ See video of the plugin and demos here:
 
 [![YouTubeVideo](https://github.com/user-attachments/assets/c3af1ccb-24cb-4b5e-9f27-fd705b26e70d)](https://youtu.be/BIbEaiVOu6k)
 
+## Easy Mesh2Motion (and Mixamo) to Vetex Animation Textures (VAT)
+
+See video showing complete VAT workflow from `Mesh2Motion` into `Blender` into `Godot` in less than 10 minutes: [insert link here]
+
+https://github.com/user-attachments/assets/32335989-0162-403c-a21e-e38b8cca9510
 
 ## What are Vertex Animation Textures?
 
@@ -18,7 +23,6 @@ Vertex Animation Textures (VAT) bakes animations of a mesh into textures.
 These textures can then be used to create motion in a game engine.
 
 Best to watch this [video](https://www.youtube.com/watch?v=3ep9mkwiOjU) to understand fully.
-
 
 ## Preview
 
