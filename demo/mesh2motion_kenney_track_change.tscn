@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bypvmrpum6glw"]
 
 [ext_resource type="Script" uid="uid://bwf8bcqwdntcm" path="res://demo/src/vat_instanced_track.gd" id="1_3dxpt"]
-[ext_resource type="PackedScene" uid="uid://b5nbeneriouvl" path="res://demo/mesh2motion_male_track_change.tscn" id="2_3dxpt"]
+[ext_resource type="PackedScene" uid="uid://cxqqbhaenn8kj" path="res://demo/exploding_floor.tscn" id="2_3dxpt"]
 [ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_mkj31"]
 [ext_resource type="ArrayMesh" uid="uid://d3ri3s4xpv5e6" path="res://demo/assets/models/mesh2motion_kenney/kenney_mesh.res" id="4_sss41"]
 [ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_qts8c"]
@@ -31,7 +31,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_sss41")
-buffer = PackedFloat32Array(1, 1, 1, 1, 1.435e-42, 1.435e-42, 1, 0.6900348, 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 1, 1, 0)
+buffer = PackedFloat32Array(0, 8e-45, 1e-45, 0, 1e-44, 8e-45, 1e-45, 7e-45, 3e-45, 1e-45, 8e-45, 7e-45, 3e-45, 6e-45, 4e-45, 3e-45, 7e-45, 6e-45, 9.4e-44, 9.2e-44)
 
 [node name="Mesh2MotionTrackChange" type="Node3D" unique_id=391254406]
 script = ExtResource("1_3dxpt")

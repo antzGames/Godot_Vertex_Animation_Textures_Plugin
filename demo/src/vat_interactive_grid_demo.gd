@@ -71,6 +71,11 @@ func placeInstance(i: int):
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("next_scene"):
 		if next_scene: get_tree().change_scene_to_packed(next_scene)
+		else:
+			if OS.get_name() != "Web":
+				get_tree().quit()
+			else:
+				get_tree().change_scene_to_file("res://demo/skeletons_track_change.tscn")
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			do_raycast()

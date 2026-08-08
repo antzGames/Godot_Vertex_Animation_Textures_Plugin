@@ -100,7 +100,7 @@ void vertex(){
 	} else {
 		frame_time = time_scale_normalized;
 		current_frame = start_frame + (frame_time * num_frames) + frame_offset + 1.0;
-		if (current_frame > end_frame) current_frame = end_frame;
+		if (current_frame >= end_frame) current_frame = end_frame;
 		frame_ceil = clamp(ceil(current_frame), start_frame, end_frame);
 	}
 		
