@@ -3,7 +3,7 @@ extends Node3D
 
 @onready var directional_light_3d: DirectionalLight3D = $DirectionalLight3D
 
-@onready var vat_multi_mesh_instance_3d: VATMultiMeshInstance3D = $OpenVATMultiMeshInstance3D
+@onready var vat_multi_mesh_instance_3d: VATMultiMeshInstance3D = $VATMultiMeshInstance3D
 @onready var mesh_floor: MeshInstance3D = $Floor
 @onready var pivot: Node3D = $Pivot
 @onready var camera_3d: Camera3D = $Pivot/Camera3D
@@ -73,13 +73,13 @@ func setupInstances():
 		randomizeInstance(instance)
 		
 		#func get_track_number_from_instance(instance_id: int) -> int:
-		#func get_animation_from_instance(instance_id: int) -> OpenVATAnimationTrack:
-		#func get_track_number_from_animation(animation: OpenVATAnimationTrack) -> int:
+		#func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
+		#func get_track_number_from_animation(animation: VATAnimationTrack) -> int:
 		#func get_track_number_from_start_end_frames(start: int, end: int) -> int:
 			
 		# Unit tests for helper functions - you can comment this out
 		#if instance < 50:
-			#var track: OpenVATAnimationTrack = vat_multi_mesh_instance_3d.get_animation_from_instance(instance)
+			#var track: VATAnimationTrack = vat_multi_mesh_instance_3d.get_animation_from_instance(instance)
 			#var tn: int = vat_multi_mesh_instance_3d.get_track_number_from_instance(instance)
 			#var tn_anim: int = vat_multi_mesh_instance_3d.get_track_number_from_animation(track)
 			#var tn_se: int = vat_multi_mesh_instance_3d.get_track_number_from_start_end_frames(track.startFrame, track.endFrame)

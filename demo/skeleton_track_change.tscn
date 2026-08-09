@@ -31,7 +31,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_acrxm")
-buffer = PackedFloat32Array(0, 8e-45, 1e-45, 0, 1e-44, 8e-45, 1e-45, 7e-45, 3e-45, 1e-45, 8e-45, 7e-45, 3e-45, 6e-45, 4e-45, 3e-45, 7e-45, 6e-45, 1.1920928e-07, 1.1920928e-07)
+buffer = PackedFloat32Array(8e-44, 8e-44, 8.3e-44, 8.1e-44, 8.1e-44, 8.4e-44, 8.3e-44, 8.3e-44, 8.5e-44, 8.4e-44, 8.4e-44, 8.7e-44, 8.5e-44, 8.5e-44, 8.8e-44, 8.7e-44, 8.7e-44, 9e-44, 8.8e-44, 8.8e-44)
 
 [node name="SkeletonTrackChange" type="Node3D" unique_id=391254406]
 script = ExtResource("1_phdlk")
@@ -63,7 +63,7 @@ shadow_enabled = true
 [node name="Floor" type="MeshInstance3D" parent="." unique_id=1794494979]
 mesh = SubResource("PlaneMesh_m56k3")
 
-[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1903163823]
+[node name="VATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1903163823]
 physics_interpolation_mode = 2
 multimesh = SubResource("MultiMesh_wsgid")
 script = ExtResource("5_2dhfw")

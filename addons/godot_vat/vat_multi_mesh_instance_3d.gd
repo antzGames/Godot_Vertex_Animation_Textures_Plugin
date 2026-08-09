@@ -132,7 +132,7 @@ func update_instance_animation_offset(instance_id: int, animation_offset: float)
 ## Updates the current instance_id with the provided track_number (0..animation_tracks.size()- 1)
 func update_instance_track(instance_id: int, track_number: int):
 	if track_number < 0 or track_number > animation_tracks.size() - 1: 
-		printerr("[OpenVATMultiMeshInstance3D] -> update_instance_track(instance_id: int, track_number: int)]: track_number is out of bounds.")
+		printerr("[VATMultiMeshInstance3D] -> update_instance_track(instance_id: int, track_number: int)]: track_number is out of bounds.")
 		return 
 	custom_data = multimesh.get_instance_custom_data(instance_id)
 	custom_data.g = vat_animation_tracks[track_number].startFrame 
@@ -248,7 +248,7 @@ func play_next_track_all_instances():
 
 # Get functions
 
-## get [animationOpenVATAnimationTrack] from instance.
+## get [VATAnimationTrack] from instance.
 ## instance must have been initialized. 
 ## Returns null if instance_id not found
 func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:

@@ -31,7 +31,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("3_y47ev")
-buffer = PackedFloat32Array(0, 8e-45, 1e-45, 0, 1e-44, 8e-45, 1e-45, 7e-45, 3e-45, 1e-45, 8e-45, 7e-45, 3e-45, 6e-45, 4e-45, 3e-45, 7e-45, 6e-45, 7.213502e-26, 7.213502e-26)
+buffer = PackedFloat32Array(0, 0, 0.06923, 0.06923, 0.06923, 1, 0, 0, 758, 0, 0.06923, 0.06923, 0.06923, 1, 1, 0, 758, 0, 0.06923, 0.06923)
 
 [node name="Mesh2MotionTrackChange" type="Node3D" unique_id=391254406]
 script = ExtResource("1_qm7mt")
@@ -63,7 +63,7 @@ shadow_enabled = true
 [node name="Floor" type="MeshInstance3D" parent="." unique_id=1794494979]
 mesh = SubResource("PlaneMesh_m56k3")
 
-[node name="OpenVATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1903163823]
+[node name="VATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1903163823]
 physics_interpolation_mode = 2
 multimesh = SubResource("MultiMesh_wsgid")
 script = ExtResource("4_h0omw")
