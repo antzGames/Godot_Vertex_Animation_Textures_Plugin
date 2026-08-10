@@ -204,11 +204,9 @@ void fragment(){
 
 ## Demos
 
-There are four demo scenes in the `demo` subfolder:
+Demo scenes are in the `demo` subfolder:
 
 - **PerformanceTest**: 2000 instances (configurable) with 20 animations, with different scales, and positions.  Displays FPS, and allows you to disable shadows.  See `Performance` section for detailed performance findings.
-- **PerformanceTestBat**: used to compare performance with: https://github.com/shadecoredev/AnimatedMultimeshInstance3D project
-- **MultipleAnimations**: 108 instances with 20 animations, with different scales, and positions.
 - **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
 
 The skeleton mesh included in the demo has 20 baked in animations.
