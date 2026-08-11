@@ -136,14 +136,14 @@ Or play the next animation track of all instances using:
 
 ### `OpenVATMultiMeshInstance3D` Animation Get Functions
 
-Animation meta data is stored in the `animation_tracks` variable.  It is an `Array` of `OpenVATAnimationTrack`:
+Animation meta data is stored in the `vat_animation_tracks` variable.  It is an `Array` of `VATAnimationTrack`:
 ```gdscript
-var animation_tracks: Array[OpenVATAnimationTrack] 
+var vat_animation_tracks: Array[VATAnimationTrack] 
 ```
 
-This is the `OpenVATAnimationTrack` class :
+This is the `VATAnimationTrack` class :
 ```gdscript
-class_name OpenVATAnimationTrack
+class_name VATAnimationTrack
 extends RefCounted
 
 var name: String
@@ -153,13 +153,13 @@ var framerate: int
 var isLooping: bool
 ```
 
-To get the `OpenVATAnimationTrack` object from an instance:
+To get the `VATAnimationTrack` object from an instance:
 
-`get_animation_from_instance(instance_id: int) -> OpenVATAnimationTrack`
+`get_animation_from_instance(instance_id: int) -> VATAnimationTrack`
 
-To get the animation track index from the provided `OpenVATAnimationTrack` object: 
+To get the animation track index from the provided `VATAnimationTrack` object: 
 
-`get_track_number_from_animation(animation: OpenVATAnimationTrack) -> int`
+`get_track_number_from_animation(animation: VATAnimationTrack) -> int`
 
 To get the currently playing animation track index from the instance, use:
 
