@@ -67,6 +67,10 @@ Maybe if this plugin gets noticed, I will add it to Godot's AssetLib.  Until the
 - Go to `Project > Project Settings > Plugins` and enable **Godot Vertex Animation Textures Plugin**.
 - Test to see if you can add the new `VATMultiMeshInstance3D` node into a scene.
 
+## Full Mesh2Motion > Blender > Godot workflow video
+
+You will need to follow these steps to get your baked VAT into Godot: [https://youtu.be/twFFcn4Q0fQ](https://youtu.be/twFFcn4Q0fQ)
+
 ## `VATMultiMeshInstance3D`
 
 This plugin provides a new node called `VATMultiMeshInstance3D` which inherits `MultiMeshInstance3D`.
@@ -252,16 +256,11 @@ void fragment(){
 
 ## Common Issues
 
-❓**Question**: My mesh is all white, with no colors or textures. 💡**Answer**: You forgot to add Albedo, Metallic, Roughness, Normal Map textures that came with the original model to the shader.
+❓**Question**: My mesh is all white, with no colors or textures. 💡**Answer**: You forgot to add Albedo, Metallic, Roughness, Normal textures that came with the original model to the shader.
 
-❓**Question**: My mesh's verticies are cracked or all over the place. 💡**Answer**: Re-import your VAT texture (`.exr` file) with compress mode as `Lossless` and turn off `Generate` Mipmaps. 
+❓**Question**: My mesh's verticies are cracked or all over the place. 💡**Answer**: Re-import your VAT offsets (`.exr` file)  and VAT normals (`.png` file) with compress mode as `Lossless` and turn off `Generate` Mipmaps. 
 
 ❓**Question**: How do I restart a non-looping animation for a specific instance? 💡**Answer**:  Use `reset_one_shot(instance_id)` or `update_instance_track(instance_id: int, track_number: int)` both assume the animation track is set with `is_looping =  false`.
-
-❓**Question**: How do I implement a static pose in an animation track:
- 
-  - 💡**Answer 1**: Create a 3 frame action on your NLA strip in Blender with each keyframe being the same, then do an OpenVAT export, and re-import into Godot.  The shader will loop these 3 frames, and look like the model is static because the vertex positions have not moved. 
-  - 💡**Answer 2**: Manually encode another animation track in the JSON file with the same startFrame and endFrame, then do an OpenVAT export, and re-import JSON file into Godot.
 
 ## Demos
 
