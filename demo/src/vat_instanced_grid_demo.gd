@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 	if rotate_camera:
 		pivot.rotate_y(delta * 0.1 * camera_speed)
 
-func setupInstances():
+func setupInstances() -> void:
 	# change floor size based on instance count
 	square_rt = int(sqrt(vat_multi_mesh_instance_3d.multimesh.instance_count))
 	mesh_floor.mesh.size = Vector2(float(square_rt) * grid_size.x, float(square_rt) * grid_size.y) 

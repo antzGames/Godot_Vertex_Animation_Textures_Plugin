@@ -37,23 +37,23 @@ var number_of_animation_tracks: int
 var _rollover_value : float = ProjectSettings.get_setting("rendering/limits/time/time_rollover_secs")
 
 
-func _create_multimesh():
+func _create_multimesh() -> void:
 	multimesh = MultiMesh.new()
 	multimesh.instance_count = 0
 	multimesh.transform_format = MultiMesh.TRANSFORM_3D
 	multimesh.use_custom_data = true
 
-func _enter_tree():
+func _enter_tree() -> void:
 	pass
 	
-func _exit_tree():
+func _exit_tree() -> void:
 	# Clean-up of the plugin goes here.
 	pass
 
 func _init() -> void:
 	pass
 
-func _get_configuration_warnings(): # display the warning on the scene dock
+func _get_configuration_warnings() -> PackedStringArray: # display the warning on the scene dock
 	var warnings = []
 	if !multimesh:
 		warnings.push_back('Multimesh not set')
@@ -61,7 +61,7 @@ func _get_configuration_warnings(): # display the warning on the scene dock
 		warnings.push_back('No animation tracks defined')
 	return warnings
 	
-func _validate_property(property: Dictionary): # update the config warnings
+func _validate_property(property: Dictionary) -> void: # update the config warnings
 	if property.name == "animation_tracks" or property.name == "multimesh":
 		update_configuration_warnings()
 	if property.name.begins_with("multimesh"):
@@ -108,7 +108,7 @@ func _ready() -> void:
 			
 			vat_anim.set_track(str("track", i), animation_tracks[i].x - track_offset, animation_tracks[i].y - track_offset, fps, isLooping)
 			vat_animation_tracks.append(vat_anim)
-			print_rich(str("  🎞️Animation track: [color=yellow]", vat_anim.name, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]    FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
+			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
 
 		print_rich("[color=cyan]Animation configuration completed.[/color]")
 		
@@ -120,7 +120,7 @@ func _process(delta: float) -> void:
 
 ## Updates the current instance_id with the provided animation_offset (0..1),
 ## unless rand_anim_offset = false, where it sets the animation_offset to 0
-func update_instance_animation_offset(instance_id: int, animation_offset: float):
+func update_instance_animation_offset(instance_id: int, animation_offset: float) -> void:
 	animation_offset = clamp(animation_offset, 0.0, 1.0)
 	custom_data = multimesh.get_instance_custom_data(instance_id)
 	if rand_anim_offset:
@@ -130,7 +130,7 @@ func update_instance_animation_offset(instance_id: int, animation_offset: float)
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 
 ## Updates the current instance_id with the provided track_number (0..animation_tracks.size()- 1)
-func update_instance_track(instance_id: int, track_number: int):
+func update_instance_track(instance_id: int, track_number: int) -> void:
 	if track_number < 0 or track_number > animation_tracks.size() - 1: 
 		printerr("[VATMultiMeshInstance3D] -> update_instance_track(instance_id: int, track_number: int)]: track_number is out of bounds.")
 		return 
@@ -142,7 +142,7 @@ func update_instance_track(instance_id: int, track_number: int):
 	reset_one_shot(instance_id)
 
 ## Updates the current instance_id with the provided alpha (0..1)
-func update_instance_alpha(instance_id: int, alpha: float):
+func update_instance_alpha(instance_id: int, alpha: float) -> void:
 	alpha = clampf(alpha, 0.0, 1.0)
 	custom_data = multimesh.get_instance_custom_data(instance_id)
 	custom_data.a = alpha
@@ -150,14 +150,14 @@ func update_instance_alpha(instance_id: int, alpha: float):
 
 ## Update the instance_id with the provided animation_offset, track_number, and alpha
 ## unless rand_anim_offset = false, where it sets the animation_offset to 0
-func update_instance(instance_id: int, animation_offset: float, track_number: int, alpha: float):
+func update_instance(instance_id: int, animation_offset: float, track_number: int, alpha: float) -> void:
 	update_instance_animation_offset(instance_id, animation_offset)
 	update_instance_track(instance_id, track_number)
 	update_instance_alpha(instance_id, alpha)
 
 ## Update ALL INSTANCES with the provided animation_offset, track_number, and alpha
 ## unless rand_anim_offset = false, where it sets the animation_offset to 0
-func update_all_instances(animation_offset: float, track_number: int, alpha: float):
+func update_all_instances(animation_offset: float, track_number: int, alpha: float) -> void:
 	for instance in multimesh.instance_count:
 		update_instance_animation_offset(instance, animation_offset)
 		update_instance_track(instance, track_number)
@@ -169,7 +169,7 @@ func update_all_instances(animation_offset: float, track_number: int, alpha: flo
 ## [param instance_id] is the specific instance to fade.[br]
 ## [param fade_out_time] the duration of the fade.[br]
 ## [param start_delay] is the delay before fade starts.
-func fade_out_instance(instance_id: int, fade_out_time: float = 1.0, start_delay: float = 0.0):
+func fade_out_instance(instance_id: int, fade_out_time: float = 1.0, start_delay: float = 0.0) -> void:
 	if fade_out_time < 0: return
 	if instance_id >= multimesh.instance_count: return
 	
@@ -187,7 +187,7 @@ func fade_out_instance(instance_id: int, fade_out_time: float = 1.0, start_delay
 ## [param instance_id] is the specific instance to fade in.[br]
 ## [param fade_out_time] the duration of the fade.[br]
 ## [param start_delay] is the delay before fade starts.
-func fade_in_instance(instance_id: int, fade_in_time: float = 1.0, start_delay: float = 0.0):
+func fade_in_instance(instance_id: int, fade_in_time: float = 1.0, start_delay: float = 0.0) -> void:
 	if fade_in_time < 0: return
 	if instance_id >= multimesh.instance_count: return
 
@@ -201,7 +201,7 @@ func fade_in_instance(instance_id: int, fade_in_time: float = 1.0, start_delay: 
 		1,
 		fade_in_time).set_delay(start_delay)
 
-func _do_tween_fade(value: float, instance_id: int):
+func _do_tween_fade(value: float, instance_id: int) -> void:
 	var custom_data: Color = multimesh.get_instance_custom_data(instance_id)
 	custom_data.a = value
 	multimesh.set_instance_custom_data(instance_id, custom_data)
@@ -211,7 +211,7 @@ func _do_tween_fade(value: float, instance_id: int):
 ## [param y_amount] the amount to move the instance in the y-axis (negative value will float up)[br]
 ## [param fade_out_time] the duration of the fade.[br]
 ## [param start_delay] is the delay before fade starts.
-func sink_instance(instance_id: int, y_amount: float, fade_out_time: float = 1.0, start_delay: float = 0.0):
+func sink_instance(instance_id: int, y_amount: float, fade_out_time: float = 1.0, start_delay: float = 0.0) -> void:
 	if fade_out_time < 0: return
 	if instance_id >= multimesh.instance_count: return
 
@@ -222,7 +222,7 @@ func sink_instance(instance_id: int, y_amount: float, fade_out_time: float = 1.0
 		multimesh.get_instance_transform(instance_id).origin.y - y_amount,
 		fade_out_time).set_delay(start_delay).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 
-func _do_tween_sink(value: float, instance_id: int):
+func _do_tween_sink(value: float, instance_id: int) -> void:
 	var trans: Transform3D
 	trans = multimesh.get_instance_transform(instance_id)
 	trans.origin.y = value
@@ -231,14 +231,14 @@ func _do_tween_sink(value: float, instance_id: int):
 # Play next track
 
 ## Plays the next animation track for the provided instance_id
-func play_next_track_instance(instance_id: int):
+func play_next_track_instance(instance_id: int) -> void:
 	var track_number: int = get_track_number_from_instance(instance_id)
 	track_number += 1
 	if track_number > animation_tracks.size() - 1: track_number = 0
 	update_instance_track(instance_id, track_number)
 	
 ## Plays the next animation track for ALL INSTANCES
-func play_next_track_all_instances():
+func play_next_track_all_instances() -> void:
 	var track_number : int
 	for instance in multimesh.instance_count:
 		track_number = get_track_number_from_instance(instance)

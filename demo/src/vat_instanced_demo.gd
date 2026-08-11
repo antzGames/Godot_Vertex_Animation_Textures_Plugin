@@ -52,7 +52,7 @@ func _ready() -> void:
 	# setup all instances
 	setupInstances()
 		
-func setupInstances():
+func setupInstances() -> void:
 	# change floor size based on instance count
 	var s: float = sqrt(vat_multi_mesh_instance_3d.multimesh.instance_count) * 5
 	mesh_floor.mesh.size = Vector2(s,s) 
@@ -72,30 +72,12 @@ func setupInstances():
 		# randomize scale, rotation, and location
 		randomizeInstance(instance)
 		
-		#func get_track_number_from_instance(instance_id: int) -> int:
-		#func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
-		#func get_track_number_from_animation(animation: VATAnimationTrack) -> int:
-		#func get_track_number_from_start_end_frames(start: int, end: int) -> int:
-			
-		# Unit tests for helper functions - you can comment this out
-		#if instance < 50:
-			#var track: VATAnimationTrack = vat_multi_mesh_instance_3d.get_animation_from_instance(instance)
-			#var tn: int = vat_multi_mesh_instance_3d.get_track_number_from_instance(instance)
-			#var tn_anim: int = vat_multi_mesh_instance_3d.get_track_number_from_animation(track)
-			#var tn_se: int = vat_multi_mesh_instance_3d.get_track_number_from_start_end_frames(track.startFrame, track.endFrame)
-			#
-			## Print the test results
-			#print(track, " >>> Tests: ",
-				## is the assigned animation object correct                     Are all three track_number methods the same?
-				#track == vat_multi_mesh_instance_3d.animation_tracks[tn], " ", bool(tn == tn_anim and tn == tn_se))
-			#
-		
 		# this cycles through each animation track number
 		count += 1
 		if count > vat_multi_mesh_instance_3d.animation_tracks.size() - 1:
 			count = 0
 		
-func randomizeInstance(i: int):
+func randomizeInstance(i: int) -> void:
 	var x = mesh_floor.mesh.size.x / 2
 	var y = mesh_floor.mesh.size.y / 2
 	

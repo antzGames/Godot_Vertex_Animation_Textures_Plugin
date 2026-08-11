@@ -34,9 +34,9 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 - Animation tracks' metadata is configured in the editor, not the code.
 - Animations tracks can be different frame sizes.
 - Ability to set a unique animation track per instance.
-- Ability to control the alpha channel for individual instances.
+- Ability to control the alpha channel for individual instances.  Also includes easy fade in/out tweened functions.
 - Ability to set a unique fps speed per animation track.
-- Animation tracks can loop or be a one-shot.
+- Ability to restart the non-looping animation tracks for individual instances.
 - All the `MultiMeshInstance3D` features such as a unique transform (scale, rotation, and position) per instance.
 - Works on all renderers, and on HTML builds.
 
@@ -44,7 +44,7 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 
 - Mesh must be less than 8192 vertices.
 - Total number of frames for all animations must be less than 8192.
-- No blending or transitions between animation tracks possible.
+- No blending or mixing of animation tracks.
 - Cloth simulations not supported by the Blender tool.
 - `MultiMeshInstance3D` `custom_data` and `instance_color` is used by this plugin so you will not have access to it.
 - The new `VATMultiMeshInstance3D` will have `physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF`. The reason is that Godot interpolates the `custom_data` uniform which we do not want.  You can still use physics interpolation in your project though.
@@ -91,58 +91,102 @@ Error messages will also appear in the Output console.
 
 <img width="352" alt="image" src="https://github.com/user-attachments/assets/179685b6-48ba-49d3-8212-717bea88bceb" />
 
-## `VATMultiMeshInstance3D` Functions
+### `OpenVATMultiMeshInstance3D` Update Functions
 
-### Set/update functions
+If you want to change the animation track for a specific instance, use:
 
-#### `update_all_instances`(animation_offset: float, track_number: int, alpha: float)
+`update_instance_track(instance_id: int, track_number: int)`
 
-- Updates ALL INSTANCES with the provided `animation_offset`, `track_number`, and `alpha` unless `rand_anim_offset = false`, where it sets the `animation_offset` to 0.
+If you want to change the alpha of a specific instance use:
 
-#### `update_instance_animation_offset`(instance_id: int, animation_offset: float)
+`update_instance_alpha(instance_id: int, alpha: float)`
 
-- Updates the current `instance_id` with the provided `animation_offset` (0..1), unless `rand_anim_offset = false`, where it sets the offset to `0`.
+If you want to change the animation offset of an instance, so that different instances playing the same animation
+track are not syncronized, use:
 
-#### `update_instance_track`(instance_id: int, track_number: int):
+`update_instance_animation_offset(instance_id: int, animation_offset: float)`
 
-- Updates the current `instance_id` with the provided `track_number` (`0`..`number_of_animation_tracks - 1`)
+You can also change all parameters of a specific instance by using:
 
-#### `update_instance_alpha`(instance_id: int, alpha: float):
+`update_instance(instance_id: int, animation_offset: float, track_number: int, alpha: float)`
 
-- Updates the current `instance_id` with the provided `alpha` (`0`..`1`)
+You can also change ALL instances by using:
 
-### Get helper functions
+`update_all_instances(animation_offset: float, track_number: int, alpha: float)`
 
-#### `get_start_end_frames_from_track_number`(track_number: int) -> Vector2i
+### `OpenVATMultiMeshInstance3D` Tweened Fade In/Out Functions
 
-- Get animation start/end frame `Vector2i` from `track_number`. `track_number` must be within (`0`..`number_of_animation_tracks - 1`)
+You can get Godot to automatically fade out an instance using a `Tween` with:
 
-#### `get_start_end_frames_from_instance`(instance_id: int) -> Vector2i
+`fade_out_instance(instance_id: int, fade_out_time: float = 1.0, start_delay: float = 0.0):`
 
-- Get animation start/end frames `Vector2i` from `instance_id`. Instance must have been initialized.
+You can get Godot to automatically fade in an instance using a `Tween` with:
 
-#### `get_track_number_from_track_vector`(track_vector: Vector2i) -> int
+`fade_in_instance(instance_id: int, fade_in_time: float = 1.0, start_delay: float = 0.0):`
 
-- Get `track_number` from start/end frame `Vector2i`. Returns `-1` if not found.
+### `OpenVATMultiMeshInstance3D` Animation Play Functions
 
-#### `get_track_number_from_instance(instance_id: int)` -> int
+You can play the next animation track of an instance using:
 
-- Get `track_number` from `instance_id`. Returns `-1` if not found.
+`play_next_track_instance(instance_id: int)`
 
-## `MutiMeshInstance3D` `custom_data`
+Or play the next animation track of all instances using:
+	
+`play_next_track_all_instances()`
 
-`MultiMeshInstance3D` `custom_data` is used by this plugin.  Here is how it is used:
+### `OpenVATMultiMeshInstance3D` Animation Get Functions
+
+Animation meta data is stored in the `animation_tracks` variable.  It is an `Array` of `OpenVATAnimationTrack`:
+```gdscript
+var animation_tracks: Array[OpenVATAnimationTrack] 
+```
+
+This is the `OpenVATAnimationTrack` class :
+```gdscript
+class_name OpenVATAnimationTrack
+extends RefCounted
+
+var name: String
+var startFrame: int
+var endFrame: int
+var framerate: int
+var isLooping: bool
+```
+
+To get the `OpenVATAnimationTrack` object from an instance:
+
+`get_animation_from_instance(instance_id: int) -> OpenVATAnimationTrack`
+
+To get the animation track index from the provided `OpenVATAnimationTrack` object: 
+
+`get_track_number_from_animation(animation: OpenVATAnimationTrack) -> int`
+
+To get the currently playing animation track index from the instance, use:
+
+`get_track_number_from_instance(instance_id: int) -> int`
+
+To get the animation track index by animation track name:
+
+`get_track_number_from_name(name: String) -> int:`
+
+To get the animation track index from the start and end frames, use:
+
+`get_track_number_from_start_end_frames(start: int, end: int) -> int`
+
+### Instanced `custom_data` and instanced `color` shader uniforms
+
+The inherited `MultiMeshInstance3D` `custom_data` is used by this plugin and instanced shader.  Here is how it is used:
 
 - `custom_data.r` = **animation offset**: used to randomize instances playing the same animation track
 - `custom_data.g` = **animation start frame**
 - `custom_data.b` = **animation end frame**
 - `custom_data.a` = **alpha of mesh**: used to fade in/out a unique instance
 
-The inherited `MultiMeshInstance3D` `color_instance` is used by this plugin and instanced shader. Here is how it is used:
+The inherited `MultiMeshInstance3D` `color_instance` is used by this plugin and instanced shader.  Here is how it is used:
 
-- `color.r` = is_looping (1.0 = true, 0.0 = false)
-- `color.g` = timestamp used to keep track of when an animation was set or the one_shot has been reset.
-- `color.b` = animation frame rate: must be greater than zero
+- `color.r` = **is_looping** 1.0 = true, 0.0 = false
+- `color.g` = **timestamp** used to keep track of when an animation was set or the one_shot has been reset.
+- `color.b` = **animation frame rate**: must be greater than zero
 
 ## Vertex Animation Shader
 
@@ -178,12 +222,14 @@ uniform sampler2D offset_map;
 uniform sampler2D normal_map;
 uniform sampler2D texture_albedo;
 
-uniform float fps;
+...
 
 varying flat vec4 custom_data;
+varying flat vec4 color_data;
 
 void vertex(){
 	custom_data = INSTANCE_CUSTOM;
+	color_data = COLOR;
 
 	float start_frame = custom_data.g;
 	float end_frame = custom_data.b;
@@ -195,12 +241,27 @@ void vertex(){
 }
 		
 void fragment(){
-	vec3 albedo_col = texture(texture_albedo, UV).rgb;
+	ALBEDO = albedo.rgb * texture(albedo_texture, UV).rgb;
+
+	...
 
 	ALPHA = custom_data.a;  // fader
-	ALBEDO = albedo_col.rgb;
+
 }
 ```
+
+## Common Issues
+
+❓**Question**: My mesh is all white, with no colors or textures. 💡**Answer**: You forgot to add Albedo, Metallic, Roughness, Normal Map textures that came with the original model to the shader.
+
+❓**Question**: My mesh's verticies are cracked or all over the place. 💡**Answer**: Re-import your VAT texture (`.exr` file) with compress mode as `Lossless` and turn off `Generate` Mipmaps. 
+
+❓**Question**: How do I restart a non-looping animation for a specific instance? 💡**Answer**:  Use `reset_one_shot(instance_id)` or `update_instance_track(instance_id: int, track_number: int)` both assume the animation track is set with `is_looping =  false`.
+
+❓**Question**: How do I implement a static pose in an animation track:
+ 
+  - 💡**Answer 1**: Create a 3 frame action on your NLA strip in Blender with each keyframe being the same, then do an OpenVAT export, and re-import into Godot.  The shader will loop these 3 frames, and look like the model is static because the vertex positions have not moved. 
+  - 💡**Answer 2**: Manually encode another animation track in the JSON file with the same startFrame and endFrame, then do an OpenVAT export, and re-import JSON file into Godot.
 
 ## Demos
 

@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	if rotate_camera:
 		pivot.rotate_y(delta * 0.1 * camera_speed)
 
-func setupInstances():
+func setupInstances() -> void:
 	# change floor size based on instance count
 	square_rt = int(sqrt(vat_multi_mesh_instance_3d.multimesh.instance_count))
 	mesh_floor.mesh.size = Vector2(float(square_rt) * grid_size.x, float(square_rt) * grid_size.y) 
@@ -51,7 +51,7 @@ func setupInstances():
 	for instance in vat_multi_mesh_instance_3d.multimesh.instance_count:
 		placeInstance(instance)
 
-func placeInstance(i: int):
+func placeInstance(i: int) -> void:
 	vat_multi_mesh_instance_3d.update_instance_alpha(i, 1.0)
 	
 	var x: float = (-square_rt * grid_size.x)/2.0 + (i % square_rt * grid_size.y)
@@ -80,7 +80,7 @@ func _input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			do_raycast()
 
-func do_raycast():
+func do_raycast() -> void:
 	var space_state = get_world_3d().direct_space_state
 	var mousepos = get_viewport().get_mouse_position()
 
