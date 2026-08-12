@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_te56j"]
 [ext_resource type="ArrayMesh" uid="uid://ser3u8cvloqa" path="res://demo/assets/models/skeleton/skeleton_export_mesh.res" id="4_acrxm"]
 [ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_2dhfw"]
+[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/vat_animation_track.gd" id="6_36v5s"]
 [ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_yoji6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
@@ -31,7 +32,170 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_acrxm")
-buffer = PackedFloat32Array(8e-44, 8e-44, 8.3e-44, 8.1e-44, 8.1e-44, 8.4e-44, 8.3e-44, 8.3e-44, 8.5e-44, 8.4e-44, 8.4e-44, 8.7e-44, 8.5e-44, 8.5e-44, 8.8e-44, 8.7e-44, 8.7e-44, 9e-44, 8.8e-44, 8.8e-44)
+buffer = PackedFloat32Array(0.06923, 1, 1, 0, 758, 0, 0.06923, 0.06923, 0.06923, 1, 1, 0, 758, 190, 0.06923, 0.06923, 0.06923, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_5fsja"]
+script = ExtResource("6_36v5s")
+name = "Track0"
+endFrame = 25
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_36v5s"]
+script = ExtResource("6_36v5s")
+name = "Track1"
+startFrame = 26
+endFrame = 58
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_a0885"]
+script = ExtResource("6_36v5s")
+name = "Track2"
+startFrame = 59
+endFrame = 116
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_8ohrs"]
+script = ExtResource("6_36v5s")
+name = "Track3"
+startFrame = 117
+endFrame = 157
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_oiy5x"]
+script = ExtResource("6_36v5s")
+name = "Track4"
+startFrame = 158
+endFrame = 174
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_vv276"]
+script = ExtResource("6_36v5s")
+name = "Track5"
+startFrame = 175
+endFrame = 226
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_ahovb"]
+script = ExtResource("6_36v5s")
+name = "Track6"
+startFrame = 227
+endFrame = 252
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_r7oa3"]
+script = ExtResource("6_36v5s")
+name = "Track7"
+startFrame = 253
+endFrame = 325
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_cj7pd"]
+script = ExtResource("6_36v5s")
+name = "Track8"
+startFrame = 326
+endFrame = 357
+isLooping = false
+framerate = 24
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_gje4f"]
+script = ExtResource("6_36v5s")
+name = "Track9"
+startFrame = 358
+endFrame = 389
+isLooping = false
+framerate = 24
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_pcrqj"]
+script = ExtResource("6_36v5s")
+name = "Track10"
+startFrame = 390
+endFrame = 475
+isLooping = false
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_cyvd7"]
+script = ExtResource("6_36v5s")
+name = "Track11"
+startFrame = 476
+endFrame = 508
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_kljyh"]
+script = ExtResource("6_36v5s")
+name = "Track12"
+startFrame = 509
+endFrame = 537
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_ywljl"]
+script = ExtResource("6_36v5s")
+name = "Track13"
+startFrame = 538
+endFrame = 554
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_nlc7c"]
+script = ExtResource("6_36v5s")
+name = "Track14"
+startFrame = 555
+endFrame = 583
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_k8maw"]
+script = ExtResource("6_36v5s")
+name = "Track15"
+startFrame = 584
+endFrame = 622
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_x4o7p"]
+script = ExtResource("6_36v5s")
+name = "Track16"
+startFrame = 623
+endFrame = 661
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_rfik7"]
+script = ExtResource("6_36v5s")
+name = "Track17"
+startFrame = 662
+endFrame = 686
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_wches"]
+script = ExtResource("6_36v5s")
+name = "Track18"
+startFrame = 687
+endFrame = 706
+isLooping = false
+framerate = 12
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_td40j"]
+script = ExtResource("6_36v5s")
+name = "Track19"
+startFrame = 707
+endFrame = 711
+framerate = 16
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [node name="SkeletonTrackChange" type="Node3D" unique_id=391254406]
 script = ExtResource("1_phdlk")
@@ -70,7 +234,7 @@ script = ExtResource("5_2dhfw")
 exported_mesh = ExtResource("4_acrxm")
 instance_count = 1
 default_fps = 16
-animation_tracks = Array[Vector4i]([Vector4i(0, 25, 1, 0), Vector4i(26, 58, 1, 0), Vector4i(59, 116, 1, 0), Vector4i(117, 157, 1, 0), Vector4i(158, 174, 1, 0), Vector4i(175, 226, 1, 0), Vector4i(227, 252, 1, 0), Vector4i(253, 325, 1, 0), Vector4i(326, 357, 0, 24), Vector4i(358, 389, 0, 24), Vector4i(390, 475, 0, 0), Vector4i(476, 508, 1, 0), Vector4i(509, 537, 1, 0), Vector4i(538, 554, 1, 0), Vector4i(555, 583, 1, 0), Vector4i(584, 622, 1, 0), Vector4i(623, 661, 1, 0), Vector4i(662, 686, 1, 0), Vector4i(687, 706, 0, 12), Vector4i(707, 711, 1, 0)])
+vat_animation_tracks = Array[ExtResource("6_36v5s")]([SubResource("Resource_5fsja"), SubResource("Resource_36v5s"), SubResource("Resource_a0885"), SubResource("Resource_8ohrs"), SubResource("Resource_oiy5x"), SubResource("Resource_vv276"), SubResource("Resource_ahovb"), SubResource("Resource_r7oa3"), SubResource("Resource_cj7pd"), SubResource("Resource_gje4f"), SubResource("Resource_pcrqj"), SubResource("Resource_cyvd7"), SubResource("Resource_kljyh"), SubResource("Resource_ywljl"), SubResource("Resource_nlc7c"), SubResource("Resource_k8maw"), SubResource("Resource_x4o7p"), SubResource("Resource_rfik7"), SubResource("Resource_wches"), SubResource("Resource_td40j")])
 metadata/_custom_type_script = "uid://damlqeu0m6ksk"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=10977124]

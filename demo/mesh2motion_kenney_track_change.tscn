@@ -6,6 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://d3ri3s4xpv5e6" path="res://demo/assets/models/mesh2motion_kenney/kenney_mesh.res" id="4_sss41"]
 [ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_qts8c"]
 [ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_bcyuy"]
+[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/vat_animation_track.gd" id="6_i413i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
 
@@ -31,11 +32,51 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_sss41")
-buffer = PackedFloat32Array(0, 8e-45, 1e-45, 0, 1e-44, 8e-45, 1e-45, 7e-45, 3e-45, 1e-45, 8e-45, 7e-45, 3e-45, 6e-45, 4e-45, 3e-45, 7e-45, 6e-45, 0, 0)
+buffer = PackedFloat32Array(0.2576, 0, 0.9983766, 0.8541667, 305.2308, 38.699596, 0.2576, 0.2576, 0.2576, 1, 0.99425584, 0.88957494, 306.18185, 39.008614, 0.2576, 0.2576, 0.2576, 0, 0.99734366, 0.8960128)
 
-[node name="Mesh2MotionTrackChange" type="Node3D" unique_id=391254406]
+[sub_resource type="Resource" id="Resource_2y6qg"]
+script = ExtResource("6_i413i")
+name = "Death"
+endFrame = 52
+isLooping = false
+framerate = 24
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_06ljv"]
+script = ExtResource("6_i413i")
+name = "Chop Tree"
+startFrame = 53
+endFrame = 76
+framerate = 24
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_p7rp7"]
+script = ExtResource("6_i413i")
+name = "Bow"
+startFrame = 77
+endFrame = 166
+framerate = 24
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_wlpno"]
+script = ExtResource("6_i413i")
+name = "Attack Ground Pound"
+startFrame = 167
+endFrame = 231
+framerate = 24
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_y47ev"]
+script = ExtResource("6_i413i")
+name = "Angry"
+startFrame = 232
+endFrame = 251
+framerate = 24
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[node name="Mesh2MotionKenneyTrackChange" type="Node3D" unique_id=391254406]
 script = ExtResource("1_3dxpt")
-title = "Kenney's Mesh2Motion"
+title = "Mesh2Motion - Kenney's  Zombie"
 next_scene = ExtResource("2_3dxpt")
 base_scale = 2.0
 max_scale = 2.0
@@ -69,9 +110,8 @@ multimesh = SubResource("MultiMesh_wsgid")
 script = ExtResource("5_qts8c")
 exported_mesh = ExtResource("4_sss41")
 instance_count = 1
-rand_anim_offset = false
 default_fps = 24
-animation_tracks = Array[Vector4i]([Vector4i(1, 53, 0, 0), Vector4i(54, 77, 1, 0), Vector4i(78, 167, 1, 0), Vector4i(168, 232, 1, 0), Vector4i(233, 252, 1, 0)])
+vat_animation_tracks = Array[ExtResource("6_i413i")]([SubResource("Resource_2y6qg"), SubResource("Resource_06ljv"), SubResource("Resource_p7rp7"), SubResource("Resource_wlpno"), SubResource("Resource_y47ev")])
 metadata/_custom_type_script = "uid://damlqeu0m6ksk"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=10977124]

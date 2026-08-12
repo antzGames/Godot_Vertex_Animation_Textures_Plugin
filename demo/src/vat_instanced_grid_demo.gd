@@ -75,7 +75,7 @@ func placeInstance(i: int):
 		vat_multi_mesh_instance_3d.update_instance_track(i, count)
 		vat_multi_mesh_instance_3d.update_instance_animation_offset(i, randf())
 		count += 1
-		if count > vat_multi_mesh_instance_3d.animation_tracks.size() - 1:
+		if count > vat_multi_mesh_instance_3d.number_of_animation_tracks - 1:
 			count = 0
 	
 	node3D.rotation.y = randi_range(0,3) * (PI/2)

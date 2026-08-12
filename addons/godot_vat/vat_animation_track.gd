@@ -1,11 +1,11 @@
 class_name VATAnimationTrack
-extends RefCounted
+extends Resource
 
-var name: String
-var startFrame: int
-var endFrame: int
-var framerate: int
-var isLooping: bool
+@export var name: String
+@export_range(0, 8192) var startFrame: int
+@export_range(0, 8192) var endFrame: int
+@export var isLooping: bool = true
+@export_range(0, 120) var framerate: int
 
 func set_track(name_in: String, start_in: int, end_in: int, framerate_in: int, loop: bool):
 	name = name_in

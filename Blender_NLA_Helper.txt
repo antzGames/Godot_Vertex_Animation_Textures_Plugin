@@ -78,7 +78,7 @@ def add_vat_entry(scene, name, start_frame, end_frame):
     mode = "w" if int(start_frame) == START_FRAME else "a"
 
     with open(export_file, mode, encoding="utf-8") as file:
-        file.write(f"{name}: Vector4i({int(start_frame)}, {int(end_frame)}, 1, 30)\n")
+        file.write(f"{name}: {int(start_frame)}, {int(end_frame)}, true, 30\n")
 
 
 # ------------------------------------------------------------

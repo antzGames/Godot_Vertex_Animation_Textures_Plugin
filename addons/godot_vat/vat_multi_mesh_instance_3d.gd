@@ -19,23 +19,22 @@ class_name VATMultiMeshInstance3D
 @export var instance_count: int = 10
 
 ## Random animation offset on/off. [br]
-## Recommend to keep this on.
-@export var rand_anim_offset: bool = true
+## Use to desync the animation of many instances.
+@export var rand_anim_offset: bool = false
 
+## Default FPS: [br]
+## Overwrites any [VATAnimationTrack] with framerate = 0 with this value.[br]
 @export var default_fps: int = 30
 
 ## Animation tracks: [br]
-## x = start frame, y = end frame, z = isLooping = 1, !isLooping = 0, w = fps [br]
-## Use xy values from your Blender project.[br]
-@export var animation_tracks: Array[Vector4i] = []
-var vat_animation_tracks: Array[VATAnimationTrack] = []
+## Use values from your Blender project.[br]
+@export var vat_animation_tracks: Array[VATAnimationTrack] = []
 
 var frames: int
 var custom_data: Color
 var custom_color: Color
 var number_of_animation_tracks: int
 var _rollover_value : float = ProjectSettings.get_setting("rendering/limits/time/time_rollover_secs")
-
 
 func _create_multimesh() -> void:
 	multimesh = MultiMesh.new()
@@ -57,7 +56,7 @@ func _get_configuration_warnings() -> PackedStringArray: # display the warning o
 	var warnings = []
 	if !multimesh:
 		warnings.push_back('Multimesh not set')
-	if animation_tracks.size() == 0:
+	if vat_animation_tracks.size() == 0:
 		warnings.push_back('No animation tracks defined')
 	return warnings
 	
@@ -77,42 +76,32 @@ func _ready() -> void:
 		physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF # becasue Godot interpolates custom_data, which we do not want
 	else:
 		printerr("VATMultiMeshInstance3D: No multimesh defined")
+		return
+
+	# Clean up empty VAT tracks
+	var original_vat_tracks: Array[VATAnimationTrack] = vat_animation_tracks.duplicate()
+	vat_animation_tracks.clear()
+
+	for vat_track: VATAnimationTrack in original_vat_tracks:
+		if vat_track: vat_animation_tracks.push_back(vat_track)
 		
-	number_of_animation_tracks = animation_tracks.size()
+	number_of_animation_tracks = vat_animation_tracks.size()
 
 	if number_of_animation_tracks == 0:
 		printerr("VATMultiMeshInstance3D: You have not defined any animation tracks!")
 	else:
 		print_rich("\n[color=cyan]Beginning VAT animation configuration...")
 
-		var track_offset: int = 0
-		if animation_tracks[0].x == 1:
-			track_offset = 1
-			print_rich(str("✅First animation track starts at: [color=yellow]1[/color]"))
-			print_rich(str("✅Offset to 1 - All tracks start/end frames reduced by 1."))
-		else:
-			print_rich(str("✅First animation track starts at: [color=yellow]0[/color]"))
-			print_rich(str("✅No offest needed!"))
-
-		# create vat_animation_track array
-		for i in number_of_animation_tracks:
-			var vat_anim: VATAnimationTrack = VATAnimationTrack.new()
-			var fps: int
-			var isLooping: bool
-			
-			if animation_tracks[i].w == 0: fps = default_fps
-			else: fps = animation_tracks[i].w
-			
-			if animation_tracks[i].z == 0: isLooping = false
-			else: isLooping = true
-			
-			vat_anim.set_track(str("track", i), animation_tracks[i].x - track_offset, animation_tracks[i].y - track_offset, fps, isLooping)
-			vat_animation_tracks.append(vat_anim)
+		var i : int = 0
+		for vat_anim: VATAnimationTrack in vat_animation_tracks:
+			if vat_anim.framerate == 0: vat_anim.framerate = default_fps
+			if !vat_anim.name or vat_anim.name.is_empty():
+				vat_anim.name = str("Track", i)
 			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
+			i += 1
 
 		print_rich("[color=cyan]Animation configuration completed.[/color]")
 		
-
 func _process(delta: float) -> void:
 	pass
 
@@ -131,7 +120,7 @@ func update_instance_animation_offset(instance_id: int, animation_offset: float)
 
 ## Updates the current instance_id with the provided track_number (0..animation_tracks.size()- 1)
 func update_instance_track(instance_id: int, track_number: int) -> void:
-	if track_number < 0 or track_number > animation_tracks.size() - 1: 
+	if track_number < 0 or track_number > vat_animation_tracks.size() - 1: 
 		printerr("[VATMultiMeshInstance3D] -> update_instance_track(instance_id: int, track_number: int)]: track_number is out of bounds.")
 		return 
 	custom_data = multimesh.get_instance_custom_data(instance_id)
@@ -234,7 +223,7 @@ func _do_tween_sink(value: float, instance_id: int) -> void:
 func play_next_track_instance(instance_id: int) -> void:
 	var track_number: int = get_track_number_from_instance(instance_id)
 	track_number += 1
-	if track_number > animation_tracks.size() - 1: track_number = 0
+	if track_number > vat_animation_tracks.size() - 1: track_number = 0
 	update_instance_track(instance_id, track_number)
 	
 ## Plays the next animation track for ALL INSTANCES
@@ -243,7 +232,7 @@ func play_next_track_all_instances() -> void:
 	for instance in multimesh.instance_count:
 		track_number = get_track_number_from_instance(instance)
 		track_number += 1
-		if track_number > animation_tracks.size() - 1: track_number = 0
+		if track_number > vat_animation_tracks.size() - 1: track_number = 0
 		update_instance_track(instance, track_number)
 
 # Get functions
@@ -264,7 +253,7 @@ func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
 ## Returns -1 if not found or animation object is null.
 func get_track_number_from_animation(animation: VATAnimationTrack) -> int:
 	if !animation: return -1
-	for i in range(animation_tracks.size()):
+	for i in range(vat_animation_tracks.size()):
 		if animation == vat_animation_tracks[i]: return i
 	
 	return -1
@@ -272,7 +261,7 @@ func get_track_number_from_animation(animation: VATAnimationTrack) -> int:
 ## get track_number from animation track name
 ## Returns -1 if not found.
 func get_track_number_from_name(name: String) -> int:
-	for i in range(animation_tracks.size()):
+	for i in range(vat_animation_tracks.size()):
 		if vat_animation_tracks[i].name.to_lower() == name.to_lower():
 			return i
 	
@@ -282,7 +271,7 @@ func get_track_number_from_name(name: String) -> int:
 ## However [get_track_number_from_animation] is a better option.
 ## Returns -1 if not found.
 func get_track_number_from_start_end_frames(start: int, end: int) -> int:
-	for i in range(animation_tracks.size()):
+	for i in range(vat_animation_tracks.size()):
 		if Vector2i(start,end) == Vector2i(vat_animation_tracks[i].startFrame, vat_animation_tracks[i].endFrame): return i
 	
 	return -1

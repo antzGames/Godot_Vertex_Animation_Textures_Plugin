@@ -6,6 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://2aqlbf68xslb" path="res://demo/assets/models/mesh2motion_male/mesh2motion_mesh.res" id="3_y47ev"]
 [ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="4_h0omw"]
 [ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="5_3srpc"]
+[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/vat_animation_track.gd" id="6_y47ev"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
 
@@ -31,11 +32,67 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("3_y47ev")
-buffer = PackedFloat32Array(0, 0, 0.06923, 0.06923, 0.06923, 1, 0, 0, 758, 0, 0.06923, 0.06923, 0.06923, 1, 1, 0, 758, 0, 0.06923, 0.06923)
+buffer = PackedFloat32Array(1, 0.04, 0.005508439, 0.9058205, 27.74139, 50.820606, 1, 1, 1, 0, 0.003761102, 0.9205152, 27.76919, 48.699593, 1, 1, 1, 0.04, 0.0038211443, 0.8674898)
+
+[sub_resource type="Resource" id="Resource_y47ev"]
+script = ExtResource("6_y47ev")
+name = "Track0"
+endFrame = 44
+framerate = 30
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_h0omw"]
+script = ExtResource("6_y47ev")
+name = "Track1"
+startFrame = 45
+endFrame = 81
+framerate = 30
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_3srpc"]
+script = ExtResource("6_y47ev")
+name = "Track2"
+startFrame = 82
+endFrame = 110
+framerate = 30
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_y2heo"]
+script = ExtResource("6_y47ev")
+name = "Track3"
+startFrame = 111
+endFrame = 186
+framerate = 30
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_r32so"]
+script = ExtResource("6_y47ev")
+name = "Track4"
+startFrame = 187
+endFrame = 239
+isLooping = false
+framerate = 30
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_27quq"]
+script = ExtResource("6_y47ev")
+name = "Track5"
+startFrame = 240
+endFrame = 295
+framerate = 30
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+
+[sub_resource type="Resource" id="Resource_mdq6n"]
+script = ExtResource("6_y47ev")
+name = "Track6"
+startFrame = 296
+endFrame = 355
+framerate = 30
+metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [node name="Mesh2MotionTrackChange" type="Node3D" unique_id=391254406]
 script = ExtResource("1_qm7mt")
-title = "Mesh2Motion's Male"
+title = "Mesh2Motion - Male"
 next_scene = ExtResource("2_y47ev")
 base_scale = 2.0
 max_scale = 2.0
@@ -69,9 +126,7 @@ multimesh = SubResource("MultiMesh_wsgid")
 script = ExtResource("4_h0omw")
 exported_mesh = ExtResource("3_y47ev")
 instance_count = 1
-rand_anim_offset = false
-default_fps = 24
-animation_tracks = Array[Vector4i]([Vector4i(1, 45, 1, 0), Vector4i(46, 82, 1, 0), Vector4i(83, 111, 1, 0), Vector4i(112, 187, 1, 0), Vector4i(188, 240, 0, 0), Vector4i(241, 296, 1, 0), Vector4i(297, 356, 1, 0)])
+vat_animation_tracks = Array[ExtResource("6_y47ev")]([SubResource("Resource_y47ev"), SubResource("Resource_h0omw"), SubResource("Resource_3srpc"), SubResource("Resource_y2heo"), SubResource("Resource_r32so"), SubResource("Resource_27quq"), SubResource("Resource_mdq6n")])
 metadata/_custom_type_script = "uid://damlqeu0m6ksk"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=10977124]

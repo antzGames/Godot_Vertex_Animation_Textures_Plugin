@@ -35,11 +35,10 @@ It has total of 4 floats. All renderers supported.
 */
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_always,depth_prepass_alpha,cull_disabled;
+render_mode blend_mix,depth_draw_always,depth_prepass_alpha,cull_disabled; // change if needed
 
 uniform sampler2D offset_map: filter_nearest;
 uniform sampler2D normal_map: filter_nearest;
-//uniform sampler2D texture_albedo: filter_nearest, hint_default_white;
 
 group_uniforms Albedo;
 uniform vec4 albedo : source_color = vec4(1.0); // Opaque white by default
@@ -77,17 +76,15 @@ void vertex(){
 	float start_frame = custom_data.g;
 	float end_frame = custom_data.b;
 	float num_frames = end_frame - start_frame;
-	int frame_count = int(end_frame - start_frame);
+	int frame_count = int(end_frame - start_frame);  // for % mod used later
 	
 	float frame_offset = num_frames * custom_data.r;
 	float speed = max(1, color_data.b);
 
 	// if start_frame and end_frame are the same - prevents divide by zero
 	num_frames = clamp(num_frames, 0.0001, 8192.0);
-	//if (abs(num_frames) < 0.0001) num_frames = 0.0001;
 
 	float time_scale_normalized = (TIME - timestamp) * (speed / num_frames);
-		
 	float frame_time;
 	float current_frame;
 	float frame_ceil;

@@ -74,7 +74,7 @@ func setupInstances() -> void:
 		
 		# this cycles through each animation track number
 		count += 1
-		if count > vat_multi_mesh_instance_3d.animation_tracks.size() - 1:
+		if count > vat_multi_mesh_instance_3d.number_of_animation_tracks - 1:
 			count = 0
 		
 func randomizeInstance(i: int) -> void:
