@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_te56j"]
 [ext_resource type="ArrayMesh" uid="uid://ser3u8cvloqa" path="res://demo/assets/models/skeleton/skeleton_export_mesh.res" id="4_acrxm"]
 [ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_2dhfw"]
-[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/vat_animation_track.gd" id="6_36v5s"]
+[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/src/vat_animation_track.gd" id="6_36v5s"]
 [ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_yoji6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
@@ -32,7 +32,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_acrxm")
-buffer = PackedFloat32Array(0.06923, 1, 1, 0, 758, 0, 0.06923, 0.06923, 0.06923, 1, 1, 0, 758, 190, 0.06923, 0.06923, 0.06923, 1, 1, 1)
+buffer = PackedFloat32Array(0, 8e-45, 1e-45, 0, 1e-44, 8e-45, 1e-45, 7e-45, 3e-45, 1e-45, 8e-45, 7e-45, 3e-45, 6e-45, 4e-45, 3e-45, 7e-45, 6e-45, 0.07888999, 0.07888999)
 
 [sub_resource type="Resource" id="Resource_5fsja"]
 script = ExtResource("6_36v5s")

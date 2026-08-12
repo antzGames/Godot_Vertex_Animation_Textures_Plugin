@@ -1,0 +1,5 @@
+Greeting: startFrame:0, endFrame:115
+Dance_Simple: startFrame:116, endFrame:146
+Dance_Reach_Hip: startFrame:147, endFrame:207
+Dance_Charleston: startFrame:208, endFrame:263
+Dance_Body_Roll: startFrame:264, endFrame:419

@@ -70,7 +70,7 @@ def add_vat_entry(scene, name, start_frame, end_frame):
     import os
 
     export_folder = bpy.path.abspath("//vaexport")
-    export_file = os.path.join(export_folder, "vat-animation tracks.txt")
+    export_file = os.path.join(export_folder, "vat-animation-tracks.txt")
 
     os.makedirs(export_folder, exist_ok=True)
 
@@ -78,7 +78,7 @@ def add_vat_entry(scene, name, start_frame, end_frame):
     mode = "w" if int(start_frame) == START_FRAME else "a"
 
     with open(export_file, mode, encoding="utf-8") as file:
-        file.write(f"{name}: {int(start_frame)}, {int(end_frame)}, true, 30\n")
+        file.write(f"{name}: startFrame:{int(start_frame)}, endFrame:{int(end_frame)}\n")
 
 
 # ------------------------------------------------------------

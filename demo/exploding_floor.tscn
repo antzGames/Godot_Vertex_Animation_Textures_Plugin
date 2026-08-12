@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://rikiay6d5yp3" path="res://demo/assets/models/granite/Marble 4_Roughness.jpg" id="4_24a65"]
 [ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_yj520"]
 [ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_lh24r"]
-[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/vat_animation_track.gd" id="7_24a65"]
+[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/src/vat_animation_track.gd" id="7_24a65"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
 

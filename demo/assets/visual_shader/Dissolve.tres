@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4vuq4mpi3kcd" path="res://demo/assets/visual_shader/PerlinNoise3DNode.gd" id="1_1r1m7"]
 [ext_resource type="Texture2D" uid="uid://ch57dnrr25jn3" path="res://demo/assets/models/skeleton/skeleton_texture.png" id="2_uuo70"]
-[ext_resource type="Script" uid="uid://bg1qxktyaicdq" path="res://addons/godot_vat/vat_visual_shader.gd" id="3_uuo70"]
+[ext_resource type="Script" uid="uid://bg1qxktyaicdq" path="res://addons/godot_vat/src/vat_visual_shader.gd" id="3_uuo70"]
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_7ghpb"]
 parameter_name = "Edge_Color"

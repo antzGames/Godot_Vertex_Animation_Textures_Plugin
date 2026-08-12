@@ -91,9 +91,7 @@ Error messages will also appear in the Output console.
 - **Instance Count**: `int` = the number of instances
 - **Rand Anim Offset**: `bool` = randomize the animation offset (true/false)
 - **Default FPS**: `int` = replaces the `Vector4i.w` component to this specified FPS if `0`.
-- **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks: `x` = start frame,`y` = end frame, `z` = is_looping `[0..1]`, `w` = fps, if `0`, then the **Default FPS** is used.
-
-<img width="352" alt="image" src="https://github.com/user-attachments/assets/179685b6-48ba-49d3-8212-717bea88bceb" />
+- **Animation Tracks**: `Array[VATAnimationTrack]` the array of animation tracks.
 
 ### `VATMultiMeshInstance3D` Update Functions
 
@@ -145,10 +143,10 @@ Animation meta data is stored in the `vat_animation_tracks` variable.  It is an 
 var vat_animation_tracks: Array[VATAnimationTrack] 
 ```
 
-This is the `VATAnimationTrack` class :
+This is the `VATAnimationTrack` class:
 ```gdscript
 class_name VATAnimationTrack
-extends RefCounted
+extends Resource
 
 var name: String
 var startFrame: int
@@ -209,7 +207,7 @@ shader parameters:
 - `Offset Map`: A texture that encodes the position of each vertex for every frame.
 - `Normal Map`: A texture that encodes the normal of each vertex for every frame.
 - `Texture Albedo`: The UV color texture that is used for the mesh.
-- `Specular`, `Metallic`, `Roughness`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information.
+- `Specular`, `Metallic`, `Roughness`, `Normal`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information.
 
 
 <img width="353" alt="image" src="https://github.com/user-attachments/assets/f54cd3d3-fe8c-423a-a50c-bb47f3bf4bb5" />
@@ -266,10 +264,11 @@ void fragment(){
 
 Demo scenes are in the `demo` subfolder:
 
-- **PerformanceTest**: 2000 instances (configurable) with 20 animations, with different scales, and positions.  Displays FPS, and allows you to disable shadows.  See `Performance` section for detailed performance findings.
-- **AlphaTest**: Shows how to control alpha so that you can fade in/out individual instances.
+- **Performance Test**: 2000 instances (configurable) with 20 animations, with different scales, and positions.  Displays FPS, and allows you to disable shadows.  See `Performance` section for detailed performance findings.
+- **Alpha Test**: Shows how to control alpha so that you can fade in/out individual instances.
+- **Visual Shader Test**: An example post dissolve effect using Visual Shaders.
 
-The skeleton mesh included in the demo has 20 baked in animations.
+The skeleton mesh included in the demo has 20 baked in animations.  Both the Male Mannequin and Kenney's Zombie are from Mesh2Motion.
 
 ## Godot games made with this plugin
 
