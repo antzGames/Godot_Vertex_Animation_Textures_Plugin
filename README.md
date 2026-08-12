@@ -272,7 +272,7 @@ Demo scenes are in the `demo` subfolder:
 - **Alpha Test**: Shows how to control alpha so that you can fade in/out individual instances.
 - **Visual Shader Test**: An example post dissolve effect using Visual Shaders.
 
-The skeleton mesh included in the demo has 20 baked in animations.  Both the Male Mannequin and Kenney's Zombie are from Mesh2Motion.
+The skeleton mesh included in the demo has 20 baked in animations.  The Male and Female Mannequins and Kenney's Zombie are from Mesh2Motion.
 
 ## Godot games made with this plugin
 
