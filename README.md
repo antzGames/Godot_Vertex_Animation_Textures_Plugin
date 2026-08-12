@@ -90,12 +90,12 @@ Error messages will also appear in the Output console.
 
 - **Instance Count**: `int` = the number of instances
 - **Rand Anim Offset**: `bool` = randomize the animation offset (true/false)
-- **Default FPS**: `int` = sets `Vector4i.w` component automatically if it is `0`.
+- **Default FPS**: `int` = replaces the `Vector4i.w` component to this specified FPS if `0`.
 - **Animation Tracks**: `Array[Vector4i]` = the list of animation tracks: `x` = start frame,`y` = end frame, `z` = is_looping `[0..1]`, `w` = fps, if `0`, then the **Default FPS** is used.
 
 <img width="352" alt="image" src="https://github.com/user-attachments/assets/179685b6-48ba-49d3-8212-717bea88bceb" />
 
-### `OpenVATMultiMeshInstance3D` Update Functions
+### `VATMultiMeshInstance3D` Update Functions
 
 If you want to change the animation track for a specific instance, use:
 
@@ -118,7 +118,7 @@ You can also change ALL instances by using:
 
 `update_all_instances(animation_offset: float, track_number: int, alpha: float)`
 
-### `OpenVATMultiMeshInstance3D` Tweened Fade In/Out Functions
+### `VATMultiMeshInstance3D` Tweened Fade In/Out Functions
 
 You can get Godot to automatically fade out an instance using a `Tween` with:
 
@@ -128,7 +128,7 @@ You can get Godot to automatically fade in an instance using a `Tween` with:
 
 `fade_in_instance(instance_id: int, fade_in_time: float = 1.0, start_delay: float = 0.0):`
 
-### `OpenVATMultiMeshInstance3D` Animation Play Functions
+### `VATMultiMeshInstance3D` Animation Play Functions
 
 You can play the next animation track of an instance using:
 
@@ -138,7 +138,7 @@ Or play the next animation track of all instances using:
 	
 `play_next_track_all_instances()`
 
-### `OpenVATMultiMeshInstance3D` Animation Get Functions
+### `VATMultiMeshInstance3D` Animation Get Functions
 
 Animation meta data is stored in the `vat_animation_tracks` variable.  It is an `Array` of `VATAnimationTrack`:
 ```gdscript
