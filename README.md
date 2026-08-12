@@ -357,4 +357,8 @@ Initial findings is that the `Mobile` renderer performs the best.  `Compatibilit
 
 [Skeleton](https://kaylousberg.itch.io/kaykit-skeletons) by Kay Lousberg - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
 
+[Zoimbie Model](https://kenney.nl/assets/animated-characters-survivors) by Kenney - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
+
+[Male and Female Mannequins](https://quaternius.com/packs/universalanimationlibrary2.html) by Quaternius - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
+
 [Floor Tile](https://kenney.nl/assets/prototype-textures) by Kenney - [CC0 License](http://creativecommons.org/publicdomain/zero/1.0/)
