@@ -92,7 +92,7 @@ Error messages will also appear in the Output console.
 
 - **Instance Count**: `int` = the number of instances
 - **Rand Anim Offset**: `bool` = randomize the animation offset (true/false)
-- **Default FPS**: `int` = replaces the `Vector4i.w` component to this specified FPS if `0`.
+- **Default FPS**: `int` = replaces the framerate of all animation tracks if FPS set to `0`.
 - **Animation Tracks**: `Array[VATAnimationTrack]` the array of animation tracks.
 
 <img width="332" alt="new_vat" src="https://github.com/user-attachments/assets/a2379c01-61c9-4716-8832-ad5d9a9ef37e" />
