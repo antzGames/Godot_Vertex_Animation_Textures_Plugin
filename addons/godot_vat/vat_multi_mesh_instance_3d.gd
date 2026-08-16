@@ -71,7 +71,7 @@ func _ready() -> void:
 		multimesh.instance_count = 0
 		multimesh.transform_format = MultiMesh.TRANSFORM_3D
 		multimesh.use_custom_data = true # offsets, start/end frame, alpha
-		multimesh.use_colors = true # isLooping, timestamp
+		multimesh.use_colors = true # isLooping, timestamp, isBlended
 		multimesh.instance_count = instance_count
 		physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF # becasue Godot interpolates custom_data, which we do not want
 	else:
@@ -97,7 +97,7 @@ func _ready() -> void:
 			if vat_anim.framerate == 0: vat_anim.framerate = default_fps
 			if !vat_anim.name or vat_anim.name.is_empty():
 				vat_anim.name = str("Track", i)
-			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
+			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   isBlended: [color=yellow]", vat_anim.isBlended , "[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
 			i += 1
 
 		print_rich("[color=cyan]Animation configuration completed.[/color]")
@@ -128,7 +128,7 @@ func update_instance_track(instance_id: int, track_number: int) -> void:
 	custom_data.b = vat_animation_tracks[track_number].endFrame
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 		
-	reset_one_shot(instance_id)
+	reset_one_shot(instance_id)  # will also update isBlended
 
 ## Updates the current instance_id with the provided alpha (0..1)
 func update_instance_alpha(instance_id: int, alpha: float) -> void:
@@ -292,7 +292,12 @@ func reset_one_shot(instance_id: int):
 		custom_color.r = 1.0
 	else:
 		custom_color.r = 0.0
-	
+		
+	if anim.isBlended:
+		custom_color.a = 1.0
+	else:
+		custom_color.a = 0.0
+		
 	custom_color.g = get_current_timestamp()
 	custom_color.b = anim.framerate
 	

@@ -17,11 +17,11 @@ It has total of 4 floats. All renderers supported
 		alpha of mesh: used to fade in/out a unique instance
 
 		
-Instanced COLOR is used for looping / non-looping (also called one_shot) animations.
+Instanced COLOR is used for interpolation, looping / non-looping (also called one_shot) animations.
 It has total of 4 floats. All renderers supported.
 
 	Red channel:
-		is_looping: 1.0 = true, 0.0 = false
+		use_looping: 1.0 = true, 0.0 = false
 
 	Green channel:
 		timestamp:
@@ -29,9 +29,11 @@ It has total of 4 floats. All renderers supported.
 			if non-lopping - Tells the shader when the one_shot has been reset.
 
 	Blue channel: 
-			animation frame rate - must be greater than 0
+		animation frame rate - must be greater than 0
 	
-	Alpha channel: not used
+	Alpha channel:
+		use_blended: 1.0 = true, 0.0 = false
+		Animation track blend/interpolation, suggested by: @theHoodaloo
 */
 
 shader_type spatial;
@@ -70,7 +72,8 @@ void vertex(){
 	custom_data = INSTANCE_CUSTOM;
 	color_data = COLOR;
 
-	bool is_looping = color_data.r > 0.5; // 1.0 = true, 0.0 = false
+	float use_looping = color_data.r;
+	float use_blended = color_data.a; // Suggested by: @theHoodaloo
 	float timestamp = color_data.g;
 	
 	float start_frame = custom_data.g;
@@ -85,21 +88,35 @@ void vertex(){
 	num_frames = clamp(num_frames, 0.0001, 8192.0);
 
 	float time_scale_normalized = (TIME - timestamp) * (speed / num_frames);
-	float frame_time;
-	float current_frame;
-	float frame_ceil;
+	
+	float loop_time  = mod(time_scale_normalized, 1.0);
+	float frame_time = mix(time_scale_normalized, loop_time, use_looping);
+
+	float frame_progress        = frame_time * num_frames;
+	float frame_progress_offset = frame_progress + frame_offset;
 		
-	if (is_looping) {
-		frame_time = mod(time_scale_normalized, 1.0);
-		current_frame = start_frame + mod((frame_time * num_frames) + frame_offset, num_frames) + 1.0;
-		if (current_frame > end_frame) current_frame = start_frame;
-		frame_ceil = float(int(ceil(current_frame) - start_frame) % frame_count) + start_frame;
-	} else {
-		frame_time = time_scale_normalized;
-		current_frame = start_frame + (frame_time * num_frames) + frame_offset + 1.0;
-		if (current_frame >= end_frame) current_frame = end_frame;
-		frame_ceil = clamp(ceil(current_frame), start_frame, end_frame);
-	}
+	float stop_frame = start_frame + floor(frame_progress);
+
+	float blend_frame = start_frame + mix(
+		frame_progress_offset + 1.0,
+		mod(frame_progress_offset, num_frames) + 1.0,
+		use_looping
+	);
+		
+	float current_frame_raw = mix(stop_frame, blend_frame, use_blended);
+	float ceil_frame        = ceil(current_frame_raw);
+
+	float current_frame = mix(
+		clamp(current_frame_raw, start_frame, end_frame),
+		mix(current_frame_raw, start_frame, step(end_frame, current_frame_raw)),
+		use_looping
+	);
+
+	float frame_ceil = mix(
+		clamp(ceil_frame, start_frame, end_frame),
+		float(int(ceil_frame - start_frame) % frame_count) + start_frame,
+		use_looping
+	);
 		
 	ivec2 tex_size = textureSize(offset_map, 0);
 	float pixel_size = 1.0 / float(tex_size.y);

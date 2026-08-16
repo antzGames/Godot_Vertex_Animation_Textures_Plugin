@@ -9,7 +9,7 @@ func _ready() -> void:
 	mesh_floor.mesh.size = Vector2(200,200) 
 	
 	for track in vat_multi_mesh_instance_3d.vat_animation_tracks:
-		track_select.add_item(str(track.name,"   FPS:", track.framerate, "   isLooping:", track.isLooping))
+		track_select.add_item(str(track.name,"   FPS:", track.framerate, "   isLooping:", track.isLooping, "   isBlended:", track.isBlended))
 		
 	_on_track_select_item_selected(0)
 
