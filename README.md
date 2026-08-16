@@ -96,7 +96,8 @@ Error messages will also appear in the Output console.
 - **Default FPS**: `int` = replaces the framerate of all animation tracks if FPS set to `0`.
 - **Animation Tracks**: `Array[VATAnimationTrack]` the array of animation tracks.
 
-<img width="332" alt="new_vat" src="https://github.com/user-attachments/assets/a2379c01-61c9-4716-8832-ad5d9a9ef37e" />
+<img width="326" alt="image" src="https://github.com/user-attachments/assets/2804297d-3122-4892-99f8-39418255ec4f" />
+
 
 ### `VATMultiMeshInstance3D` Update Functions
 
