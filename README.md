@@ -37,7 +37,7 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 - Ability to control the alpha channel for individual instances.  Also includes easy fade in/out tweened functions.
 - Ability to set a unique fps speed per animation track.
 - Ability to restart the non-looping animation tracks for individual instances.
-- Ability to set animation interpolation (blending) for each animation track. Suggested by: @theHoodaloo
+- Ability to set animation interpolation (blending) for each animation track. Suggested by: [@theHoodaloo](https://github.com/antzGames/Godot_Vertex_Animation_Textures_Plugin/issues/7)
 - Visual Shaders are supported so you can also freely apply your own shader logic while still having VAT animations.
 - All the `MultiMeshInstance3D` features such as a unique transform (scale, rotation, and position) per instance.
 - Works on all renderers, and on HTML builds.
