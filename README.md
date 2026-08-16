@@ -222,7 +222,7 @@ shader parameters:
 
 Make sure both offset and normal textures are imported with Lossless format.
 
-The `custom_data` in the `MultiMeshInstance3D` and the shader parameters are passed to the shader
+The instanced uniforms `custom_data` and `color ` in the `MultiMeshInstance3D` are passed to the shader
 to do its magic.  Here is some of the shader code that uses this data:
 	
 ```C++
