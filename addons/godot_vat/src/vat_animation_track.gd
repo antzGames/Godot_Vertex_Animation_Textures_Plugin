@@ -18,16 +18,21 @@ extends Resource
 ## like a death animation, or does it loop?
 @export var isLooping: bool = true
 
+## Is the animation track only to be played once,[br]
+## like a death animation, or does it loop?
+@export var isBlended: bool = true
+
 ## Each animation track can have it own unique fps.[br]
 ## If set to 0, then it will be replaced by [member VATMultiMeshInstance3D.default_fps].
 @export_range(0, 120) var framerate: int
 
-func set_track(name_in: String, start_in: int, end_in: int, framerate_in: int, loop: bool):
+func set_track(name_in: String, start_in: int, end_in: int, framerate_in: int, loop: bool, blend: bool):
 	name = name_in
 	startFrame = start_in
 	endFrame = end_in
 	framerate = framerate_in
 	isLooping = loop
+	isBlended = blend
 	
 func _to_string() -> String:
-	return str("Animation Track Name: ",name, "   startFrame: ", startFrame, "    endFrame: ", endFrame, "   framerate: ", framerate, "   isLooping: ", isLooping)
+	return str("Animation Track Name: ",name, "   startFrame: ", startFrame, "    endFrame: ", endFrame, "   framerate: ", framerate, "   isLooping: ", isLooping, "   isBlended: ", isBlended)
