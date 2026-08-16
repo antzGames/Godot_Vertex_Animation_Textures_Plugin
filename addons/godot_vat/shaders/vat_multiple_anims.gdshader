@@ -17,11 +17,11 @@ It has total of 4 floats. All renderers supported
 		alpha of mesh: used to fade in/out a unique instance
 
 		
-Instanced COLOR is used for looping / non-looping (also called one_shot) animations.
+Instanced COLOR is used for interpolation, looping / non-looping (also called one_shot) animations.
 It has total of 4 floats. All renderers supported.
 
 	Red channel:
-		is_looping: 1.0 = true, 0.0 = false
+		use_looping: 1.0 = true, 0.0 = false
 
 	Green channel:
 		timestamp:
@@ -29,10 +29,11 @@ It has total of 4 floats. All renderers supported.
 			if non-lopping - Tells the shader when the one_shot has been reset.
 
 	Blue channel: 
-			animation frame rate - must be greater than 0
+		animation frame rate - must be greater than 0
 	
 	Alpha channel:
-			is animation belnded/interpolated
+		use_blended: 1.0 = true, 0.0 = false
+		Animation track blend/interpolation, suggested by: @theHoodaloo
 */
 
 shader_type spatial;
@@ -72,8 +73,7 @@ void vertex(){
 	color_data = COLOR;
 
 	float use_looping = color_data.r;
-	float use_blended = color_data.a;
-	
+	float use_blended = color_data.a; // Suggested by: @theHoodaloo
 	float timestamp = color_data.g;
 	
 	float start_frame = custom_data.g;

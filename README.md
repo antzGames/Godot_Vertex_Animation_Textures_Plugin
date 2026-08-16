@@ -37,6 +37,7 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 - Ability to control the alpha channel for individual instances.  Also includes easy fade in/out tweened functions.
 - Ability to set a unique fps speed per animation track.
 - Ability to restart the non-looping animation tracks for individual instances.
+- Ability to set animation interpolation (blending) for each animation track. Suggested by: @theHoodaloo
 - Visual Shaders are supported so you can also freely apply your own shader logic while still having VAT animations.
 - All the `MultiMeshInstance3D` features such as a unique transform (scale, rotation, and position) per instance.
 - Works on all renderers, and on HTML builds.
@@ -155,8 +156,9 @@ extends Resource
 var name: String
 var startFrame: int
 var endFrame: int
-var framerate: int
 var isLooping: bool
+var isBlended: bool
+var framerate: int
 ```
 
 To get the `VATAnimationTrack` object from an instance:
@@ -190,9 +192,10 @@ The inherited `MultiMeshInstance3D` `custom_data` is used by this plugin and ins
 
 The inherited `MultiMeshInstance3D` `color_instance` is used by this plugin and instanced shader.  Here is how it is used:
 
-- `color.r` = **is_looping** 1.0 = true, 0.0 = false
+- `color.r` = **use_looping** 1.0 = true, 0.0 = false
 - `color.g` = **timestamp** used to keep track of when an animation was set or the one_shot has been reset.
 - `color.b` = **animation frame rate**: must be greater than zero
+- `color.a` = **use_blended**: 1.0 = true, 0.0 = false
 
 ## Vertex Animation Shader
 
