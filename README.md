@@ -211,9 +211,8 @@ In the `Shader` property select `Quick Load` and select: `vat_multiple_anims.gds
 Once loaded expand `Shader Parametrs` and you will have access to configure the following
 shader parameters:
 	
-- `FPS`: How many frames to play per second.  Use the same value you see in Blender.
-- `Offset Map`: A texture that encodes the position of each vertex for every frame.
-- `Normal Map`: A texture that encodes the normal of each vertex for every frame.
+- `Offset Map`: The texture that encodes the position of each vertex for every frame.
+- `Normal Map`: The texture that encodes the normal of each vertex for every frame.
 - `Texture Albedo`: The UV color texture that is used for the mesh.
 - `Specular`, `Metallic`, `Roughness`, `Normal`: See Godot [docs](https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html) for more information.
 
