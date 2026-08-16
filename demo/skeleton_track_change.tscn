@@ -32,7 +32,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_acrxm")
-buffer = PackedFloat32Array(0, 8e-45, 1e-45, 0, 1e-44, 8e-45, 1e-45, 7e-45, 3e-45, 1e-45, 8e-45, 7e-45, 3e-45, 6e-45, 4e-45, 3e-45, 7e-45, 6e-45, 0.07888999, 0.07888999)
+buffer = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 [sub_resource type="Resource" id="Resource_5fsja"]
 script = ExtResource("6_36v5s")
@@ -121,6 +121,7 @@ name = "Track10"
 startFrame = 390
 endFrame = 475
 isLooping = false
+isBlended = false
 framerate = 16
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
