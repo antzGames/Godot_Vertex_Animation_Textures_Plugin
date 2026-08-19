@@ -390,6 +390,11 @@ func freeze_frame(instance_id: int, frame: int) -> void:
 	custom_data.b = frame
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 
+## Identical to shader
+func _extractDigitGroup(value: float, groupIndex: int, digitCount: int) -> int:
+	var exp: float = pow(10.0, float(digitCount))
+	return int(fmod(value * exp * pow(10.0, float(groupIndex * digitCount)),exp))
+
 ## Get current frame from instance_id (0...last_frame - first_frame)
 func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: bool = false) -> int:
 	var color_data: Color = multimesh.get_instance_color(instance_id)
@@ -403,9 +408,10 @@ func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: b
 	var last_frame:   float = frame_data.b
 	var frame_count:  float = last_frame - first_frame + 1.0
 	
-	var time_scale:   float = elapsed_time * (color_data.b / (frame_count + 0.0001))
-	var is_looping:   float = color_data.r
-	var blend_amount: float = color_data.a
+	var framerate:    float = _extractDigitGroup(color_data.r, 1, 3);
+	var time_scale:   float = elapsed_time * (framerate / (frame_count + 0.0001))
+	var is_looping:   float = _extractDigitGroup(color_data.r, 0, 1)
+	var blend_amount: float = _extractDigitGroup(color_data.r, 1, 1)
 	
 	var frame_time:         float = lerp(time_scale, fmod(time_scale, 1.0), is_looping)
 	var frame_progress:     float = frame_time * frame_count + frame_data.r
