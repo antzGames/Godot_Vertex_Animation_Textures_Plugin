@@ -3,6 +3,7 @@ extends VATInstancedDemo
 
 @onready var track_select: OptionButton = $UI/MarginContainer/VBox/HBoxTrack/TrackSelect
 @onready var repeat: Button = $UI/MarginContainer/VBox/HBoxTrack/Repeat
+@onready var frame_info: Label = $UI/FrameInfo
 
 func _ready() -> void:
 	super._ready()
@@ -12,6 +13,10 @@ func _ready() -> void:
 		track_select.add_item(str(track.name,"   FPS:", track.framerate, "   isLooping:", track.isLooping, "   isBlended:", track.isBlended))
 		
 	_on_track_select_item_selected(0)
+
+func _process(delta: float) -> void:
+	super._process(delta)
+	frame_info.text = str("Frame: %d" % vat_multi_mesh_instance_3d.get_current_frame_from_instance(0))
 
 func _on_track_select_item_selected(index: int) -> void:
 	vat_multi_mesh_instance_3d.update_all_instances(0, index, 1)

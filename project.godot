@@ -20,7 +20,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Godot_VAT_Plugin"
-config/version="0.1.5"
+config/version="0.1.6"
 run/main_scene="uid://cmhtwdpo7atr4"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/image="res://demo/assets/images/AntzBanner1.png"

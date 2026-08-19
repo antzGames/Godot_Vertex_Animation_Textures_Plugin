@@ -32,13 +32,14 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_hqf4c")
-buffer = PackedFloat32Array(1.83671e-40, 1.83677e-40, 3.6735e-40, 2.75508e-40, 2.75513e-40, 4.59187e-40, 9.18366e-40, 9.18372e-40, 1.102046e-39, 1.010203e-39, 1.010209e-39, 1.193882e-39, 1.653061e-39, 1.653067e-39, 1.836741e-39, 1.744898e-39, 1.744904e-39, 1.928578e-39, 0, 0)
+buffer = PackedFloat32Array(-0.05, 0.05, 0, 0.05, 0.05, 0, 0.05, -0.05, 0, -0.05, -0.05, 0, 9.1835e-41, 3e-45, 2.75509e-40, 0.2, 0.32, 1, 0, 24)
 
 [sub_resource type="Resource" id="Resource_3srpc"]
 script = ExtResource("6_1tdip")
 name = "Dance_Reach_Hip"
 startFrame = 147
 endFrame = 207
+framerate = 24
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [sub_resource type="Resource" id="Resource_r32so"]
@@ -46,6 +47,7 @@ script = ExtResource("6_1tdip")
 name = "Dance_Body_Roll"
 startFrame = 264
 endFrame = 419
+framerate = 24
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [sub_resource type="Resource" id="Resource_h0omw"]
@@ -53,6 +55,7 @@ script = ExtResource("6_1tdip")
 name = "Dance_Simple"
 startFrame = 116
 endFrame = 146
+framerate = 24
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [sub_resource type="Resource" id="Resource_y2heo"]
@@ -60,12 +63,14 @@ script = ExtResource("6_1tdip")
 name = "Dance_Charleston"
 startFrame = 208
 endFrame = 263
+framerate = 24
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [sub_resource type="Resource" id="Resource_y47ev"]
 script = ExtResource("6_1tdip")
 name = "Greeting"
 endFrame = 115
+framerate = 24
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [node name="Mesh2MotionTrackChange" type="Node3D" unique_id=391254406]
@@ -241,6 +246,24 @@ grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("7_46fn5")
 expand_mode = 1
+
+[node name="FrameInfo" type="Label" parent="UI" unique_id=76117508]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -206.0
+offset_right = 20.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 96
+horizontal_alignment = 1
 
 [connection signal="item_selected" from="UI/MarginContainer/VBox/HBoxTrack/TrackSelect" to="." method="_on_track_select_item_selected"]
 [connection signal="pressed" from="UI/MarginContainer/VBox/HBoxTrack/Repeat" to="." method="_on_repeat_pressed"]

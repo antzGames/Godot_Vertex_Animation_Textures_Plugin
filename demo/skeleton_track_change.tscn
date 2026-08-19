@@ -32,7 +32,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_acrxm")
-buffer = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+buffer = PackedFloat32Array(1.193982e-39, 7.989809e-39, 1.193881e-39, 1.285817e-39, 1.285715e-39, 5.234644e-39, 5.418418e-39, 8.081605e-39, 8.173439e-39, 8.357156e-39, 8.265322e-39, 8.54083e-39, 5.510261e-39, 8.724504e-39, 5.510214e-39, 8.816341e-39, 5.60205e-39, 8.540831e-39, 5.693886e-39, 5.87756e-39)
 
 [sub_resource type="Resource" id="Resource_5fsja"]
 script = ExtResource("6_36v5s")
@@ -121,8 +121,8 @@ name = "Track10"
 startFrame = 390
 endFrame = 475
 isLooping = false
-isBlended = false
 framerate = 16
+isBlended = false
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [sub_resource type="Resource" id="Resource_cyvd7"]
@@ -268,6 +268,24 @@ grow_horizontal = 2
 text = "Press [SPACE] or [F1] to load next scene."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FrameInfo" type="Label" parent="UI" unique_id=1218394506]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -206.0
+offset_right = 20.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 96
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1163633282]
 offset_right = 40.0

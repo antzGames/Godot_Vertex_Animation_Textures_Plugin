@@ -32,7 +32,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_sss41")
-buffer = PackedFloat32Array(0, 8e-45, 1e-45, 0, 1e-44, 8e-45, 1e-45, 7e-45, 3e-45, 1e-45, 8e-45, 7e-45, 3e-45, 6e-45, 4e-45, 3e-45, 7e-45, 6e-45, 0, 0)
+buffer = PackedFloat32Array(0, 0, 0.337, 0.62, 1, 1, 365, 0, 0.337, 0.62, 1, 1, 365, 96, 0.337, 0.62, 1, 1, 0, 96)
 
 [sub_resource type="Resource" id="Resource_2y6qg"]
 script = ExtResource("6_i413i")
@@ -247,6 +247,24 @@ grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("6_bcyuy")
 expand_mode = 1
+
+[node name="FrameInfo" type="Label" parent="UI" unique_id=1936275258]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -206.0
+offset_right = 20.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 96
+horizontal_alignment = 1
 
 [connection signal="item_selected" from="UI/MarginContainer/VBox/HBoxTrack/TrackSelect" to="." method="_on_track_select_item_selected"]
 [connection signal="pressed" from="UI/MarginContainer/VBox/HBoxTrack/Repeat" to="." method="_on_repeat_pressed"]
