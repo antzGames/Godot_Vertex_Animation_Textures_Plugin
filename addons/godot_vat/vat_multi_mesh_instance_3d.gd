@@ -71,7 +71,7 @@ func _ready() -> void:
 		multimesh.instance_count = 0
 		multimesh.transform_format = MultiMesh.TRANSFORM_3D
 		multimesh.use_custom_data = true # offsets, start/end frame, alpha
-		multimesh.use_colors = true # isLooping, timestamp, isBlended
+		multimesh.use_colors = true # isLooping, timestamp
 		multimesh.instance_count = instance_count
 		physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF # becasue Godot interpolates custom_data, which we do not want
 	else:
@@ -97,7 +97,7 @@ func _ready() -> void:
 			if vat_anim.framerate == 0: vat_anim.framerate = default_fps
 			if !vat_anim.name or vat_anim.name.is_empty():
 				vat_anim.name = str("Track", i)
-			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   isBlended: [color=yellow]", vat_anim.isBlended , "[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
+			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
 			i += 1
 
 		print_rich("[color=cyan]Animation configuration completed.[/color]")
@@ -128,7 +128,7 @@ func update_instance_track(instance_id: int, track_number: int) -> void:
 	custom_data.b = vat_animation_tracks[track_number].endFrame
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 		
-	reset_one_shot(instance_id)  # will also update isBlended
+	reset_one_shot(instance_id)
 
 ## Updates the current instance_id with the provided alpha (0..1)
 func update_instance_alpha(instance_id: int, alpha: float) -> void:
@@ -281,29 +281,154 @@ func get_track_number_from_start_end_frames(start: int, end: int) -> int:
 func get_track_number_from_instance(instance_id: int) -> int:
 	return get_track_number_from_animation(get_animation_from_instance(instance_id))
 
+func get_current_timestamp() -> float:
+	return fmod((float(Time.get_ticks_msec()) / 1000.0), _rollover_value) - 0.5
+#endregion
+
+#region theHoodaloo Custom Code
+
 ## Restarts the one shot animation for a specific instance_id.[br][br]
 ## Only valid if instanced animation track  [is_looping] is true
 func reset_one_shot(instance_id: int):
 	custom_color = multimesh.get_instance_color(instance_id)
 	
-	var anim: VATAnimationTrack = get_animation_from_instance(instance_id)
+	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
 	
-	if anim.isLooping:
-		custom_color.r = 1.0
-	else:
-		custom_color.r = 0.0
-		
-	if anim.isBlended:
-		custom_color.a = 1.0
-	else:
-		custom_color.a = 0.0
-		
+	custom_color.r = _encode_color_channel_red(track)
 	custom_color.g = get_current_timestamp()
-	custom_color.b = anim.framerate
 	
 	multimesh.set_instance_color(instance_id, custom_color)
 
-func get_current_timestamp() -> float:
-	return fmod((float(Time.get_ticks_msec()) / 1000.0), _rollover_value) - 0.5
+## Generates a float that represents isLooping, isBlended, isReversed, and framerate to be encoded into custom_color.r [br]
+func _encode_color_channel_red(track: VATAnimationTrack) -> float:
+	var toggle_array: Array[int] = []
+	toggle_array.append(1 if track.isLooping  else 0)
+	toggle_array.append(1 if track.isBlended  else 0)
+	toggle_array.append(1 if track.isReversed else 0)
 	
+	var framerate: int = clamp(track.framerate, 0, 999)
+	var framerate_length: int = len(str(abs(framerate)))
+	
+	var zeros_to_add: int = 3 - framerate_length
+	for i in range(zeros_to_add): # TODO: Make Integer Padding Helper Function
+		toggle_array.append(0)
+	toggle_array.append(track.framerate) # 0-999FPS
+	
+	return _encode_float_from_digits(toggle_array)
+
+## Encodes a float from array of integers: [br]
+## Example: [1,0,9,0,0,2] = 0.109002 [br]
+## Example: [10,900,2]    = 0.109002 [br]
+## NOTE: Integer values discard the 0 when in front of the value! Plese pad values instead: [br]
+## Example: [10,9,002]   = 0.1092      ❌ [br]
+## Example: [10,9,0,0,2] = 0.109002 ✅ [br]
+func _encode_float_from_digits(float_digits: Array[int]) -> float:
+	var result:           float = 0.0
+	var decimal_position: int   = 1
+	
+	for value: int in float_digits:
+		var digit_count: int   = len(str(value)) if value > 0 else 1
+		var exponent:    float = -float(decimal_position + digit_count - 1)
+		
+		result += float(value) * pow(10.0, exponent)
+		decimal_position += digit_count
+	
+	return result
+
+## Sets start and end frame while keeping current track parameters
+func set_section(instance_id: int, start_frame: int, end_frame: int,) -> void:
+	custom_data   = multimesh.get_instance_custom_data(instance_id)
+	custom_data.r = 0.0
+	custom_data.g = start_frame
+	custom_data.b = end_frame
+	multimesh.set_instance_custom_data(instance_id, custom_data)
+	
+	custom_color   = multimesh.get_instance_color(instance_id)
+	custom_color.g = get_current_timestamp()
+	multimesh.set_instance_color(instance_id, custom_color)
+	
+@export_tool_button("Import VATAnimationTrack(s) from JSON File", "File") var import_vat_animation_track = _import_vat_animation_track
+func _import_vat_animation_track() -> void:
+	if !Engine.is_editor_hint(): return
+	
+	var dialog: EditorFileDialog = EditorFileDialog.new()
+	dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
+	dialog.filters = ["*.json ; JSON Files"]
+	
+	dialog.file_selected.connect(func(path: String) -> void:
+		var json_as_text: String = FileAccess.open(path, FileAccess.READ).get_as_text()
+		var json_as_array: Array = JSON.parse_string(json_as_text)
+		
+		var vat_animation_track_new: Array[VATAnimationTrack] = []
+		for track: Dictionary in json_as_array:
+			var vat_animation_track: VATAnimationTrack = VATAnimationTrack.new()
+			vat_animation_track.name       = track.get("name", "Animation")
+			vat_animation_track.startFrame = track.get("startFrame", 0)
+			vat_animation_track.endFrame   = track.get("endFrame",   0)
+			vat_animation_track.isLooping  = track.get("isLooping", true)
+			vat_animation_track.isBlended  = track.get("isBlended", true)
+			vat_animation_track.framerate  = track.get("framerate", 0.0)
+			vat_animation_track_new.append(vat_animation_track)
+			
+		vat_animation_tracks = vat_animation_track_new
+		dialog.queue_free()
+	)
+	dialog.canceled.connect(func() -> void: dialog.queue_free())
+	
+	get_tree().root.add_child(dialog)
+	dialog.popup_centered_ratio(0.70)
+
+## Updates the current instance_id with the provided frame number
+## Frame number is in VAT scope
+## Animation offset will be reset to 0
+func freeze_frame(instance_id: int, frame: int) -> void:
+	custom_data = multimesh.get_instance_custom_data(instance_id)
+	
+	frame = clampi(frame, 0, 8192)
+	custom_data.r = 0.0
+	custom_data.g = frame
+	custom_data.b = frame
+	multimesh.set_instance_custom_data(instance_id, custom_data)
+
+## Identical to shader
+func _extractDigitGroup(value: float, groupIndex: int, digitCount: int) -> int:
+	var exp: float = pow(10.0, float(digitCount))
+	return int(fmod(value * exp * pow(10.0, float(groupIndex * digitCount)),exp))
+
+## Get current frame from instance_id (0...last_frame - first_frame)
+func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: bool = false) -> int:
+	var color_data: Color = multimesh.get_instance_color(instance_id)
+	var frame_data: Color = multimesh.get_instance_custom_data(instance_id)
+	
+	var start_time:   float = color_data.g
+	var current_time: float = get_current_timestamp()
+	var elapsed_time: float = current_time - start_time
+	
+	var first_frame:  float = frame_data.g
+	var last_frame:   float = frame_data.b
+	var frame_count:  float = last_frame - first_frame + 1.0
+	
+	var framerate:    float = _extractDigitGroup(color_data.r, 1, 3);
+	var time_scale:   float = elapsed_time * (framerate / (frame_count + 0.0001))
+	var is_looping:   float = _extractDigitGroup(color_data.r, 0, 1)
+	var blend_amount: float = _extractDigitGroup(color_data.r, 1, 1)
+	
+	var frame_time:         float = lerp(time_scale, fmod(time_scale, 1.0), is_looping)
+	var frame_progress:     float = frame_time * frame_count + frame_data.r
+	var frame_progress_mod: float = fmod(frame_progress, frame_count)
+	
+	var stop_frame:    float = first_frame + floor(frame_progress)
+	var loop_frame:    float = first_frame + lerp(frame_progress + 1.0, frame_progress_mod + 1.0, is_looping)
+	var current_frame: float = ceil(lerp(stop_frame, loop_frame, blend_amount))
+	
+	var result: float = lerp(
+		clamp(current_frame, first_frame, last_frame),
+		fmod(current_frame - first_frame, frame_count) + first_frame,
+		is_looping
+	)
+	
+	if !relative_to_all_tracks:
+		result -= first_frame
+	
+	return int(result)
 #endregion
