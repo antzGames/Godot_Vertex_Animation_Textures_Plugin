@@ -294,13 +294,13 @@ func reset_one_shot(instance_id: int):
 	
 	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
 	
-	custom_color.r = _encode_color_channel_red(0, track)
+	custom_color.r = _encode_color_channel_red(track)
 	custom_color.g = get_current_timestamp()
 	
 	multimesh.set_instance_color(instance_id, custom_color)
 
 ## Generates a float that represents isLooping, isBlended, isReversed, and framerate to be encoded into custom_color.r [br]
-func _encode_color_channel_red(instance_id: int, track: VATAnimationTrack) -> float:
+func _encode_color_channel_red(track: VATAnimationTrack) -> float:
 	var toggle_array: Array[int] = []
 	toggle_array.append(1 if track.isLooping  else 0)
 	toggle_array.append(1 if track.isBlended  else 0)
