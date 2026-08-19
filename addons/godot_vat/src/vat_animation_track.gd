@@ -1,3 +1,4 @@
+@tool
 class_name VATAnimationTrack
 extends Resource
 
@@ -18,21 +19,24 @@ extends Resource
 ## like a death animation, or does it loop?
 @export var isLooping: bool = true
 
-## Is the animation track only to be played once,[br]
-## like a death animation, or does it loop?
-@export var isBlended: bool = true
-
 ## Each animation track can have it own unique fps.[br]
 ## If set to 0, then it will be replaced by [member VATMultiMeshInstance3D.default_fps].
 @export_range(0, 120) var framerate: int
 
-func set_track(name_in: String, start_in: int, end_in: int, framerate_in: int, loop: bool, blend: bool):
+## Is the animation track interpolated/blended, or stepped/constant?[br]
+@export var isBlended: bool = true
+
+## Is the animation track played in reverse? (UNUSED FOR NOW)
+@export var isReversed: bool = false
+
+func set_track(name_in: String, start_in: int, end_in: int, framerate_in: int, loop: bool, blend: bool, reversed: bool):
 	name = name_in
 	startFrame = start_in
-	endFrame = end_in
-	framerate = framerate_in
-	isLooping = loop
-	isBlended = blend
+	endFrame   = end_in
+	framerate  = framerate_in
+	isLooping  = loop
+	isBlended  = blend
+	isReversed = reversed
 	
 func _to_string() -> String:
-	return str("Animation Track Name: ",name, "   startFrame: ", startFrame, "    endFrame: ", endFrame, "   framerate: ", framerate, "   isLooping: ", isLooping, "   isBlended: ", isBlended)
+	return str("Animation Track Name: ",name, "   startFrame: ", startFrame, "    endFrame: ", endFrame, "   framerate: ", framerate, "   isLooping: ", isLooping, "isReversed: ", isReversed)
