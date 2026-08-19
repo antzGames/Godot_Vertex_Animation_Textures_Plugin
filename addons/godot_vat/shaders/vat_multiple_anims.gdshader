@@ -20,8 +20,11 @@ It has total of 4 floats. All renderers supported
 Instanced COLOR is used for interpolation, looping / non-looping (also called one_shot) animations.
 It has total of 4 floats. All renderers supported.
 
-	Red channel:
-		use_looping: 1.0 = true, 0.0 = false
+	Red channel: (FLOAT ENCODED)
+		digit 0 {use_looping:  1.0 = true, 0.0 = false}
+		digit 1 {use_blended:  1.0 = true, 0.0 = false}
+		digit 2 {use_reversed: 1.0 = true, 0.0 = false} <-- UNUSED FOR NOW
+		digit 3-5 {animation frame rate: 0-999}
 
 	Green channel:
 		timestamp:
@@ -29,11 +32,10 @@ It has total of 4 floats. All renderers supported.
 			if non-lopping - Tells the shader when the one_shot has been reset.
 
 	Blue channel: 
-		animation frame rate - must be greater than 0
+		UNUSED
 	
 	Alpha channel:
-		use_blended: 1.0 = true, 0.0 = false
-		Animation track blend/interpolation, suggested by: @theHoodaloo
+		UNUSED
 */
 
 shader_type spatial;
@@ -68,13 +70,18 @@ group_uniforms;
 varying flat vec4 custom_data;
 varying flat vec4 color_data;
 
+int extractDigitGroup(float value, int groupIndex, int digitCount) {
+    float exp = pow(10.0, float(digitCount));
+    return int(mod(value * exp * pow(10.0, float(groupIndex * digitCount)), exp));
+}
+
 void vertex(){
 	custom_data = INSTANCE_CUSTOM;
 	color_data = COLOR;
 
-	float use_looping = color_data.r;
-	float use_blended = color_data.a; // Suggested by: @theHoodaloo
-	float timestamp = color_data.g;
+	float use_looping = float(extractDigitGroup(color_data.r, 0, 1));
+	float use_blended = float(extractDigitGroup(color_data.r, 1, 1));
+	float timestamp   = color_data.g;
 	
 	float start_frame = custom_data.g;
 	float end_frame = custom_data.b;
@@ -82,7 +89,7 @@ void vertex(){
 	int frame_count = int(end_frame - start_frame);  // for % mod used later
 	
 	float frame_offset = num_frames * custom_data.r;
-	float speed = max(1, color_data.b);
+	float speed = max(1, float(float(extractDigitGroup(color_data.r, 1, 3))));
 
 	// if start_frame and end_frame are the same - prevents divide by zero
 	num_frames = clamp(num_frames, 0.0001, 8192.0);
