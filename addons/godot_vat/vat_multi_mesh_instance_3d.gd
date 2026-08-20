@@ -7,7 +7,6 @@ class_name VATMultiMeshInstance3D
 ##
 ## @tutorial: https://github.com/antzGames/Godot_Vertex_Animation_Textures_Plugin
 
-
 #region @exports
 ## Exported [Mesh] from Blender, with [ShaderMaterial] set in surface_0
 @export var exported_mesh: ArrayMesh:
@@ -311,9 +310,8 @@ func reset_one_shot(instance_id: int):
 	
 	multimesh.set_instance_color(instance_id, custom_color)
 
-
 ## Sets start and end frame while keeping current track parameters
-func set_section(instance_id: int, start_frame: int, end_frame: int,) -> void:
+func set_section(instance_id: int, start_frame: int, end_frame: int) -> void:
 	custom_data   = multimesh.get_instance_custom_data(instance_id)
 	custom_data.r = 0.0
 	custom_data.g = start_frame
@@ -407,7 +405,7 @@ func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: b
 #endregion
 
 #region encoding/decoding float functions
-## Generates a float that represents isLooping, isBlended, isReversed, and framerate to be encoded into custom_color.r [br]
+## Generates a float that represents isLooping, isBlended, isReversed to be encoded into custom_color.r [br]
 func _encode_color_channel_red(track: VATAnimationTrack) -> float:
 	var toggle_array: Array[int] = []
 	toggle_array.append(1 if track.isLooping  else 0)
@@ -417,7 +415,7 @@ func _encode_color_channel_red(track: VATAnimationTrack) -> float:
 	return _encode_float_from_digits(toggle_array)
 
 ## Encodes a float from array of integers: [br]
-## Example: [1,0,1] = 0.101 [br]
+## Example: [1,0,1] = 0.101 encoded float[br]
 func _encode_float_from_digits(float_digits: Array[int]) -> float:
 	var result:           float = 0.0
 	var decimal_position: int   = 1
