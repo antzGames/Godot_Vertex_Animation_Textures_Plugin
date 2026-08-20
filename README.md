@@ -158,7 +158,7 @@ var startFrame: int
 var endFrame: int
 var isLooping: bool
 var isBlended: bool
-var isReversed: bool # For future backward playback
+var isReversed: bool # For future reverse playback
 var framerate: int
 ```
 
@@ -193,7 +193,7 @@ The inherited `MultiMeshInstance3D` `custom_data` is used by this plugin and ins
 
 The inherited `MultiMeshInstance3D` `color_instance` is used by this plugin and instanced shader.  Here is how it is used:
 
-- `color.r` = packed flat for **use_looping**, **use_blended**, **use_reverse** where 1.0 = true, 0.0 = false.
+- `color.r` = packed float for **use_looping**, **use_blended**, **use_reverse** where 1.0 = true, 0.0 = false.
 - `color.g` = **timestamp** used to keep track of when an animation was set or the one_shot has been reset.
 - `color.b` = **animation frame rate**: must be greater than zero
 - `color.a` = NOT USED
