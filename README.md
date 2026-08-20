@@ -298,7 +298,7 @@ Here are the performance test results per renderer, using:
 
 | Renderer  | Shadows On | Shadows Off  |
 |---|---|---|
-| **Compatibility**  | 354 fps | 520 fps  |
+| **Compatibility**  | 354 fps | 536 fps  |
 | **Mobile** | 458 fps | 768 fps |
 | **Forward+** | 349 fps | 506 fps |
 
@@ -310,7 +310,7 @@ Here are the performance test results per renderer, using:
 | **Mobile** |  216 fps | 378 fps |
 | **Forward+** | 165 fps | 244 fps |
 
-Initial findings is that the `Mobile` renderer performs the best.  `Compatibility` renderer performs the worst.
+Initial findings is that the `Mobile` renderer performs the best.
 
 ## Blender Add-On Guide
 
