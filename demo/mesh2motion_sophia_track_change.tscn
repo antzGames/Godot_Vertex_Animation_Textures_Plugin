@@ -1,12 +1,12 @@
-[gd_scene format=3 uid="uid://bypvmrpum6glw"]
+[gd_scene format=3 uid="uid://b0367x2ld7c66"]
 
-[ext_resource type="Script" uid="uid://bwf8bcqwdntcm" path="res://demo/src/vat_instanced_track.gd" id="1_3dxpt"]
-[ext_resource type="PackedScene" uid="uid://b0367x2ld7c66" path="res://demo/mesh2motion_sophia_track_change.tscn" id="2_i413i"]
-[ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_mkj31"]
-[ext_resource type="ArrayMesh" uid="uid://d3ri3s4xpv5e6" path="res://demo/assets/models/mesh2motion_kenney/kenney_mesh.res" id="4_sss41"]
-[ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_qts8c"]
-[ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="6_bcyuy"]
-[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/src/vat_animation_track.gd" id="6_i413i"]
+[ext_resource type="Script" uid="uid://bwf8bcqwdntcm" path="res://demo/src/vat_instanced_track.gd" id="1_15nk8"]
+[ext_resource type="PackedScene" uid="uid://bq8p1i0571hj4" path="res://demo/mesh2motion_female_track_change.tscn" id="2_15nk8"]
+[ext_resource type="Texture2D" uid="uid://baoe11f1xmft0" path="res://demo/assets/images/texture_01.png" id="3_cdo4s"]
+[ext_resource type="ArrayMesh" uid="uid://duklwk5vrfa5o" path="res://demo/assets/models/mesh2motion_sophia/sophia_mesh.res" id="4_15nk8"]
+[ext_resource type="Script" uid="uid://damlqeu0m6ksk" path="res://addons/godot_vat/vat_multi_mesh_instance_3d.gd" id="5_ad7jy"]
+[ext_resource type="Script" uid="uid://b7dau4o26vdnl" path="res://addons/godot_vat/src/vat_animation_track.gd" id="6_rigvj"]
+[ext_resource type="Texture2D" uid="uid://b81hm82v24aym" path="res://antz_512.png" id="7_ultro"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7n746"]
 
@@ -19,7 +19,7 @@ sky = SubResource("Sky_03w7h")
 ambient_light_source = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwhhi"]
-albedo_texture = ExtResource("3_mkj31")
+albedo_texture = ExtResource("3_cdo4s")
 uv1_scale = Vector3(20, 20, 20)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m56k3"]
@@ -31,53 +31,47 @@ transform_format = 1
 use_colors = true
 use_custom_data = true
 instance_count = 1
-mesh = ExtResource("4_sss41")
-buffer = PackedFloat32Array(487.58978, 0, 0, 0, 1e-45, 0, 7e-45, 0, 6e-45, 0, 2814620, 0, 5.066395e-06, 0, 4.351139e-06, 0, 2.8014183e-06, 0, 0, 0)
+mesh = ExtResource("4_15nk8")
+buffer = PackedFloat32Array(35490244, 0, 0, 0, 0, 0, 8e-45, 0, 8e-45, 0, 0, 0, 6.6161156e-06, 0, 7.0929527e-06, 0, 6.854534e-06, 0, 6.377697e-06, 0)
 
-[sub_resource type="Resource" id="Resource_2y6qg"]
-script = ExtResource("6_i413i")
-name = "Death"
-endFrame = 52
-isLooping = false
-framerate = 24
-metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+[sub_resource type="Resource" id="Resource_1ilhq"]
+script = ExtResource("6_rigvj")
+name = "Jumping_Jacks.001"
+startFrame = 48
+endFrame = 77
+framerate = 30
 
-[sub_resource type="Resource" id="Resource_06ljv"]
-script = ExtResource("6_i413i")
-name = "Chop Tree"
-startFrame = 53
-endFrame = 76
-framerate = 24
-metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+[sub_resource type="Resource" id="Resource_15nk8"]
+script = ExtResource("6_rigvj")
+name = "Levitate_Entrance.001"
+endFrame = 47
+framerate = 30
 
-[sub_resource type="Resource" id="Resource_p7rp7"]
-script = ExtResource("6_i413i")
-name = "Bow"
-startFrame = 77
-endFrame = 166
-framerate = 24
-metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+[sub_resource type="Resource" id="Resource_cdo4s"]
+script = ExtResource("6_rigvj")
+name = "Head_Nod.001"
+startFrame = 78
+endFrame = 98
+framerate = 30
 
-[sub_resource type="Resource" id="Resource_wlpno"]
-script = ExtResource("6_i413i")
-name = "Attack Ground Pound"
-startFrame = 167
-endFrame = 231
-framerate = 24
-metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+[sub_resource type="Resource" id="Resource_xsrig"]
+script = ExtResource("6_rigvj")
+name = "Crouch_Walk.001"
+startFrame = 99
+endFrame = 159
+framerate = 30
 
-[sub_resource type="Resource" id="Resource_y47ev"]
-script = ExtResource("6_i413i")
-name = "Angry"
-startFrame = 232
-endFrame = 251
-framerate = 24
-metadata/_custom_type_script = "uid://b7dau4o26vdnl"
+[sub_resource type="Resource" id="Resource_ad7jy"]
+script = ExtResource("6_rigvj")
+name = "Crawl.001"
+startFrame = 160
+endFrame = 200
+framerate = 30
 
-[node name="Mesh2MotionKenneyTrackChange" type="Node3D" unique_id=391254406]
-script = ExtResource("1_3dxpt")
-title = "Mesh2Motion - Kenney's  Zombie"
-next_scene = ExtResource("2_i413i")
+[node name="Mesh2MotionTrackChange" type="Node3D" unique_id=391254406]
+script = ExtResource("1_15nk8")
+title = "Mesh2Motion - Sophia"
+next_scene = ExtResource("2_15nk8")
 base_scale = 2.0
 max_scale = 2.0
 cycle_all_instances = false
@@ -106,12 +100,12 @@ mesh = SubResource("PlaneMesh_m56k3")
 
 [node name="VATMultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1903163823]
 physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 multimesh = SubResource("MultiMesh_wsgid")
-script = ExtResource("5_qts8c")
-exported_mesh = ExtResource("4_sss41")
+script = ExtResource("5_ad7jy")
+exported_mesh = ExtResource("4_15nk8")
 instance_count = 1
-default_fps = 24
-vat_animation_tracks = Array[ExtResource("6_i413i")]([SubResource("Resource_2y6qg"), SubResource("Resource_06ljv"), SubResource("Resource_p7rp7"), SubResource("Resource_wlpno"), SubResource("Resource_y47ev")])
+vat_animation_tracks = Array[ExtResource("6_rigvj")]([SubResource("Resource_1ilhq"), SubResource("Resource_15nk8"), SubResource("Resource_cdo4s"), SubResource("Resource_xsrig"), SubResource("Resource_ad7jy")])
 metadata/_custom_type_script = "uid://damlqeu0m6ksk"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=10977124]
@@ -245,10 +239,10 @@ offset_right = -3.0
 offset_bottom = 42.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("6_bcyuy")
+texture = ExtResource("7_ultro")
 expand_mode = 1
 
-[node name="FrameInfo" type="Label" parent="UI" unique_id=1936275258]
+[node name="FrameInfo" type="Label" parent="UI" unique_id=76117508]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

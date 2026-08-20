@@ -1,4 +1,5 @@
 import bpy
+import json
 
 # Based on: https://github.com/sharpen3d/openvat/blob/main/Development/PopulateVATAnimDataFromNLA.py
 # by Luke Stilson
@@ -66,19 +67,36 @@ def get_nla_strips(obj):
 	return strips
 
 # This is new.  Writes to a file instead of OpenVAT's plugin
-def add_vat_entry(scene, name, start_frame, end_frame):
+def add_vat_entry(is_last, name, start_frame, end_frame):
     import os
 
     export_folder = bpy.path.abspath("//vaexport")
-    export_file = os.path.join(export_folder, "vat-animation-tracks.txt")
+    export_file = os.path.join(export_folder, "vat-animation-tracks.json")
 
     os.makedirs(export_folder, exist_ok=True)
 
     # Write the first entry fresh, then append subsequent entries.
     mode = "w" if int(start_frame) == START_FRAME else "a"
 
+    data = {
+        "name": name,
+        "startFrame": int(start_frame),
+        "endFrame": int(end_frame),
+        "isLooping": True,
+        "isBlended": True,
+        "isReversed": False,
+        "frameRate": 30
+    }
+
     with open(export_file, mode, encoding="utf-8") as file:
-        file.write(f"{name}: startFrame:{int(start_frame)}, endFrame:{int(end_frame)}\n")
+        if int(start_frame) == START_FRAME:
+            file.write(f"[\n")        
+
+        json.dump(data, file, indent=4)
+        if is_last:
+            file.write(f"\n]")
+        else:
+            file.write(f",")
 
 
 # ------------------------------------------------------------
@@ -126,7 +144,7 @@ for item in all_strips:
     # VAT ranges are usually integer frame ranges.
     # End frame is rounded down from strip.frame_end.
     add_vat_entry(
-        scene,
+        item == all_strips[-1],
         clip_name,
         round(strip.frame_start),
         round(strip.frame_end)

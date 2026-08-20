@@ -342,7 +342,7 @@ func _import_vat_animation_track() -> void:
 			vat_animation_track.endFrame   = track.get("endFrame",   0)
 			vat_animation_track.isLooping  = track.get("isLooping", true)
 			vat_animation_track.isBlended  = track.get("isBlended", true)
-			vat_animation_track.framerate  = track.get("framerate", 0.0)
+			vat_animation_track.framerate  = track.get("frameRate", 0.0)
 			vat_animation_track_new.append(vat_animation_track)
 			
 		vat_animation_tracks = vat_animation_track_new

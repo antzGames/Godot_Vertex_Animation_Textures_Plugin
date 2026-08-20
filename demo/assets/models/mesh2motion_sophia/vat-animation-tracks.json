@@ -1,0 +1,43 @@
+[
+{
+	"name": "Levitate_Entrance.001",
+	"startFrame": 0,
+	"endFrame": 47,
+	"isLooping": true,
+	"isBlended": true,
+	"isReversed": false,
+	"frameRate": 30
+},{
+	"name": "Jumping_Jacks.001",
+	"startFrame": 48,
+	"endFrame": 77,
+	"isLooping": true,
+	"isBlended": true,
+	"isReversed": false,
+	"frameRate": 30
+},{
+	"name": "Head_Nod.001",
+	"startFrame": 78,
+	"endFrame": 98,
+	"isLooping": true,
+	"isBlended": true,
+	"isReversed": false,
+	"frameRate": 30
+},{
+	"name": "Crouch_Walk.001",
+	"startFrame": 99,
+	"endFrame": 159,
+	"isLooping": true,
+	"isBlended": true,
+	"isReversed": false,
+	"frameRate": 30
+},{
+	"name": "Crawl.001",
+	"startFrame": 160,
+	"endFrame": 200,
+	"isLooping": true,
+	"isBlended": true,
+	"isReversed": false,
+	"frameRate": 30
+}
+]
