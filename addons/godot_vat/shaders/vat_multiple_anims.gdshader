@@ -69,28 +69,14 @@ group_uniforms;
 varying flat vec4 custom_data;
 varying flat vec4 color_data;
 
-int extractDigitGroup(float value, int group_index, int digit_count) {
-    float scale = 1.0;
-
-    for (int i = 0; i < digit_count; i++) {
-        scale *= 10.0;
-    }
-
-    float shifted = value * scale;
-
-    for (int i = 0; i < group_index; i++) {
-        shifted *= scale;
-    }
-
-    return int(mod(floor(shifted + 0.5), scale));
-}
-
 void vertex(){
 	custom_data = INSTANCE_CUSTOM;
 	color_data = COLOR;
 
-	float use_looping = float(extractDigitGroup(color_data.r, 0, 1));
-	float use_blended = float(extractDigitGroup(color_data.r, 1, 1));
+	float use_looping = mod(floor(color_data.r * 10.0 + 0.5), 10.0);
+	float use_blended = mod(floor(color_data.r * 100.0 + 0.5), 10.0);
+	//float use_reverse = mod(floor(color_data.r * 1000.0 + 0.5), 10.0);
+	
 	float timestamp   = color_data.g;
 	
 	float start_frame = custom_data.g;

@@ -107,7 +107,7 @@ func _ready() -> void:
 			if vat_anim.framerate == 0: vat_anim.framerate = default_fps
 			if !vat_anim.name or vat_anim.name.is_empty():
 				vat_anim.name = str("Track", i)
-			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
+			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   isBlended: [color=yellow]", vat_anim.isBlended ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
 			i += 1
 
 		print_rich("[color=cyan]Animation configuration completed.[/color]")
@@ -384,6 +384,7 @@ func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: b
 	var time_scale:   float = elapsed_time * (framerate / (frame_count + 0.0001))
 	var is_looping:   float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.IS_LOOPING)
 	var blend_amount: float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.IS_BLENDED)
+	#var is_reversed: float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.REVERSED)
 	
 	var frame_time:         float = lerp(time_scale, fmod(time_scale, 1.0), is_looping)
 	var frame_progress:     float = frame_time * frame_count + frame_data.r
@@ -416,11 +417,7 @@ func _encode_color_channel_red(track: VATAnimationTrack) -> float:
 	return _encode_float_from_digits(toggle_array)
 
 ## Encodes a float from array of integers: [br]
-## Example: [1,0,9,0,0,2] = 0.109002 [br]
-## Example: [10,900,2]    = 0.109002 [br]
-## NOTE: Integer values discard the 0 when in front of the value! Plese pad values instead: [br]
-## Example: [10,9,002]   = 0.1092      ❌ [br]
-## Example: [10,9,0,0,2] = 0.109002 ✅ [br]
+## Example: [1,0,1] = 0.101 [br]
 func _encode_float_from_digits(float_digits: Array[int]) -> float:
 	var result:           float = 0.0
 	var decimal_position: int   = 1
@@ -431,7 +428,7 @@ func _encode_float_from_digits(float_digits: Array[int]) -> float:
 		
 		result += float(value) * pow(10.0, exponent)
 		decimal_position += digit_count
-	
+
 	return result
 	
 ## Simple decoding of the packed COLOR.r channel[br]
@@ -442,25 +439,12 @@ func _encode_float_from_digits(float_digits: Array[int]) -> float:
 func _decode_float_from_color_channel_red(red_value: float, type: ColorChannelRed) -> int:
 	match type:
 		ColorChannelRed.IS_LOOPING:
-			return _extractDigitGroup(red_value, 0, 1)
+			return fmod(floor(red_value * 10.0 + 0.5), 10.0);
 		ColorChannelRed.IS_BLENDED:
-			return _extractDigitGroup(red_value, 1, 1)
-		#ColorChannelRed.REVERSED:
-		#	return _extractDigitGroup(red_value, 2, 1) # double check if groupIndex is correct
+			return fmod(floor(red_value * 100.0 + 0.5), 10.0);
+		ColorChannelRed.REVERSED:
+			return fmod(floor(red_value * 1000.0 + 0.5), 10.0);
 		_: #  This should not happen unless another ColorChannelRed emum value was added
 			return 0
 			
-func _extractDigitGroup(value: float, group_index: int, digit_count: int) -> int:
-	var scale: float = 1.0
-
-	for i: int in digit_count:
-		scale *= 10.0
-	
-	var shifted: float = value * scale
-
-	for i: int in group_index:
-		shifted *= scale
-
-	return int(fmod(floor(shifted + 0.5), scale))
-	
 #endregion

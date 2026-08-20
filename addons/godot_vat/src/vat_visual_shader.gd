@@ -56,9 +56,10 @@ func _get_global_code(mode: Shader.Mode) -> String:
 
 func _get_code(input_vars: Array[String], output_vars: Array[String], mode: Shader.Mode, type: VisualShader.Type) -> String:
 	return """
-	float exp = pow(10.0, float(1));
-    float use_looping = float(int(mod(COLOR.r * exp * pow(10.0, float(0 * 1)), exp)));
-	float use_blended = float(int(mod(COLOR.r * exp * pow(10.0, float(1 * 1)), exp)));
+	float use_looping = mod(floor(COLOR.r * 10.0 + 0.5), 10.0);
+	float use_blended = mod(floor(COLOR.r * 100.0 + 0.5), 10.0);
+	float is_reversed = mod(floor(COLOR.r * 1000.0 + 0.5), 10.0);
+	
 	float timestamp = COLOR.g;
 	
 	float start_frame = INSTANCE_CUSTOM.g;
@@ -68,7 +69,6 @@ func _get_code(input_vars: Array[String], output_vars: Array[String], mode: Shad
 	
 	float frame_offset = num_frames * INSTANCE_CUSTOM.r;
 
-	exp = pow(10.0, float(3));
 	float speed = max(1, COLOR.b);
 
 	num_frames = clamp(num_frames, 0.0001, 8192.0);
