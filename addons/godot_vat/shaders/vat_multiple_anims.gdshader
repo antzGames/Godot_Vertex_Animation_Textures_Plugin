@@ -24,7 +24,6 @@ It has total of 4 floats. All renderers supported.
 		digit 0 {use_looping:  1.0 = true, 0.0 = false}
 		digit 1 {use_blended:  1.0 = true, 0.0 = false}
 		digit 2 {use_reversed: 1.0 = true, 0.0 = false} <-- UNUSED FOR NOW
-		digit 3-5 {animation frame rate: 0-999}
 
 	Green channel:
 		timestamp:
@@ -32,7 +31,7 @@ It has total of 4 floats. All renderers supported.
 			if non-lopping - Tells the shader when the one_shot has been reset.
 
 	Blue channel: 
-		UNUSED
+		animation frame rate
 	
 	Alpha channel:
 		UNUSED
@@ -70,9 +69,20 @@ group_uniforms;
 varying flat vec4 custom_data;
 varying flat vec4 color_data;
 
-int extractDigitGroup(float value, int groupIndex, int digitCount) {
-    float exp = pow(10.0, float(digitCount));
-    return int(mod(value * exp * pow(10.0, float(groupIndex * digitCount)), exp));
+int extractDigitGroup(float value, int group_index, int digit_count) {
+    float scale = 1.0;
+
+    for (int i = 0; i < digit_count; i++) {
+        scale *= 10.0;
+    }
+
+    float shifted = value * scale;
+
+    for (int i = 0; i < group_index; i++) {
+        shifted *= scale;
+    }
+
+    return int(mod(floor(shifted + 0.5), scale));
 }
 
 void vertex(){
@@ -89,7 +99,7 @@ void vertex(){
 	int frame_count = int(end_frame - start_frame);  // for % mod used later
 	
 	float frame_offset = num_frames * custom_data.r;
-	float speed = max(1, float(float(extractDigitGroup(color_data.r, 1, 3))));
+	float speed = max(1, color_data.b);
 
 	// if start_frame and end_frame are the same - prevents divide by zero
 	num_frames = clamp(num_frames, 0.0001, 8192.0);

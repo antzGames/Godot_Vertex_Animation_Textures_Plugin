@@ -7,6 +7,8 @@ class_name VATMultiMeshInstance3D
 ##
 ## @tutorial: https://github.com/antzGames/Godot_Vertex_Animation_Textures_Plugin
 
+
+#region @exports
 ## Exported [Mesh] from Blender, with [ShaderMaterial] set in surface_0
 @export var exported_mesh: ArrayMesh:
 	set(value):
@@ -29,13 +31,21 @@ class_name VATMultiMeshInstance3D
 ## Animation tracks: [br]
 ## Use values from your Blender project.[br]
 @export var vat_animation_tracks: Array[VATAnimationTrack] = []
+#endregion
 
+#region varibles
 var frames: int
 var custom_data: Color
 var custom_color: Color
 var number_of_animation_tracks: int
 var _rollover_value : float = ProjectSettings.get_setting("rendering/limits/time/time_rollover_secs")
+#endregion
 
+#region enums
+enum ColorChannelRed {IS_LOOPING, IS_BLENDED, REVERSED}
+#endregion
+
+#region built_ins and helpers
 func _create_multimesh() -> void:
 	multimesh = MultiMesh.new()
 	multimesh.instance_count = 0
@@ -104,6 +114,7 @@ func _ready() -> void:
 		
 func _process(delta: float) -> void:
 	pass
+#endregion
 
 #region instanced helper functions
 
@@ -295,45 +306,11 @@ func reset_one_shot(instance_id: int):
 	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
 	
 	custom_color.r = _encode_color_channel_red(track)
+	custom_color.b = track.framerate
 	custom_color.g = get_current_timestamp()
 	
 	multimesh.set_instance_color(instance_id, custom_color)
 
-## Generates a float that represents isLooping, isBlended, isReversed, and framerate to be encoded into custom_color.r [br]
-func _encode_color_channel_red(track: VATAnimationTrack) -> float:
-	var toggle_array: Array[int] = []
-	toggle_array.append(1 if track.isLooping  else 0)
-	toggle_array.append(1 if track.isBlended  else 0)
-	toggle_array.append(1 if track.isReversed else 0)
-	
-	var framerate: int = clamp(track.framerate, 0, 999)
-	var framerate_length: int = len(str(abs(framerate)))
-	
-	var zeros_to_add: int = 3 - framerate_length
-	for i in range(zeros_to_add): # TODO: Make Integer Padding Helper Function
-		toggle_array.append(0)
-	toggle_array.append(track.framerate) # 0-999FPS
-	
-	return _encode_float_from_digits(toggle_array)
-
-## Encodes a float from array of integers: [br]
-## Example: [1,0,9,0,0,2] = 0.109002 [br]
-## Example: [10,900,2]    = 0.109002 [br]
-## NOTE: Integer values discard the 0 when in front of the value! Plese pad values instead: [br]
-## Example: [10,9,002]   = 0.1092      ❌ [br]
-## Example: [10,9,0,0,2] = 0.109002 ✅ [br]
-func _encode_float_from_digits(float_digits: Array[int]) -> float:
-	var result:           float = 0.0
-	var decimal_position: int   = 1
-	
-	for value: int in float_digits:
-		var digit_count: int   = len(str(value)) if value > 0 else 1
-		var exponent:    float = -float(decimal_position + digit_count - 1)
-		
-		result += float(value) * pow(10.0, exponent)
-		decimal_position += digit_count
-	
-	return result
 
 ## Sets start and end frame while keeping current track parameters
 func set_section(instance_id: int, start_frame: int, end_frame: int,) -> void:
@@ -390,11 +367,6 @@ func freeze_frame(instance_id: int, frame: int) -> void:
 	custom_data.b = frame
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 
-## Identical to shader
-func _extractDigitGroup(value: float, groupIndex: int, digitCount: int) -> int:
-	var exp: float = pow(10.0, float(digitCount))
-	return int(fmod(value * exp * pow(10.0, float(groupIndex * digitCount)),exp))
-
 ## Get current frame from instance_id (0...last_frame - first_frame)
 func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: bool = false) -> int:
 	var color_data: Color = multimesh.get_instance_color(instance_id)
@@ -408,10 +380,10 @@ func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: b
 	var last_frame:   float = frame_data.b
 	var frame_count:  float = last_frame - first_frame + 1.0
 	
-	var framerate:    float = _extractDigitGroup(color_data.r, 1, 3);
+	var framerate:    float = color_data.b
 	var time_scale:   float = elapsed_time * (framerate / (frame_count + 0.0001))
-	var is_looping:   float = _extractDigitGroup(color_data.r, 0, 1)
-	var blend_amount: float = _extractDigitGroup(color_data.r, 1, 1)
+	var is_looping:   float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.IS_LOOPING)
+	var blend_amount: float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.IS_BLENDED)
 	
 	var frame_time:         float = lerp(time_scale, fmod(time_scale, 1.0), is_looping)
 	var frame_progress:     float = frame_time * frame_count + frame_data.r
@@ -431,4 +403,64 @@ func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: b
 		result -= first_frame
 	
 	return int(result)
+#endregion
+
+#region encoding/decoding float functions
+## Generates a float that represents isLooping, isBlended, isReversed, and framerate to be encoded into custom_color.r [br]
+func _encode_color_channel_red(track: VATAnimationTrack) -> float:
+	var toggle_array: Array[int] = []
+	toggle_array.append(1 if track.isLooping  else 0)
+	toggle_array.append(1 if track.isBlended  else 0)
+	toggle_array.append(1 if track.isReversed else 0)
+	
+	return _encode_float_from_digits(toggle_array)
+
+## Encodes a float from array of integers: [br]
+## Example: [1,0,9,0,0,2] = 0.109002 [br]
+## Example: [10,900,2]    = 0.109002 [br]
+## NOTE: Integer values discard the 0 when in front of the value! Plese pad values instead: [br]
+## Example: [10,9,002]   = 0.1092      ❌ [br]
+## Example: [10,9,0,0,2] = 0.109002 ✅ [br]
+func _encode_float_from_digits(float_digits: Array[int]) -> float:
+	var result:           float = 0.0
+	var decimal_position: int   = 1
+	
+	for value: int in float_digits:
+		var digit_count: int   = len(str(value)) if value > 0 else 1
+		var exponent:    float = -float(decimal_position + digit_count - 1)
+		
+		result += float(value) * pow(10.0, exponent)
+		decimal_position += digit_count
+	
+	return result
+	
+## Simple decoding of the packed COLOR.r channel[br]
+##	Red channel: (FLOAT ENCODED)[br]
+##		digit 0 {use_looping:  1.0 = true, 0.0 = false}[br]
+##		digit 1 {use_blended:  1.0 = true, 0.0 = false}[br]
+##		digit 2 {use_reversed: 1.0 = true, 0.0 = false}[br]
+func _decode_float_from_color_channel_red(red_value: float, type: ColorChannelRed) -> int:
+	match type:
+		ColorChannelRed.IS_LOOPING:
+			return _extractDigitGroup(red_value, 0, 1)
+		ColorChannelRed.IS_BLENDED:
+			return _extractDigitGroup(red_value, 1, 1)
+		#ColorChannelRed.REVERSED:
+		#	return _extractDigitGroup(red_value, 2, 1) # double check if groupIndex is correct
+		_: #  This should not happen unless another ColorChannelRed emum value was added
+			return 0
+			
+func _extractDigitGroup(value: float, group_index: int, digit_count: int) -> int:
+	var scale: float = 1.0
+
+	for i: int in digit_count:
+		scale *= 10.0
+	
+	var shifted: float = value * scale
+
+	for i: int in group_index:
+		shifted *= scale
+
+	return int(fmod(floor(shifted + 0.5), scale))
+	
 #endregion

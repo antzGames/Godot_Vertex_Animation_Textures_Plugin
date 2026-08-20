@@ -69,7 +69,7 @@ func _get_code(input_vars: Array[String], output_vars: Array[String], mode: Shad
 	float frame_offset = num_frames * INSTANCE_CUSTOM.r;
 
 	exp = pow(10.0, float(3));
-	float speed = max(1.0, float(int(mod(COLOR.r * exp * pow(10.0, float(1 * 3)), exp))));
+	float speed = max(1, COLOR.b);
 
 	num_frames = clamp(num_frames, 0.0001, 8192.0);
 

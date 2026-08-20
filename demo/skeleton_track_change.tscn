@@ -32,13 +32,13 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_acrxm")
-buffer = PackedFloat32Array(1.193982e-39, 7.989809e-39, 1.193881e-39, 1.285817e-39, 1.285715e-39, 5.234644e-39, 5.418418e-39, 8.081605e-39, 8.173439e-39, 8.357156e-39, 8.265322e-39, 8.54083e-39, 5.510261e-39, 8.724504e-39, 5.510214e-39, 8.816341e-39, 5.60205e-39, 8.540831e-39, 5.693886e-39, 5.87756e-39)
+buffer = PackedFloat32Array(3.854162e+21, 0, 0, 0, 0, 0, 8e-45, 0, 8e-45, 0, 4e-45, 0, 2.9206276e-06, 0, 2.9206276e-06, 0, 7.0929527e-06, 0, 3.2186508e-06, 0)
 
 [sub_resource type="Resource" id="Resource_5fsja"]
 script = ExtResource("6_36v5s")
 name = "Track0"
 endFrame = 25
-framerate = 16
+framerate = 6
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [sub_resource type="Resource" id="Resource_36v5s"]
@@ -46,7 +46,8 @@ script = ExtResource("6_36v5s")
 name = "Track1"
 startFrame = 26
 endFrame = 58
-framerate = 16
+framerate = 8
+isBlended = false
 metadata/_custom_type_script = "uid://b7dau4o26vdnl"
 
 [sub_resource type="Resource" id="Resource_a0885"]
