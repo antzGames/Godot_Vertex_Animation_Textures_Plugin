@@ -98,7 +98,6 @@ Error messages will also appear in the Output console.
 
 <img width="326" alt="image" src="https://github.com/user-attachments/assets/2804297d-3122-4892-99f8-39418255ec4f" />
 
-
 ### `VATMultiMeshInstance3D` Update Functions
 
 If you want to change the animation track for a specific instance, use:
@@ -159,6 +158,7 @@ var startFrame: int
 var endFrame: int
 var isLooping: bool
 var isBlended: bool
+var isReversed: bool 
 var framerate: int
 ```
 
@@ -193,10 +193,10 @@ The inherited `MultiMeshInstance3D` `custom_data` is used by this plugin and ins
 
 The inherited `MultiMeshInstance3D` `color_instance` is used by this plugin and instanced shader.  Here is how it is used:
 
-- `color.r` = **use_looping** 1.0 = true, 0.0 = false
+- `color.r` = packed flat for **use_looping**, **use_blended**, **use_reverse** where 1.0 = true, 0.0 = false.
 - `color.g` = **timestamp** used to keep track of when an animation was set or the one_shot has been reset.
 - `color.b` = **animation frame rate**: must be greater than zero
-- `color.a` = **use_blended**: 1.0 = true, 0.0 = false
+- `color.a` = NOT USED
 
 ## Vertex Animation Shader
 
