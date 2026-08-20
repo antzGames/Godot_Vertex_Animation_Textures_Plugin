@@ -287,8 +287,9 @@ YouTube: [Skeletron 2084 Gameplay](https://youtu.be/zTJlpS3jQCc)
 
 Here are the performance test results per renderer, using:
 
-- Godot 4.6.1 standard (DEBUG mode)
-- Windows 11, 32 GB RAM
+- Godot 4.7.1 standard (DEBUG mode)
+- Version v0.1.6 of plugin
+- Linux Mint, 32 GB RAM
 - CPU: AMD Ryzen 5500
 - GPU: AMD Radeon RX 9060 XT 16 GB
 - Viewport: 1920x1080 no MSAA
@@ -297,17 +298,17 @@ Here are the performance test results per renderer, using:
 
 | Renderer  | Shadows On | Shadows Off  |
 |---|---|---|
-| **Compatibility**  | 304 fps | 451 fps  |
-| **Mobile** | 496 fps | 739 fps |
-| **Forward+** | 380 fps | 507 fps |
+| **Compatibility**  | 354 fps | 520 fps  |
+| **Mobile** | 458 fps | 768 fps |
+| **Forward+** | 349 fps | 506 fps |
 
 `5000 instances`
 
 | Renderer  | Shadows On | Shadows Off  |
 |---|---|---|
-| **Compatibility**  | 131 fps | 203 fps  |
-| **Mobile** |  233 fps | 360 fps |
-| **Forward+** | 177 fps | 243 fps |
+| **Compatibility**  | 155 fps | 236 fps  |
+| **Mobile** |  216 fps | 378 fps |
+| **Forward+** | 165 fps | 244 fps |
 
 Initial findings is that the `Mobile` renderer performs the best.  `Compatibility` renderer performs the worst.
 
