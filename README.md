@@ -158,7 +158,7 @@ var startFrame: int
 var endFrame: int
 var isLooping: bool
 var isBlended: bool
-var isReversed: bool 
+var isReversed: bool # For future backward playback
 var framerate: int
 ```
 
