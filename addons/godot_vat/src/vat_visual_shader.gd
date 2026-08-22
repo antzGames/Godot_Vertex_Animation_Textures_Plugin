@@ -56,10 +56,7 @@ func _get_global_code(mode: Shader.Mode) -> String:
 
 func _get_code(input_vars: Array[String], output_vars: Array[String], mode: Shader.Mode, type: VisualShader.Type) -> String:
 	return """
-	float use_looping = mod(floor(COLOR.r * 10.0 + 0.5), 10.0);
-	float use_blended = mod(floor(COLOR.r * 100.0 + 0.5), 10.0);
-	float is_reversed = mod(floor(COLOR.r * 1000.0 + 0.5), 10.0);
-	
+	bool is_looping = COLOR.r > 0.5;
 	float timestamp = COLOR.g;
 	
 	float start_frame = INSTANCE_CUSTOM.g;
@@ -68,41 +65,27 @@ func _get_code(input_vars: Array[String], output_vars: Array[String], mode: Shad
 	int frame_count = int(end_frame - start_frame);  
 	
 	float frame_offset = num_frames * INSTANCE_CUSTOM.r;
-
 	float speed = max(1, COLOR.b);
 
+	// if start_frame and end_frame are the same - prevents divide by zero
 	num_frames = clamp(num_frames, 0.0001, 8192.0);
 
 	float time_scale_normalized = (TIME - timestamp) * (speed / num_frames);
-	
-	float loop_time  = mod(time_scale_normalized, 1.0);
-	float frame_time = mix(time_scale_normalized, loop_time, use_looping);
-
-	float frame_progress        = frame_time * num_frames;
-	float frame_progress_offset = frame_progress + frame_offset;
+	float frame_time;
+	float current_frame;
+	float frame_ceil;
 		
-	float stop_frame = start_frame + floor(frame_progress);
-
-	float blend_frame = start_frame + mix(
-		frame_progress_offset + 1.0,
-		mod(frame_progress_offset, num_frames) + 1.0,
-		use_looping
-	);
-		
-	float current_frame_raw = mix(stop_frame, blend_frame, use_blended);
-	float ceil_frame        = ceil(current_frame_raw);
-
-	float current_frame = mix(
-		clamp(current_frame_raw, start_frame, end_frame),
-		mix(current_frame_raw, start_frame, step(end_frame, current_frame_raw)),
-		use_looping
-	);
-
-	float frame_ceil = mix(
-		clamp(ceil_frame, start_frame, end_frame),
-		float(int(ceil_frame - start_frame) %% frame_count) + start_frame,
-		use_looping
-	);
+	if (is_looping) {
+		frame_time = mod(time_scale_normalized, 1.0);
+		current_frame = start_frame + mod((frame_time * num_frames) + frame_offset, num_frames) + 1.0;
+		if (current_frame > end_frame) current_frame = start_frame;
+		frame_ceil = float(int(mod(ceil(current_frame) - float(start_frame), float(frame_count)))) + float(start_frame);
+	} else {
+		frame_time = time_scale_normalized;
+		current_frame = start_frame + (frame_time * num_frames) + frame_offset + 1.0;
+		if (current_frame >= end_frame) current_frame = end_frame;
+		frame_ceil = clamp(ceil(current_frame), start_frame, end_frame);
+	}
 		
 	ivec2 tex_size = textureSize(offset_map, 0);
 	float pixel_size = 1.0 / float(tex_size.y);
