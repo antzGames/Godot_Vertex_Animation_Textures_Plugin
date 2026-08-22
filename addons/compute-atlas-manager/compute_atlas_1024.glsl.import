@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://ds326smmxs271"
+path="res://.godot/imported/compute_atlas_1024.glsl-8da7887d860b6f9d77d9c3146fc19d58.res"
+
+[deps]
+
+source_file="res://addons/compute-atlas-manager/compute_atlas_1024.glsl"
+dest_files=["res://.godot/imported/compute_atlas_1024.glsl-8da7887d860b6f9d77d9c3146fc19d58.res"]
+
+[params]
+
