@@ -24,6 +24,7 @@ It has total of 4 floats. All renderers supported.
 		digit 0 {use_looping:  1.0 = true, 0.0 = false}
 		digit 1 {use_blended:  1.0 = true, 0.0 = false}
 		digit 2 {use_reversed: 1.0 = true, 0.0 = false} <-- UNUSED FOR NOW
+		digit 3-5 {animation frame rate: 0-999}
 
 	Green channel:
 		timestamp:
@@ -31,7 +32,7 @@ It has total of 4 floats. All renderers supported.
 			if non-lopping - Tells the shader when the one_shot has been reset.
 
 	Blue channel: 
-		animation frame rate
+		UNUSED
 	
 	Alpha channel:
 		UNUSED
@@ -39,6 +40,11 @@ It has total of 4 floats. All renderers supported.
 
 shader_type spatial;
 render_mode blend_mix,depth_draw_always,depth_prepass_alpha,cull_disabled; // change if needed
+
+uniform sampler2D atlas_texture: filter_nearest, hint_default_white;
+uniform int cell_size_x = 8;
+uniform int cells_per_row = 512;
+uniform int max_width = 4096;
 
 uniform sampler2D offset_map: filter_nearest;
 uniform sampler2D normal_map: filter_nearest;
@@ -69,23 +75,39 @@ group_uniforms;
 varying flat vec4 custom_data;
 varying flat vec4 color_data;
 
+int extractDigitGroup(float value, int groupIndex, int digitCount) {
+    float exp = pow(10.0, float(digitCount));
+    return int(mod(value * exp * pow(10.0, float(groupIndex * digitCount)), exp));
+}
+
+float readU24(int pixel_x, int pixel_y) {
+	uint byte0 = uint(texelFetch(atlas_texture, ivec2(pixel_x, pixel_y), 0).r * 255.0);
+	uint byte1 = uint(texelFetch(atlas_texture, ivec2(pixel_x + 1, pixel_y), 0).r * 255.0);
+	uint byte2 = uint(texelFetch(atlas_texture, ivec2(pixel_x + 2, pixel_y), 0).r * 255.0);
+	return float(byte0 | (byte1 << 8u) | (byte2 << 16u));
+}
+
 void vertex(){
 	custom_data = INSTANCE_CUSTOM;
 	color_data = COLOR;
-
-	float use_looping = mod(floor(color_data.r * 10.0 + 0.5), 10.0);
-	float use_blended = mod(floor(color_data.r * 100.0 + 0.5), 10.0);
-	//float use_reverse = mod(floor(color_data.r * 1000.0 + 0.5), 10.0);
 	
+	int row = INSTANCE_ID / cells_per_row;
+	int col = INSTANCE_ID % cells_per_row;
+	int atlas_x = col * cell_size_x;
+	int atlas_y = row;
+	
+	float use_looping = float(extractDigitGroup(color_data.r, 0, 1));
+	float use_blended = texelFetch(atlas_texture, ivec2(atlas_x + 7, atlas_y), 0).r * 255.0; // TODO ADD MORE BYTES!
 	float timestamp   = color_data.g;
 	
-	float start_frame = custom_data.g;
-	float end_frame = custom_data.b;
+	float start_frame = readU24(atlas_x, atlas_y);
+	float end_frame = readU24(atlas_x + 3, atlas_y);
+	
 	float num_frames = end_frame - start_frame;
 	int frame_count = int(end_frame - start_frame);  // for % mod used later
 	
 	float frame_offset = num_frames * custom_data.r;
-	float speed = max(1, color_data.b);
+	float speed = max(1, texelFetch(atlas_texture, ivec2(atlas_x+6, atlas_y), 0).r * 255.0);
 
 	// if start_frame and end_frame are the same - prevents divide by zero
 	num_frames = clamp(num_frames, 0.0001, 8192.0);
