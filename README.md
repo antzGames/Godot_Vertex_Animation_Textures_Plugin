@@ -12,7 +12,7 @@ Works on all Godot renderers and HTML builds.
 
 See video of the plugin and demos here: 
 
-[![YouTubeVideo](https://github.com/user-attachments/assets/24120e4e-20d9-412a-9c7b-b089923eb5d6)]([https://youtu.be/BIbEaiVOu6k](https://youtu.be/twFFcn4Q0fQ](https://youtu.be/twFFcn4Q0fQ)
+[![YouTubeVideo](https://github.com/user-attachments/assets/24120e4e-20d9-412a-9c7b-b089923eb5d6)](https://youtu.be/twFFcn4Q0fQ)
 
 ## Easy Mesh2Motion (and Mixamo) to Vertex Animation Textures (VAT)
 
