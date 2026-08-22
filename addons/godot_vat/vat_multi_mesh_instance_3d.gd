@@ -7,7 +7,6 @@ class_name VATMultiMeshInstance3D
 ##
 ## @tutorial: https://github.com/antzGames/Godot_Vertex_Animation_Textures_Plugin
 
-#region @exports
 ## Exported [Mesh] from Blender, with [ShaderMaterial] set in surface_0
 @export var exported_mesh: ArrayMesh:
 	set(value):
@@ -30,21 +29,13 @@ class_name VATMultiMeshInstance3D
 ## Animation tracks: [br]
 ## Use values from your Blender project.[br]
 @export var vat_animation_tracks: Array[VATAnimationTrack] = []
-#endregion
 
-#region varibles
 var frames: int
 var custom_data: Color
 var custom_color: Color
 var number_of_animation_tracks: int
 var _rollover_value : float = ProjectSettings.get_setting("rendering/limits/time/time_rollover_secs")
-#endregion
 
-#region enums
-enum ColorChannelRed {IS_LOOPING, IS_BLENDED, REVERSED}
-#endregion
-
-#region built_ins and helpers
 func _create_multimesh() -> void:
 	multimesh = MultiMesh.new()
 	multimesh.instance_count = 0
@@ -106,13 +97,135 @@ func _ready() -> void:
 			if vat_anim.framerate == 0: vat_anim.framerate = default_fps
 			if !vat_anim.name or vat_anim.name.is_empty():
 				vat_anim.name = str("Track", i)
-			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   isBlended: [color=yellow]", vat_anim.isBlended ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
+			print_rich(str("  🎞️ Animation track: [color=yellow]", vat_anim.name, "[/color]   Start/End Frames: [color=yellow]", vat_anim.startFrame , "-", vat_anim.endFrame, "[/color]   isLooping: [color=yellow]", vat_anim.isLooping ,"[/color]   FPS: [color=yellow]", vat_anim.framerate,"[/color]"))
 			i += 1
 
 		print_rich("[color=cyan]Animation configuration completed.[/color]")
 		
-func _process(delta: float) -> void:
-	pass
+#region Texture Atlas Helper
+	# TODO MAKE NOT CRUMMY / POLISH CODE, ITS SPREAD OUTEVERYWHERE BUT I GOTTA GET THIS DONE FOR PERFORMANCE TESTING ASAP
+	_generate_texture_atlas()
+	match RenderingServer.get_current_rendering_method():
+		"forward_plus","mobile":
+			atlas_manager = ComputeAtlasManager.new()
+			atlas_manager.atlas_texture = atlas_texture
+			atlas_manager.atlas_image = atlas_image
+		"gl_compatibility":
+			atlas_manager = TextureAtlasManager.new()
+			atlas_manager.atlas_texture = atlas_texture
+			atlas_manager.atlas_image = atlas_image
+
+	add_child(atlas_manager)
+	# This will crash during the brick test one, but thats cause exported_mesh isn't in there?
+	var material: ShaderMaterial = exported_mesh.surface_get_material(0)
+	
+	# TODO READ ME IN THE SHADER!
+	# NOTE - THE SHADER I ASSUME IS A GLOBAL SHADER SO WHEN THE PREVIOUS OUTPUT SHADER TEXTURE IS FREED IT CAUSES AN ERROR. WILL NEED TO FIX IT SOON BUT ITS HARMLESS FOR NOW
+	material.set_shader_parameter("atlas_texture", atlas_manager.output_shader_texture)
+	material.set_shader_parameter("cell_size_x", CELL_SIZE_X)
+	material.set_shader_parameter("cells_per_row", CELLS_PER_ROW)
+	material.set_shader_parameter("max_width", MAX_WIDTH)
+
+# -- Member Variables --
+var atlas_manager: AtlasManager
+var atlas_image: Image
+var atlas_texture: ImageTexture
+
+const MAX_WIDTH = 4096
+const CELL_SIZE_X = 8
+const CELLS_PER_ROW = MAX_WIDTH / CELL_SIZE_X
+
+# TODO - CREATE DEFAULT TRACK WHEN SPAWNING @EXPORT VAR
+func _generate_texture_atlas() -> void:
+	# -- Setup Atlas Dimensions --
+	var num_rows = ceil(float(instance_count) / CELLS_PER_ROW)
+	var atlas_width = min(instance_count, CELLS_PER_ROW) * CELL_SIZE_X
+	atlas_image = Image.create(atlas_width, num_rows, false, Image.FORMAT_R8)
+	
+	# -- Populate Atlas --
+	var default_track = vat_animation_tracks[0]
+	for i in instance_count:
+		var row = i / CELLS_PER_ROW
+		var col = i % CELLS_PER_ROW
+		var x = col * CELL_SIZE_X
+		var y = row
+		
+		# -- Start Frame Bytes 0-2 --
+		var start_frame = default_track.startFrame
+		atlas_image.set_pixel(x + 0, y, Color8(start_frame & 0xFF, 0, 0))
+		atlas_image.set_pixel(x + 1, y, Color8((start_frame >> 8) & 0xFF, 0, 0))
+		atlas_image.set_pixel(x + 2, y, Color8((start_frame >> 16) & 0xFF, 0, 0))
+		
+		# -- End Frame Bytes 3-5 --
+		var end_frame = default_track.endFrame
+		atlas_image.set_pixel(x + 3, y, Color8(end_frame & 0xFF, 0, 0))
+		atlas_image.set_pixel(x + 4, y, Color8((end_frame >> 8) & 0xFF, 0, 0))
+		atlas_image.set_pixel(x + 5, y, Color8((end_frame >> 16) & 0xFF, 0, 0))
+		
+		# -- Framerate Byte 6 --
+		atlas_image.set_pixel(x + 6, y, Color8(default_track.framerate, 0, 0))
+		
+		# -- Blended Byte 7 --
+		atlas_image.set_pixel(x + 7, y, Color8(int(default_track.isBlended), 0, 0))
+	
+	# -- Create Texture From Image --
+	atlas_texture = ImageTexture.create_from_image(atlas_image)
+
+func _generate_instance_track_update(index: int, track: VATAnimationTrack) -> Array[Variant]:
+	var row: int = index / CELLS_PER_ROW
+	var col: int = index % CELLS_PER_ROW
+	var x: int = col * CELL_SIZE_X
+	var y: int = row
+	
+	var pixels: Array[Variant] = []
+	
+	# -- Start Frame Bytes 0-2 --
+	var start_frame: int = track.startFrame
+	pixels.append(x + 0)
+	pixels.append(y)
+	pixels.append(start_frame & 0xFF)
+	
+	pixels.append(x + 1)
+	pixels.append(y)
+	pixels.append((start_frame >> 8) & 0xFF)
+	
+	pixels.append(x + 2)
+	pixels.append(y)
+	pixels.append((start_frame >> 16) & 0xFF)
+	
+	# -- End Frame Bytes 3-5 --
+	var end_frame: int = track.endFrame
+	pixels.append(x + 3)
+	pixels.append(y)
+	pixels.append(end_frame & 0xFF)
+	
+	pixels.append(x + 4)
+	pixels.append(y)
+	pixels.append((end_frame >> 8) & 0xFF)
+	
+	pixels.append(x + 5)
+	pixels.append(y)
+	pixels.append((end_frame >> 16) & 0xFF)
+	
+	# -- Framerate Byte 6 --
+	pixels.append(x + 6)
+	pixels.append(y)
+	pixels.append(track.framerate)
+	
+	# -- Blended Byte 7 --
+	pixels.append(x + 7)
+	pixels.append(y)
+	pixels.append(int(track.isBlended))
+	
+	return pixels
+
+func _get_atlas_base_coord(instance_index: int) -> Vector2i:
+	var row: int = instance_index / CELLS_PER_ROW
+	var col: int = instance_index % CELLS_PER_ROW
+	var x: int = col * CELL_SIZE_X
+	var y: int = row
+	return Vector2i(x, y)
+
 #endregion
 
 #region instanced helper functions
@@ -133,12 +246,15 @@ func update_instance_track(instance_id: int, track_number: int) -> void:
 	if track_number < 0 or track_number > vat_animation_tracks.size() - 1: 
 		printerr("[VATMultiMeshInstance3D] -> update_instance_track(instance_id: int, track_number: int)]: track_number is out of bounds.")
 		return 
-	custom_data = multimesh.get_instance_custom_data(instance_id)
-	custom_data.g = vat_animation_tracks[track_number].startFrame 
-	custom_data.b = vat_animation_tracks[track_number].endFrame
-	multimesh.set_instance_custom_data(instance_id, custom_data)
+	#custom_data = multimesh.get_instance_custom_data(instance_id)
+	#custom_data.g = vat_animation_tracks[track_number].startFrame 
+	#custom_data.b = vat_animation_tracks[track_number].endFrame
+	#multimesh.set_instance_custom_data(instance_id, custom_data)
 		
 	reset_one_shot(instance_id)
+	
+	## TODO GET RID OF PREVIOUS SHADER STUFF, ALSO MAKE MORE READABLE THIS IS CRAP
+	atlas_manager.update_texture_with_commands(_generate_instance_track_update(instance_id, vat_animation_tracks[track_number]))
 
 ## Updates the current instance_id with the provided alpha (0..1)
 func update_instance_alpha(instance_id: int, alpha: float) -> void:
@@ -156,11 +272,14 @@ func update_instance(instance_id: int, animation_offset: float, track_number: in
 
 ## Update ALL INSTANCES with the provided animation_offset, track_number, and alpha
 ## unless rand_anim_offset = false, where it sets the animation_offset to 0
-func update_all_instances(animation_offset: float, track_number: int, alpha: float) -> void:
+func update_all_instances(animation_offset: float, track_number: int, alpha: float) -> void: # TODO THESE ARENT SETTING IT RIGHT :(
+	var batch_atlas_update_array: Array[Variant] = []
 	for instance in multimesh.instance_count:
 		update_instance_animation_offset(instance, animation_offset)
-		update_instance_track(instance, track_number)
+		#update_instance_track(instance, track_number)
+		batch_atlas_update_array += _generate_instance_track_update(instance, vat_animation_tracks[track_number])
 		update_instance_alpha(instance, alpha)
+	atlas_manager.update_texture_with_commands(batch_atlas_update_array)
 
 # Tweens
 
@@ -247,14 +366,47 @@ func play_next_track_all_instances() -> void:
 
 # Get functions
 
+func _read_u24_from_image(image: Image, x: int, y: int) -> int:
+	var byte0: int = int(image.get_pixel(x, y).r * 255.0)
+	var byte1: int = int(image.get_pixel(x + 1, y).r * 255.0)
+	var byte2: int = int(image.get_pixel(x + 2, y).r * 255.0)
+	return byte0 | (byte1 << 8) | (byte2 << 16)
+
+func _get_track_data_from_atlas(instance_id: int) -> Dictionary:
+	var base_coord: Vector2i = _get_atlas_base_coord(instance_id)
+	var image_data: Image = atlas_manager.output_shader_texture.get_image()
+	
+	var start_frame: int = _read_u24_from_image(image_data, base_coord.x, base_coord.y)
+	var end_frame: int = _read_u24_from_image(image_data, base_coord.x + 3, base_coord.y)
+	var framerate: int = int(image_data.get_pixel(base_coord.x + 6, base_coord.y).r * 255.0)
+	var is_blended: int = int(image_data.get_pixel(base_coord.x + 7, base_coord.y).r * 255.0)
+	
+	return {
+		"start_frame": start_frame,
+		"end_frame": end_frame,
+		"framerate": framerate,
+		"is_blended": bool(is_blended)
+	}
+
 ## get [VATAnimationTrack] from instance.
 ## instance must have been initialized. 
 ## Returns null if instance_id not found
 func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
-	custom_data = multimesh.get_instance_custom_data(instance_id)
+	var base_coord: Vector2i = _get_atlas_base_coord(instance_id)
+	var image_data: Image = atlas_manager.output_shader_texture.get_image()
+	
+	var start_frame: int = _read_u24_from_image(image_data, base_coord.x, base_coord.y)
+	var end_frame: int = _read_u24_from_image(image_data, base_coord.x + 3, base_coord.y)
+	#return {
+	#	"start_frame": start_frame,
+	#	"end_frame": end_frame,
+	#	"framerate": framerate,
+	#	"is_blended": bool(is_blended)
+	#}
+	#custom_data = multimesh.get_instance_custom_data(instance_id)
 	
 	for track: VATAnimationTrack in vat_animation_tracks:
-		if is_equal_approx(custom_data.g, float(track.startFrame)) and is_equal_approx(custom_data.b, float(track.endFrame)):
+		if is_equal_approx(start_frame, float(track.startFrame)) and is_equal_approx(end_frame, float(track.endFrame)):
 			return track
 			
 	return null
@@ -305,13 +457,48 @@ func reset_one_shot(instance_id: int):
 	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
 	
 	custom_color.r = _encode_color_channel_red(track)
-	custom_color.b = track.framerate
 	custom_color.g = get_current_timestamp()
 	
 	multimesh.set_instance_color(instance_id, custom_color)
 
+## Generates a float that represents isLooping, isBlended, isReversed, and framerate to be encoded into custom_color.r [br]
+func _encode_color_channel_red(track: VATAnimationTrack) -> float:
+	var toggle_array: Array[int] = []
+	toggle_array.append(1 if track.isLooping  else 0)
+	toggle_array.append(1 if track.isBlended  else 0)
+	toggle_array.append(1 if track.isReversed else 0)
+	
+	var framerate: int = clamp(track.framerate, 0, 999)
+	var framerate_length: int = len(str(abs(framerate)))
+	
+	var zeros_to_add: int = 3 - framerate_length
+	for i in range(zeros_to_add): # TODO: Make Integer Padding Helper Function
+		toggle_array.append(0)
+	toggle_array.append(track.framerate) # 0-999FPS
+	
+	return _encode_float_from_digits(toggle_array)
+
+## Encodes a float from array of integers: [br]
+## Example: [1,0,9,0,0,2] = 0.109002 [br]
+## Example: [10,900,2]    = 0.109002 [br]
+## NOTE: Integer values discard the 0 when in front of the value! Plese pad values instead: [br]
+## Example: [10,9,002]   = 0.1092      ❌ [br]
+## Example: [10,9,0,0,2] = 0.109002 ✅ [br]
+func _encode_float_from_digits(float_digits: Array[int]) -> float:
+	var result:           float = 0.0
+	var decimal_position: int   = 1
+	
+	for value: int in float_digits:
+		var digit_count: int   = len(str(value)) if value > 0 else 1
+		var exponent:    float = -float(decimal_position + digit_count - 1)
+		
+		result += float(value) * pow(10.0, exponent)
+		decimal_position += digit_count
+	
+	return result
+
 ## Sets start and end frame while keeping current track parameters
-func set_section(instance_id: int, start_frame: int, end_frame: int) -> void:
+func set_section(instance_id: int, start_frame: int, end_frame: int,) -> void:
 	custom_data   = multimesh.get_instance_custom_data(instance_id)
 	custom_data.r = 0.0
 	custom_data.g = start_frame
@@ -342,7 +529,7 @@ func _import_vat_animation_track() -> void:
 			vat_animation_track.endFrame   = track.get("endFrame",   0)
 			vat_animation_track.isLooping  = track.get("isLooping", true)
 			vat_animation_track.isBlended  = track.get("isBlended", true)
-			vat_animation_track.framerate  = track.get("frameRate", 0.0)
+			vat_animation_track.framerate  = track.get("framerate", 0.0)
 			vat_animation_track_new.append(vat_animation_track)
 			
 		vat_animation_tracks = vat_animation_track_new
@@ -365,6 +552,11 @@ func freeze_frame(instance_id: int, frame: int) -> void:
 	custom_data.b = frame
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 
+## Identical to shader
+func _extractDigitGroup(value: float, groupIndex: int, digitCount: int) -> int:
+	var exp: float = pow(10.0, float(digitCount))
+	return int(fmod(value * exp * pow(10.0, float(groupIndex * digitCount)),exp))
+
 ## Get current frame from instance_id (0...last_frame - first_frame)
 func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: bool = false) -> int:
 	var color_data: Color = multimesh.get_instance_color(instance_id)
@@ -378,11 +570,10 @@ func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: b
 	var last_frame:   float = frame_data.b
 	var frame_count:  float = last_frame - first_frame + 1.0
 	
-	var framerate:    float = color_data.b
+	var framerate:    float = _extractDigitGroup(color_data.r, 1, 3);
 	var time_scale:   float = elapsed_time * (framerate / (frame_count + 0.0001))
-	var is_looping:   float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.IS_LOOPING)
-	var blend_amount: float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.IS_BLENDED)
-	#var is_reversed: float = _decode_float_from_color_channel_red(color_data.r, ColorChannelRed.REVERSED)
+	var is_looping:   float = _extractDigitGroup(color_data.r, 0, 1)
+	var blend_amount: float = _extractDigitGroup(color_data.r, 1, 1)
 	
 	var frame_time:         float = lerp(time_scale, fmod(time_scale, 1.0), is_looping)
 	var frame_progress:     float = frame_time * frame_count + frame_data.r
@@ -402,47 +593,4 @@ func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: b
 		result -= first_frame
 	
 	return int(result)
-#endregion
-
-#region encoding/decoding float functions
-## Generates a float that represents isLooping, isBlended, isReversed to be encoded into custom_color.r [br]
-func _encode_color_channel_red(track: VATAnimationTrack) -> float:
-	var toggle_array: Array[int] = []
-	toggle_array.append(1 if track.isLooping  else 0)
-	toggle_array.append(1 if track.isBlended  else 0)
-	toggle_array.append(1 if track.isReversed else 0)
-	
-	return _encode_float_from_digits(toggle_array)
-
-## Encodes a float from array of integers: [br]
-## Example: [1,0,1] = 0.101 encoded float[br]
-func _encode_float_from_digits(float_digits: Array[int]) -> float:
-	var result:           float = 0.0
-	var decimal_position: int   = 1
-	
-	for value: int in float_digits:
-		var digit_count: int   = len(str(value)) if value > 0 else 1
-		var exponent:    float = -float(decimal_position + digit_count - 1)
-		
-		result += float(value) * pow(10.0, exponent)
-		decimal_position += digit_count
-
-	return result
-	
-## Simple decoding of the packed COLOR.r channel[br]
-##	Red channel: (FLOAT ENCODED)[br]
-##		digit 0 {use_looping:  1.0 = true, 0.0 = false}[br]
-##		digit 1 {use_blended:  1.0 = true, 0.0 = false}[br]
-##		digit 2 {use_reversed: 1.0 = true, 0.0 = false}[br]
-func _decode_float_from_color_channel_red(red_value: float, type: ColorChannelRed) -> int:
-	match type:
-		ColorChannelRed.IS_LOOPING:
-			return fmod(floor(red_value * 10.0 + 0.5), 10.0);
-		ColorChannelRed.IS_BLENDED:
-			return fmod(floor(red_value * 100.0 + 0.5), 10.0);
-		ColorChannelRed.REVERSED:
-			return fmod(floor(red_value * 1000.0 + 0.5), 10.0);
-		_: #  This should not happen unless another ColorChannelRed emum value was added
-			return 0
-			
 #endregion
