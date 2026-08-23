@@ -102,30 +102,23 @@ func _ready() -> void:
 
 		print_rich("[color=cyan]Animation configuration completed.[/color]")
 		
-#region Texture Atlas Helper
-	# TODO MAKE NOT CRUMMY / POLISH CODE, ITS SPREAD OUTEVERYWHERE BUT I GOTTA GET THIS DONE FOR PERFORMANCE TESTING ASAP
-	_generate_texture_atlas()
-	match RenderingServer.get_current_rendering_method():
-		"forward_plus","mobile":
-			atlas_manager = ComputeAtlasManager.new()
-			atlas_manager.atlas_texture = atlas_texture
-			atlas_manager.atlas_image = atlas_image
-		"gl_compatibility":
-			atlas_manager = TextureAtlasManager.new()
-			atlas_manager.atlas_texture = atlas_texture
-			atlas_manager.atlas_image = atlas_image
-
+	_setup_texture_atlas()
+	
+	atlas_manager = ComputeAtlasManager.new() if RenderingServer.get_current_rendering_method() in ["forward_plus", "mobile"] else TextureAtlasManager.new()
+	atlas_manager.atlas_texture = atlas_texture
+	atlas_manager.atlas_image = atlas_image
+	
 	add_child(atlas_manager)
+	
 	# This will crash during the brick test one, but thats cause exported_mesh isn't in there?
 	var material: ShaderMaterial = exported_mesh.surface_get_material(0)
-	
-	# TODO READ ME IN THE SHADER!
-	# NOTE - THE SHADER I ASSUME IS A GLOBAL SHADER SO WHEN THE PREVIOUS OUTPUT SHADER TEXTURE IS FREED IT CAUSES AN ERROR. WILL NEED TO FIX IT SOON BUT ITS HARMLESS FOR NOW
+	# NOTE - WHEN PREVIOUS OUTPUT TEXTURE IS REPLACED WITH NEW OUTPUT TEXTURE IT WILL THROW AN ERROR; I AM FIGURING OUT HOW TO FIX THIS
 	material.set_shader_parameter("atlas_texture", atlas_manager.output_shader_texture)
 	material.set_shader_parameter("cell_size_x", CELL_SIZE_X)
 	material.set_shader_parameter("cells_per_row", CELLS_PER_ROW)
 	material.set_shader_parameter("max_width", MAX_WIDTH)
 
+#region Texture Atlas Helper
 # -- Member Variables --
 var atlas_manager: AtlasManager
 var atlas_image: Image
@@ -135,15 +128,16 @@ const MAX_WIDTH = 4096
 const CELL_SIZE_X = 8
 const CELLS_PER_ROW = MAX_WIDTH / CELL_SIZE_X
 
-# TODO - CREATE DEFAULT TRACK WHEN SPAWNING @EXPORT VAR
-func _generate_texture_atlas() -> void:
+## This is the index of the default animation the instance will play when instantiated
+@export var default_vat_track_index: int = 0
+
+func _setup_texture_atlas() -> void:
 	# -- Setup Atlas Dimensions --
 	var num_rows = ceil(float(instance_count) / CELLS_PER_ROW)
 	var atlas_width = min(instance_count, CELLS_PER_ROW) * CELL_SIZE_X
 	atlas_image = Image.create(atlas_width, num_rows, false, Image.FORMAT_R8)
 	
 	# -- Populate Atlas --
-	var default_track = vat_animation_tracks[0]
 	for i in instance_count:
 		var row = i / CELLS_PER_ROW
 		var col = i % CELLS_PER_ROW
@@ -151,22 +145,22 @@ func _generate_texture_atlas() -> void:
 		var y = row
 		
 		# -- Start Frame Bytes 0-2 --
-		var start_frame = default_track.startFrame
+		var start_frame = vat_animation_tracks[default_vat_track_index].startFrame
 		atlas_image.set_pixel(x + 0, y, Color8(start_frame & 0xFF, 0, 0))
 		atlas_image.set_pixel(x + 1, y, Color8((start_frame >> 8) & 0xFF, 0, 0))
 		atlas_image.set_pixel(x + 2, y, Color8((start_frame >> 16) & 0xFF, 0, 0))
 		
 		# -- End Frame Bytes 3-5 --
-		var end_frame = default_track.endFrame
+		var end_frame = vat_animation_tracks[default_vat_track_index].endFrame
 		atlas_image.set_pixel(x + 3, y, Color8(end_frame & 0xFF, 0, 0))
 		atlas_image.set_pixel(x + 4, y, Color8((end_frame >> 8) & 0xFF, 0, 0))
 		atlas_image.set_pixel(x + 5, y, Color8((end_frame >> 16) & 0xFF, 0, 0))
 		
 		# -- Framerate Byte 6 --
-		atlas_image.set_pixel(x + 6, y, Color8(default_track.framerate, 0, 0))
+		atlas_image.set_pixel(x + 6, y, Color8(vat_animation_tracks[default_vat_track_index].framerate, 0, 0))
 		
 		# -- Blended Byte 7 --
-		atlas_image.set_pixel(x + 7, y, Color8(int(default_track.isBlended), 0, 0))
+		atlas_image.set_pixel(x + 7, y, Color8(int(vat_animation_tracks[default_vat_track_index].isBlended), 0, 0))
 	
 	# -- Create Texture From Image --
 	atlas_texture = ImageTexture.create_from_image(atlas_image)
@@ -218,6 +212,95 @@ func _get_atlas_base_coord(instance_index: int) -> Vector2i:
 	var y: int = row
 	return Vector2i(x, y)
 
+## Updates the current instance_id with the provided track_number (0..animation_tracks.size()- 1)
+func update_instance_track(instance_id: int, track_number: int) -> void:
+	if track_number < 0 or track_number > vat_animation_tracks.size() - 1: 
+		printerr("[VATMultiMeshInstance3D] -> update_instance_track(instance_id: int, track_number: int)]: track_number is out of bounds.")
+		return 
+	atlas_manager.update_texture_with_commands(_generate_instance_track_update(instance_id, vat_animation_tracks[track_number]))
+	
+	reset_one_shot(instance_id)
+
+## Updates the current instance_id with the provided frame number
+## Frame number is in VAT scope
+## Animation offset will be reset to 0
+func freeze_frame(instance_id: int, frame: int) -> void:
+	custom_data = multimesh.get_instance_custom_data(instance_id)
+	
+	frame = clampi(frame, 0, 8192)
+	custom_data.r = 0.0
+	
+	var base_atlas_coord: Vector2i = _get_atlas_base_coord(instance_id)
+	# TODO MAKE BITWISE ENCODING HELPER FUNCTION
+	var pixels: Array[Variant] = []
+	pixels += [base_atlas_coord.x + 0, base_atlas_coord.y, frame & 0xFF]
+	pixels += [base_atlas_coord.x + 1, base_atlas_coord.y, (frame >> 8) & 0xFF]
+	pixels += [base_atlas_coord.x + 2, base_atlas_coord.y, (frame >> 16) & 0xFF]
+	pixels += [base_atlas_coord.x + 3, base_atlas_coord.y, frame & 0xFF]
+	pixels += [base_atlas_coord.x + 4, base_atlas_coord.y, (frame >> 8) & 0xFF]
+	pixels += [base_atlas_coord.x + 5, base_atlas_coord.y, (frame >> 16) & 0xFF]
+	atlas_manager.update_texture_with_commands(pixels)
+	
+	multimesh.set_instance_custom_data(instance_id, custom_data)
+
+## Sets start and end frame while keeping current track parameters
+func set_section(instance_id: int, start_frame: int, end_frame: int,) -> void: # TODO MAKE USE ATLAS
+	custom_data   = multimesh.get_instance_custom_data(instance_id)
+	custom_data.r = 0.0
+	
+	var base_atlas_coord: Vector2i = _get_atlas_base_coord(instance_id)
+	
+	# TODO MAKE BITWISE ENCODING HELPER FUNCTION
+	var pixels: Array[Variant] = []
+	pixels += [base_atlas_coord.x + 0, base_atlas_coord.y, start_frame & 0xFF]
+	pixels += [base_atlas_coord.x + 1, base_atlas_coord.y, (start_frame >> 8) & 0xFF]
+	pixels += [base_atlas_coord.x + 2, base_atlas_coord.y, (start_frame >> 16) & 0xFF]
+	pixels += [base_atlas_coord.x + 3, base_atlas_coord.y, end_frame & 0xFF]
+	pixels += [base_atlas_coord.x + 4, base_atlas_coord.y, (end_frame >> 8) & 0xFF]
+	pixels += [base_atlas_coord.x + 5, base_atlas_coord.y, (end_frame >> 16) & 0xFF]
+	atlas_manager.update_texture_with_commands(pixels)
+	
+	multimesh.set_instance_custom_data(instance_id, custom_data)
+	
+	custom_color   = multimesh.get_instance_color(instance_id)
+	custom_color.g = get_current_timestamp()
+	multimesh.set_instance_color(instance_id, custom_color)
+
+## Update ALL INSTANCES with the provided animation_offset, track_number, and alpha
+## unless rand_anim_offset = false, where it sets the animation_offset to 0
+func update_all_instances(animation_offset: float, track_number: int, alpha: float) -> void: # TODO MAKE CLEANER IF POSSIBLE
+	var batch_atlas_update_array: Array[Variant] = []
+	for instance in multimesh.instance_count: # GET ALL INSTANCE PIXELS TO UPDATE
+		update_instance_animation_offset(instance, animation_offset)
+		batch_atlas_update_array += _generate_instance_track_update(instance, vat_animation_tracks[track_number])
+		update_instance_alpha(instance, alpha)
+		
+	atlas_manager.update_texture_with_commands(batch_atlas_update_array) # BATCH UPDATE ALL INSTANCE PIXELS
+	for instance in multimesh.instance_count: # RESET EACH INSTANCE
+		reset_one_shot(instance)
+
+func _read_u24_from_image(image: Image, x: int, y: int) -> int:
+	var byte0: int = int(image.get_pixel(x, y).r * 255.0)
+	var byte1: int = int(image.get_pixel(x + 1, y).r * 255.0)
+	var byte2: int = int(image.get_pixel(x + 2, y).r * 255.0)
+	return byte0 | (byte1 << 8) | (byte2 << 16)
+
+## get [VATAnimationTrack] from instance.
+## instance must have been initialized. 
+## Returns null if instance_id not found
+func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
+	var base_coord: Vector2i = _get_atlas_base_coord(instance_id)
+	var image_data: Image = atlas_manager.output_shader_texture.get_image()
+	
+	var start_frame: int = _read_u24_from_image(image_data, base_coord.x, base_coord.y)
+	var end_frame: int = _read_u24_from_image(image_data, base_coord.x + 3, base_coord.y)
+	
+	for track: VATAnimationTrack in vat_animation_tracks:
+		if is_equal_approx(start_frame, float(track.startFrame)) and is_equal_approx(end_frame, float(track.endFrame)):
+			return track
+			
+	return null
+
 #endregion
 
 #region instanced helper functions
@@ -233,21 +316,6 @@ func update_instance_animation_offset(instance_id: int, animation_offset: float)
 		custom_data.r = 0.0
 	multimesh.set_instance_custom_data(instance_id, custom_data)
 
-## Updates the current instance_id with the provided track_number (0..animation_tracks.size()- 1)
-func update_instance_track(instance_id: int, track_number: int) -> void:
-	if track_number < 0 or track_number > vat_animation_tracks.size() - 1: 
-		printerr("[VATMultiMeshInstance3D] -> update_instance_track(instance_id: int, track_number: int)]: track_number is out of bounds.")
-		return 
-	#custom_data = multimesh.get_instance_custom_data(instance_id)
-	#custom_data.g = vat_animation_tracks[track_number].startFrame 
-	#custom_data.b = vat_animation_tracks[track_number].endFrame
-	#multimesh.set_instance_custom_data(instance_id, custom_data)
-		
-	## TODO GET RID OF PREVIOUS SHADER STUFF, ALSO MAKE MORE READABLE THIS IS CRAP
-	atlas_manager.update_texture_with_commands(_generate_instance_track_update(instance_id, vat_animation_tracks[track_number]))
-	
-	reset_one_shot(instance_id)
-
 ## Updates the current instance_id with the provided alpha (0..1)
 func update_instance_alpha(instance_id: int, alpha: float) -> void:
 	alpha = clampf(alpha, 0.0, 1.0)
@@ -261,20 +329,6 @@ func update_instance(instance_id: int, animation_offset: float, track_number: in
 	update_instance_animation_offset(instance_id, animation_offset)
 	update_instance_track(instance_id, track_number)
 	update_instance_alpha(instance_id, alpha)
-
-## Update ALL INSTANCES with the provided animation_offset, track_number, and alpha
-## unless rand_anim_offset = false, where it sets the animation_offset to 0
-func update_all_instances(animation_offset: float, track_number: int, alpha: float) -> void: # TODO THESE ARENT SETTING IT RIGHT :(
-	print("IMRUNNING")
-	var batch_atlas_update_array: Array[Variant] = []
-	for instance in multimesh.instance_count:
-		update_instance_animation_offset(instance, animation_offset)
-		#update_instance_track(instance, track_number)
-		batch_atlas_update_array += _generate_instance_track_update(instance, vat_animation_tracks[track_number])
-		update_instance_alpha(instance, alpha)
-	atlas_manager.update_texture_with_commands(batch_atlas_update_array)
-	for instance in multimesh.instance_count:
-		reset_one_shot(instance) # TODO MAKE THIS LESS MESSY 
 
 # Tweens
 
@@ -359,53 +413,6 @@ func play_next_track_all_instances() -> void:
 		if track_number > vat_animation_tracks.size() - 1: track_number = 0
 		update_instance_track(instance, track_number)
 
-# Get functions
-
-func _read_u24_from_image(image: Image, x: int, y: int) -> int:
-	var byte0: int = int(image.get_pixel(x, y).r * 255.0)
-	var byte1: int = int(image.get_pixel(x + 1, y).r * 255.0)
-	var byte2: int = int(image.get_pixel(x + 2, y).r * 255.0)
-	return byte0 | (byte1 << 8) | (byte2 << 16)
-
-func _get_track_data_from_atlas(instance_id: int) -> Dictionary:
-	var base_coord: Vector2i = _get_atlas_base_coord(instance_id)
-	var image_data: Image = atlas_manager.output_shader_texture.get_image()
-	
-	var start_frame: int = _read_u24_from_image(image_data, base_coord.x, base_coord.y)
-	var end_frame: int = _read_u24_from_image(image_data, base_coord.x + 3, base_coord.y)
-	var framerate: int = int(image_data.get_pixel(base_coord.x + 6, base_coord.y).r * 255.0)
-	var is_blended: int = int(image_data.get_pixel(base_coord.x + 7, base_coord.y).r * 255.0)
-	
-	return {
-		"start_frame": start_frame,
-		"end_frame": end_frame,
-		"framerate": framerate,
-		"is_blended": bool(is_blended)
-	}
-
-## get [VATAnimationTrack] from instance.
-## instance must have been initialized. 
-## Returns null if instance_id not found
-func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
-	var base_coord: Vector2i = _get_atlas_base_coord(instance_id)
-	var image_data: Image = atlas_manager.output_shader_texture.get_image()
-	
-	var start_frame: int = _read_u24_from_image(image_data, base_coord.x, base_coord.y)
-	var end_frame: int = _read_u24_from_image(image_data, base_coord.x + 3, base_coord.y)
-	#return {
-	#	"start_frame": start_frame,
-	#	"end_frame": end_frame,
-	#	"framerate": framerate,
-	#	"is_blended": bool(is_blended)
-	#}
-	#custom_data = multimesh.get_instance_custom_data(instance_id)
-	
-	for track: VATAnimationTrack in vat_animation_tracks:
-		if is_equal_approx(start_frame, float(track.startFrame)) and is_equal_approx(end_frame, float(track.endFrame)):
-			return track
-			
-	return null
-
 ## get track_number using an animation object to search animation_tracks.
 ## Returns -1 if not found or animation object is null.
 func get_track_number_from_animation(animation: VATAnimationTrack) -> int:
@@ -447,7 +454,6 @@ func get_current_timestamp() -> float:
 ## Restarts the one shot animation for a specific instance_id.[br][br]
 ## Only valid if instanced animation track  [is_looping] is true
 func reset_one_shot(instance_id: int):
-	print("ImNotbeingRun")
 	custom_color = multimesh.get_instance_color(instance_id)
 	
 	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
@@ -458,7 +464,7 @@ func reset_one_shot(instance_id: int):
 	multimesh.set_instance_color(instance_id, custom_color)
 
 ## Generates a float that represents isLooping, isBlended, isReversed, and framerate to be encoded into custom_color.r [br]
-func _encode_color_channel_red(track: VATAnimationTrack) -> float:
+func _encode_color_channel_red(track: VATAnimationTrack) -> float: # TODO EVENTUALLY REMOVE THIS AS ITS UNNECESSARY
 	var toggle_array: Array[int] = []
 	toggle_array.append(1 if track.isLooping  else 0)
 	toggle_array.append(1 if track.isBlended  else 0)
@@ -492,18 +498,6 @@ func _encode_float_from_digits(float_digits: Array[int]) -> float:
 		decimal_position += digit_count
 	
 	return result
-
-## Sets start and end frame while keeping current track parameters
-func set_section(instance_id: int, start_frame: int, end_frame: int,) -> void:
-	custom_data   = multimesh.get_instance_custom_data(instance_id)
-	custom_data.r = 0.0
-	custom_data.g = start_frame
-	custom_data.b = end_frame
-	multimesh.set_instance_custom_data(instance_id, custom_data)
-	
-	custom_color   = multimesh.get_instance_color(instance_id)
-	custom_color.g = get_current_timestamp()
-	multimesh.set_instance_color(instance_id, custom_color)
 	
 @export_tool_button("Import VATAnimationTrack(s) from JSON File", "File") var import_vat_animation_track = _import_vat_animation_track
 func _import_vat_animation_track() -> void:
@@ -535,23 +529,14 @@ func _import_vat_animation_track() -> void:
 	
 	get_tree().root.add_child(dialog)
 	dialog.popup_centered_ratio(0.70)
-
-## Updates the current instance_id with the provided frame number
-## Frame number is in VAT scope
-## Animation offset will be reset to 0
-func freeze_frame(instance_id: int, frame: int) -> void:
-	custom_data = multimesh.get_instance_custom_data(instance_id)
 	
-	frame = clampi(frame, 0, 8192)
-	custom_data.r = 0.0
-	custom_data.g = frame
-	custom_data.b = frame
-	multimesh.set_instance_custom_data(instance_id, custom_data)
-
 ## Identical to shader
 func _extractDigitGroup(value: float, groupIndex: int, digitCount: int) -> int:
 	var exp: float = pow(10.0, float(digitCount))
 	return int(fmod(value * exp * pow(10.0, float(groupIndex * digitCount)),exp))
+#endregion
+
+#region This code needs AtlasManager functionality
 
 ## Get current frame from instance_id (0...last_frame - first_frame)
 func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: bool = false) -> int:
