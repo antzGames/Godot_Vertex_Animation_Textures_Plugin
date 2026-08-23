@@ -1,9 +1,5 @@
 class_name ComputeAtlasManager extends AtlasManager
 
-# -- Exports --
-@export var test_texture: Texture2D
-#@export var test_mesh_instance_3d: MeshInstance3D
-
 # -- Render Device --
 var render_device: RenderingDevice
 var shader_rid: RID
@@ -29,7 +25,6 @@ const COMMAND_STRUCT_SIZE: int = 12
 const COMMAND_COMPONENTS: int = 3
 
 func _ready() -> void:
-	test_texture = atlas_texture
 	render_device = RenderingServer.get_rendering_device()
 	
 	# -- Shader Setup --
@@ -39,8 +34,8 @@ func _ready() -> void:
 	
 	# -- Texture Setup --
 	texture_format = RDTextureFormat.new()
-	texture_format.width = test_texture.get_width()
-	texture_format.height = test_texture.get_height()
+	texture_format.width = atlas_texture.get_width()
+	texture_format.height = atlas_texture.get_height()
 	texture_format.format = RenderingDevice.DATA_FORMAT_R8_UNORM
 	texture_format.usage_bits = (
 		RenderingDevice.TEXTURE_USAGE_STORAGE_BIT |
@@ -48,7 +43,7 @@ func _ready() -> void:
 		RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
 	)
 	
-	var image: Image = test_texture.get_image()
+	var image: Image = atlas_texture.get_image()
 	image.convert(Image.FORMAT_R8)
 	texture_rid = render_device.texture_create(texture_format, RDTextureView.new(), [image.get_data()])
 	
@@ -63,17 +58,17 @@ func _ready() -> void:
 	count_buffer = render_device.storage_buffer_create(count_data.size(), count_data)
 	
 	# -- Uniform Set --
-	var tex_uniform := RDUniform.new()
+	var tex_uniform: RDUniform = RDUniform.new()
 	tex_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
 	tex_uniform.binding = 0
 	tex_uniform.add_id(texture_rid)
 	
-	var update_uniform := RDUniform.new()
+	var update_uniform: RDUniform = RDUniform.new()
 	update_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
 	update_uniform.binding = 1
 	update_uniform.add_id(update_buffer)
 	
-	var count_uniform := RDUniform.new()
+	var count_uniform: RDUniform = RDUniform.new()
 	count_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
 	count_uniform.binding = 2
 	count_uniform.add_id(count_buffer)
@@ -81,11 +76,10 @@ func _ready() -> void:
 	uniform_set = render_device.uniform_set_create([tex_uniform, update_uniform, count_uniform], shader_rid, 0)
 	
 	# -- Apply Texture to Mesh --
-	var texture_2d_rd := Texture2DRD.new()
+	var texture_2d_rd: Texture2DRD = Texture2DRD.new()
 	texture_2d_rd.texture_rd_rid = texture_rid
 	
 	output_shader_texture = texture_2d_rd
-	#test_mesh_instance_3d.material_override.albedo_texture = texture_2d_rd
 	
 	commands_packed = PackedInt32Array()
 
@@ -123,8 +117,8 @@ func update_texture_with_commands(commands: PackedInt32Array) -> void:
 ## Free Compute Shader RIDs
 func _exit_tree() -> void:
 	render_device.free_rid(shader_rid)
-	#render_device.free_rid(pipeline_rid)
-	#render_device.free_rid(uniform_set)
+	#render_device.free_rid(pipeline_rid) AUTOMATICALLY FREED
+	#render_device.free_rid(uniform_set)  AUTOMATICALLY FREED
 	render_device.free_rid(texture_rid)
 	render_device.free_rid(update_buffer)
 	render_device.free_rid(count_buffer)
