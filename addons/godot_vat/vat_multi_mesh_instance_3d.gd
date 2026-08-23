@@ -181,17 +181,9 @@ func _generate_instance_track_update(index: int, track: VATAnimationTrack) -> Ar
 	
 	# -- Start Frame Bytes 0-2 --
 	var start_frame: int = track.startFrame
-	pixels.append(x + 0)
-	pixels.append(y)
-	pixels.append(start_frame & 0xFF)
-	
-	pixels.append(x + 1)
-	pixels.append(y)
-	pixels.append((start_frame >> 8) & 0xFF)
-	
-	pixels.append(x + 2)
-	pixels.append(y)
-	pixels.append((start_frame >> 16) & 0xFF)
+	pixels += [x + 0, y, start_frame & 0xFF]
+	pixels += [x + 1, y, (start_frame >> 8) & 0xFF]
+	pixels += [x + 2, y, (start_frame >> 16) & 0xFF]
 	
 	# -- End Frame Bytes 3-5 --
 	var end_frame: int = track.endFrame
@@ -251,10 +243,10 @@ func update_instance_track(instance_id: int, track_number: int) -> void:
 	#custom_data.b = vat_animation_tracks[track_number].endFrame
 	#multimesh.set_instance_custom_data(instance_id, custom_data)
 		
-	reset_one_shot(instance_id)
-	
 	## TODO GET RID OF PREVIOUS SHADER STUFF, ALSO MAKE MORE READABLE THIS IS CRAP
 	atlas_manager.update_texture_with_commands(_generate_instance_track_update(instance_id, vat_animation_tracks[track_number]))
+	
+	reset_one_shot(instance_id)
 
 ## Updates the current instance_id with the provided alpha (0..1)
 func update_instance_alpha(instance_id: int, alpha: float) -> void:
@@ -273,6 +265,7 @@ func update_instance(instance_id: int, animation_offset: float, track_number: in
 ## Update ALL INSTANCES with the provided animation_offset, track_number, and alpha
 ## unless rand_anim_offset = false, where it sets the animation_offset to 0
 func update_all_instances(animation_offset: float, track_number: int, alpha: float) -> void: # TODO THESE ARENT SETTING IT RIGHT :(
+	print("IMRUNNING")
 	var batch_atlas_update_array: Array[Variant] = []
 	for instance in multimesh.instance_count:
 		update_instance_animation_offset(instance, animation_offset)
@@ -280,6 +273,8 @@ func update_all_instances(animation_offset: float, track_number: int, alpha: flo
 		batch_atlas_update_array += _generate_instance_track_update(instance, vat_animation_tracks[track_number])
 		update_instance_alpha(instance, alpha)
 	atlas_manager.update_texture_with_commands(batch_atlas_update_array)
+	for instance in multimesh.instance_count:
+		reset_one_shot(instance) # TODO MAKE THIS LESS MESSY 
 
 # Tweens
 
@@ -452,6 +447,7 @@ func get_current_timestamp() -> float:
 ## Restarts the one shot animation for a specific instance_id.[br][br]
 ## Only valid if instanced animation track  [is_looping] is true
 func reset_one_shot(instance_id: int):
+	print("ImNotbeingRun")
 	custom_color = multimesh.get_instance_color(instance_id)
 	
 	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
