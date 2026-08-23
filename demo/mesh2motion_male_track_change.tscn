@@ -32,7 +32,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("3_y47ev")
-buffer = PackedFloat32Array(37.5, 7.5, 0.96, 0.2, 0.32, 1, 37.5, -7.5, 0.96, 0.2, 0.32, 1, 52.5, 0, 0.96, 0.2, 0.32, 1, nan, -1.9999999)
+buffer = PackedFloat32Array(3.9039145e-12, 0, 0, 0, 0, 0, 8e-45, 0, 8e-45, 0, 0, -3.6523438, 3.0994415e-06, 0, 3.0994415e-06, 0, 6.198883e-06, 0, 6.4373016e-06, 0)
 
 [sub_resource type="Resource" id="Resource_y47ev"]
 script = ExtResource("6_y47ev")

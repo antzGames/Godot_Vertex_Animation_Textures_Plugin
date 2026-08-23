@@ -55,7 +55,6 @@ func _enter_tree() -> void:
 	pass
 	
 func _exit_tree() -> void:
-	# Clean-up of the plugin goes here.
 	pass
 
 func _init() -> void:
@@ -113,6 +112,10 @@ func _ready() -> void:
 		
 func _process(delta: float) -> void:
 	pass
+	
+func get_current_timestamp() -> float:
+	return fmod((float(Time.get_ticks_msec()) / 1000.0), _rollover_value) - 0.5	
+	
 #endregion
 
 #region instanced helper functions
@@ -162,8 +165,88 @@ func update_all_instances(animation_offset: float, track_number: int, alpha: flo
 		update_instance_track(instance, track_number)
 		update_instance_alpha(instance, alpha)
 
-# Tweens
+## Restarts the one shot animation for a specific instance_id.[br][br]
+func reset_one_shot(instance_id: int):
+	custom_color = multimesh.get_instance_color(instance_id)
+	
+	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
+	
+	custom_color.r = _encode_color_channel_red(track)
+	custom_color.b = track.framerate
+	custom_color.g = get_current_timestamp()
+	
+	multimesh.set_instance_color(instance_id, custom_color)
 
+# Play next track
+
+## Plays the next animation track for the provided instance_id
+func play_next_track_instance(instance_id: int) -> void:
+	var track_number: int = get_track_number_from_instance(instance_id)
+	track_number += 1
+	if track_number > vat_animation_tracks.size() - 1: track_number = 0
+	update_instance_track(instance_id, track_number)
+	
+## Plays the next animation track for ALL INSTANCES
+func play_next_track_all_instances() -> void:
+	var track_number : int
+	for instance in multimesh.instance_count:
+		track_number = get_track_number_from_instance(instance)
+		track_number += 1
+		if track_number > vat_animation_tracks.size() - 1: track_number = 0
+		update_instance_track(instance, track_number)
+
+# Get functions
+
+## get [VATAnimationTrack] from instance.
+## instance must have been initialized. 
+## Returns null if instance_id not found
+func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
+	custom_data = multimesh.get_instance_custom_data(instance_id)
+
+	# more reliable 
+	for track: VATAnimationTrack in vat_animation_tracks:
+		if custom_data.g >= track.startFrame and custom_data.b <= track.endFrame:
+		#if is_equal_approx(custom_data.g, float(track.startFrame)) and is_equal_approx(custom_data.b, float(track.endFrame)):
+			return track
+			
+	return null
+
+## get track_number using an animation object to search animation_tracks.
+## Returns -1 if not found or animation object is null.
+func get_track_number_from_animation(animation: VATAnimationTrack) -> int:
+	if !animation: return -1
+	for i in range(vat_animation_tracks.size()):
+		if animation == vat_animation_tracks[i]: return i
+	
+	return -1
+
+## get track_number from animation track name
+## Assumes track names are unique, if not then the first found is returned
+## Returns -1 if not found.
+func get_track_number_from_name(name: String) -> int:
+	for i in range(vat_animation_tracks.size()):
+		if vat_animation_tracks[i].name.to_lower() == name.to_lower():
+			return i
+	
+	return -1
+	
+### get track_number from start/end frames.[br]
+### However [get_track_number_from_animation] is a better option.
+### Returns -1 if not found.
+func get_track_number_from_start_end_frames(start: int, end: int) -> int:
+	for i in range(vat_animation_tracks.size()):
+		if Vector2i(start,end) == Vector2i(vat_animation_tracks[i].startFrame, vat_animation_tracks[i].endFrame): return i
+	
+	return -1
+
+## get current track_number from instance_id
+## Returns -1 if not found.
+func get_track_number_from_instance(instance_id: int) -> int:
+	return get_track_number_from_animation(get_animation_from_instance(instance_id))
+
+#endregion
+
+#region Tweens for fade and sink
 ## Fade out a specific instance.[br][br]
 ## [param instance_id] is the specific instance to fade.[br]
 ## [param fade_out_time] the duration of the fade.[br]
@@ -226,145 +309,9 @@ func _do_tween_sink(value: float, instance_id: int) -> void:
 	trans = multimesh.get_instance_transform(instance_id)
 	trans.origin.y = value
 	multimesh.set_instance_transform(instance_id, trans)
-	
-# Play next track
-
-## Plays the next animation track for the provided instance_id
-func play_next_track_instance(instance_id: int) -> void:
-	var track_number: int = get_track_number_from_instance(instance_id)
-	track_number += 1
-	if track_number > vat_animation_tracks.size() - 1: track_number = 0
-	update_instance_track(instance_id, track_number)
-	
-## Plays the next animation track for ALL INSTANCES
-func play_next_track_all_instances() -> void:
-	var track_number : int
-	for instance in multimesh.instance_count:
-		track_number = get_track_number_from_instance(instance)
-		track_number += 1
-		if track_number > vat_animation_tracks.size() - 1: track_number = 0
-		update_instance_track(instance, track_number)
-
-# Get functions
-
-## get [VATAnimationTrack] from instance.
-## instance must have been initialized. 
-## Returns null if instance_id not found
-func get_animation_from_instance(instance_id: int) -> VATAnimationTrack:
-	custom_data = multimesh.get_instance_custom_data(instance_id)
-	
-	for track: VATAnimationTrack in vat_animation_tracks:
-		if is_equal_approx(custom_data.g, float(track.startFrame)) and is_equal_approx(custom_data.b, float(track.endFrame)):
-			return track
-			
-	return null
-
-## get track_number using an animation object to search animation_tracks.
-## Returns -1 if not found or animation object is null.
-func get_track_number_from_animation(animation: VATAnimationTrack) -> int:
-	if !animation: return -1
-	for i in range(vat_animation_tracks.size()):
-		if animation == vat_animation_tracks[i]: return i
-	
-	return -1
-
-## get track_number from animation track name
-## Returns -1 if not found.
-func get_track_number_from_name(name: String) -> int:
-	for i in range(vat_animation_tracks.size()):
-		if vat_animation_tracks[i].name.to_lower() == name.to_lower():
-			return i
-	
-	return -1
-	
-## get track_number from start/end frames.[br]
-## However [get_track_number_from_animation] is a better option.
-## Returns -1 if not found.
-func get_track_number_from_start_end_frames(start: int, end: int) -> int:
-	for i in range(vat_animation_tracks.size()):
-		if Vector2i(start,end) == Vector2i(vat_animation_tracks[i].startFrame, vat_animation_tracks[i].endFrame): return i
-	
-	return -1
-
-## get current track_number from instance_id
-## Returns -1 if not found.
-func get_track_number_from_instance(instance_id: int) -> int:
-	return get_track_number_from_animation(get_animation_from_instance(instance_id))
-
-func get_current_timestamp() -> float:
-	return fmod((float(Time.get_ticks_msec()) / 1000.0), _rollover_value) - 0.5
 #endregion
 
-#region theHoodaloo Custom Code
-
-## Restarts the one shot animation for a specific instance_id.[br][br]
-## Only valid if instanced animation track  [is_looping] is true
-func reset_one_shot(instance_id: int):
-	custom_color = multimesh.get_instance_color(instance_id)
-	
-	var track: VATAnimationTrack = get_animation_from_instance(instance_id)
-	
-	custom_color.r = _encode_color_channel_red(track)
-	custom_color.b = track.framerate
-	custom_color.g = get_current_timestamp()
-	
-	multimesh.set_instance_color(instance_id, custom_color)
-
-## Sets start and end frame while keeping current track parameters
-func set_section(instance_id: int, start_frame: int, end_frame: int) -> void:
-	custom_data   = multimesh.get_instance_custom_data(instance_id)
-	custom_data.r = 0.0
-	custom_data.g = start_frame
-	custom_data.b = end_frame
-	multimesh.set_instance_custom_data(instance_id, custom_data)
-	
-	custom_color   = multimesh.get_instance_color(instance_id)
-	custom_color.g = get_current_timestamp()
-	multimesh.set_instance_color(instance_id, custom_color)
-	
-@export_tool_button("Import VATAnimationTrack(s) from JSON File", "File") var import_vat_animation_track = _import_vat_animation_track
-func _import_vat_animation_track() -> void:
-	if !Engine.is_editor_hint(): return
-	
-	var dialog: EditorFileDialog = EditorFileDialog.new()
-	dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
-	dialog.filters = ["*.json ; JSON Files"]
-	
-	dialog.file_selected.connect(func(path: String) -> void:
-		var json_as_text: String = FileAccess.open(path, FileAccess.READ).get_as_text()
-		var json_as_array: Array = JSON.parse_string(json_as_text)
-		
-		var vat_animation_track_new: Array[VATAnimationTrack] = []
-		for track: Dictionary in json_as_array:
-			var vat_animation_track: VATAnimationTrack = VATAnimationTrack.new()
-			vat_animation_track.name       = track.get("name", "Animation")
-			vat_animation_track.startFrame = track.get("startFrame", 0)
-			vat_animation_track.endFrame   = track.get("endFrame",   0)
-			vat_animation_track.isLooping  = track.get("isLooping", true)
-			vat_animation_track.isBlended  = track.get("isBlended", true)
-			vat_animation_track.framerate  = track.get("frameRate", 0.0)
-			vat_animation_track_new.append(vat_animation_track)
-			
-		vat_animation_tracks = vat_animation_track_new
-		dialog.queue_free()
-	)
-	dialog.canceled.connect(func() -> void: dialog.queue_free())
-	
-	get_tree().root.add_child(dialog)
-	dialog.popup_centered_ratio(0.70)
-
-## Updates the current instance_id with the provided frame number
-## Frame number is in VAT scope
-## Animation offset will be reset to 0
-func freeze_frame(instance_id: int, frame: int) -> void:
-	custom_data = multimesh.get_instance_custom_data(instance_id)
-	
-	frame = clampi(frame, 0, 8192)
-	custom_data.r = 0.0
-	custom_data.g = frame
-	custom_data.b = frame
-	multimesh.set_instance_custom_data(instance_id, custom_data)
-
+#region theHoodaloo Custom Code 
 ## Get current frame from instance_id (0...last_frame - first_frame)
 func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: bool = false) -> int:
 	var color_data: Color = multimesh.get_instance_color(instance_id)
@@ -445,4 +392,37 @@ func _decode_float_from_color_channel_red(red_value: float, type: ColorChannelRe
 		_: #  This should not happen unless another ColorChannelRed emum value was added
 			return 0
 			
+#endregion
+
+#region JSON import
+@export_tool_button("Import VATAnimationTrack(s) from JSON File", "File") var import_vat_animation_track = _import_vat_animation_track
+func _import_vat_animation_track() -> void:
+	if !Engine.is_editor_hint(): return
+	
+	var dialog: EditorFileDialog = EditorFileDialog.new()
+	dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
+	dialog.filters = ["*.json ; JSON Files"]
+	
+	dialog.file_selected.connect(func(path: String) -> void:
+		var json_as_text: String = FileAccess.open(path, FileAccess.READ).get_as_text()
+		var json_as_array: Array = JSON.parse_string(json_as_text)
+		
+		var vat_animation_track_new: Array[VATAnimationTrack] = []
+		for track: Dictionary in json_as_array:
+			var vat_animation_track: VATAnimationTrack = VATAnimationTrack.new()
+			vat_animation_track.name       = track.get("name", "Animation")
+			vat_animation_track.startFrame = track.get("startFrame", 0)
+			vat_animation_track.endFrame   = track.get("endFrame",   0)
+			vat_animation_track.isLooping  = track.get("isLooping", true)
+			vat_animation_track.isBlended  = track.get("isBlended", true)
+			vat_animation_track.framerate  = track.get("frameRate", 0.0)
+			vat_animation_track_new.append(vat_animation_track)
+			
+		vat_animation_tracks = vat_animation_track_new
+		dialog.queue_free()
+	)
+	dialog.canceled.connect(func() -> void: dialog.queue_free())
+	
+	get_tree().root.add_child(dialog)
+	dialog.popup_centered_ratio(0.70)
 #endregion

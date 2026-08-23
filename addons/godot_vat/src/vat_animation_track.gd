@@ -39,4 +39,4 @@ func set_track(name_in: String, start_in: int, end_in: int, framerate_in: int, l
 	isReversed = reversed
 	
 func _to_string() -> String:
-	return str("Animation Track Name: ",name, "   startFrame: ", startFrame, "    endFrame: ", endFrame, "   framerate: ", framerate, "   isLooping: ", isLooping, "isReversed: ", isReversed)
+	return str("Animation Track Name: ",name, "   startFrame: ", startFrame, "    endFrame: ", endFrame, "   framerate: ", framerate, "   isLooping: ", isLooping, "   isReversed: ", isReversed)
