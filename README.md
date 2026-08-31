@@ -57,10 +57,8 @@ https://github.com/user-attachments/assets/2eaf3977-77ec-4bb1-9214-27dd26975533
 
 ## Requirements
 
-- Godot 4.x
-- Blender:
-	- For Blender 3.x use: [Not Unreal Tools - Vertex Animation](https://github.com/yanorax/unreal_tools) 
-	- For Blender 4.x use: [Godot VAT Blender Tools](https://github.com/antzGames/Godot_VAT_Blender_Tool)
+- Godot 4.5+
+- Blender 4.x, specifically tested with Blender 4.5.9 LTS using: [Godot VAT Blender Tools](https://github.com/antzGames/Godot_VAT_Blender_Tool)
 - An animated 3D model with less than 8192 total vertices.
 
 ## Installing
