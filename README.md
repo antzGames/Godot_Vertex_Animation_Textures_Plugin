@@ -10,7 +10,7 @@ The plugin is designed to simplify the process of animating meshes using VATs, p
 
 Works on all Godot renderers and HTML builds.
 
-See video of the plugin and demos here: 
+Click the image below to see video of the plugin: 
 
 [![YouTubeVideo](https://github.com/user-attachments/assets/24120e4e-20d9-412a-9c7b-b089923eb5d6)](https://youtu.be/twFFcn4Q0fQ)
 
