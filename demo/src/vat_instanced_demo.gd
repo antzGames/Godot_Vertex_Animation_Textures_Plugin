@@ -119,7 +119,7 @@ func _input(event: InputEvent) -> void:
 			if OS.get_name() != "Web":
 				get_tree().quit()
 			else:
-				get_tree().change_scene_to_file("res://demo/skeletons_track_change.tscn")
+				get_tree().change_scene_to_file("res://demo/skeleton_track_change.tscn")
 
 func _on_shadows_check_button_toggled(toggled_on: bool) -> void:
 	shadows_check_button.text = str(toggled_on).capitalize()
