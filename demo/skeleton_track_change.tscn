@@ -32,7 +32,7 @@ use_colors = true
 use_custom_data = true
 instance_count = 1
 mesh = ExtResource("4_acrxm")
-buffer = PackedFloat32Array(1.05232e-09, 0, 0, 0, 0, 0, 4e-45, 0, 4e-45, 0, 0, 0, 2.9802322e-06, 0, 5.6624413e-06, 0, 0, 0, 6.6161156e-06, 0)
+buffer = PackedFloat32Array(8.4852363e+18, 0, 0, 0, 0, 0, 4e-45, 0, 4e-45, 0, 0, -2.125, 3.0398369e-06, 0, 5.6624413e-06, 0, 0, 0, 4.7683716e-07, 0)
 
 [sub_resource type="Resource" id="Resource_5fsja"]
 script = ExtResource("6_36v5s")

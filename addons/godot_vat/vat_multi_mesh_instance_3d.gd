@@ -50,6 +50,7 @@ func _create_multimesh() -> void:
 	multimesh.instance_count = 0
 	multimesh.transform_format = MultiMesh.TRANSFORM_3D
 	multimesh.use_custom_data = true
+	multimesh.use_colors = true
 
 func _enter_tree() -> void:
 	pass
@@ -311,7 +312,7 @@ func _do_tween_sink(value: float, instance_id: int) -> void:
 	multimesh.set_instance_transform(instance_id, trans)
 #endregion
 
-#region theHoodaloo Custom Code 
+#region get current frame 
 ## Get current frame from instance_id (0...last_frame - first_frame)
 func get_current_frame_from_instance(instance_id: int, relative_to_all_tracks: bool = false) -> int:
 	var color_data: Color = multimesh.get_instance_color(instance_id)
@@ -397,10 +398,18 @@ func _decode_float_from_color_channel_red(red_value: float, type: ColorChannelRe
 #region JSON import
 @export_tool_button("Import VATAnimationTrack(s) from JSON File", "File") var import_vat_animation_track = _import_vat_animation_track
 func _import_vat_animation_track() -> void:
-	if !Engine.is_editor_hint(): return
+	if !Engine.is_editor_hint():
+		return
+
+	if !ClassDB.class_exists("EditorFileDialog"):
+		return
+
+	var dialog = ClassDB.instantiate("EditorFileDialog")
 	
-	var dialog: EditorFileDialog = EditorFileDialog.new()
-	dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE
+	if dialog == null:
+		return
+
+	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
 	dialog.filters = ["*.json ; JSON Files"]
 	
 	dialog.file_selected.connect(func(path: String) -> void:
